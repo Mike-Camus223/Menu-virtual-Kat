@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+AU+QLD:wght@400;700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Reset moderno y profesional compatible con Tailwind */
+
+/* Box sizing global */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin and padding */
+body, h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd {
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove list styles */
+ul, ol {
+  list-style: none;
+}
+
+ul, li {
+  list-style: none !important;
+}
+
+/* Anchor links reset */
+a {
+  text-decoration: none;
+}
+
+/* Images reset */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+
+/* Body defaults */
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Inter', sans-serif; /* default font */
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
+.title {
+  font-family: "PT Sans Narrow", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.text-font {
+  font-family: "PT Sans Narrow", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.title2 {
+  font-family: "Playwrite AU QLD", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.title3 {
+  font-family: "Courgette", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@keyframes scrollLeft {
+  0% {
+    left: 100%;
+  }
+  100% {
+    left: -20rem; 
+  }
+}
+
+.bgunico {
+background-color: #56051A;
+}
+
+@keyframes dropdown {
+  0% { opacity: 0; transform: translateY(-5px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-dropdown {
+  animation: dropdown 0.2s ease-out forwards;
+}
