@@ -96,3 +96,15 @@ background-color: #56051A;
 .animate-dropdown {
   animation: dropdown 0.2s ease-out forwards;
 }
+
+.bg-card {
+  background-color: #F7FEE7;
+}
+
+.text-card {
+  color: #64815c;
+}
+
+.border-card {
+  border-color: #64815c;
+}

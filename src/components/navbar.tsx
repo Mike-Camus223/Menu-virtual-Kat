@@ -222,78 +222,89 @@ const Navbar: React.FC<NavbarProps> = () => {
         </div>
 
         {/* Contenido */}
-        {/* Contenido */}
-<div className="flex flex-col h-[calc(100%-70px)]">
-  {/* Zona de scroll */}
-  <div className="p-5 flex-1 flex flex-col gap-4 overflow-y-auto">
-    {/* Mostrar mensaje de plan solo si se seleccionó uno */}
-    {plan && items.length > 0 && (
-      <p className="text-sm text-gray-700 italic">
-        Plan seleccionado: <b className="text-rose-900">{plan.maxItems} viandas {plan.type === 'gran' ? 'grandes' : 'pequeñas'}</b>
-      </p>
-    )}
+        <div className="flex flex-col h-[calc(100%-70px)]">
+          {/* Zona de scroll */}
+          <div className="p-5 flex-1 flex flex-col gap-4 overflow-y-auto">
+            {/* Mostrar mensaje de plan solo si se seleccionó uno */}
+            {plan && items.length > 0 && (
+              <p className="text-sm text-gray-700 italic">
+                Plan seleccionado: <b className="text-rose-900">{plan.maxItems} viandas {plan.type === 'gran' ? 'grandes' : 'pequeñas'}</b>
+              </p>
+            )}
 
-    {items.length === 0 ? (
-      <div className="flex flex-1 flex-col items-center justify-center text-gray-400">
-        <ShoppingCart size={55} strokeWidth={1.5} />
-        <p className="mt-3 text-lg font-medium">Carrito vacío</p>
-      </div>
-    ) : (
-      <ul className="flex flex-col gap-3">
-        {items.map((item) => (
-          <li key={item.id} className="flex items-center justify-between">
-            <span className="text-gray-800 font-medium">
-              {item.name} <span className="text-gray-500">x{item.quantity}</span>
-            </span>
-            <button
-              onClick={() => removeItem(item.id)}
-              className="text-rose-700 cursor-pointer hover:text-rose-900 transition"
-            >
-              <Trash2 size={18} />
-            </button>
-          </li>
-        ))}
-      </ul>
-    )}
-  </div>
+            {items.length === 0 ? (
+              <div className="flex flex-1 flex-col items-center justify-center text-gray-400">
+                <ShoppingCart size={55} strokeWidth={1.5} />
+                <p className="mt-3 text-lg font-medium">Carrito vacío</p>
+              </div>
+            ) : (
+              <div className="flex flex-col flex-1">
+                <ul className="flex flex-col gap-3">
+                  {items.map((item) => (
+                    <li key={item.id} className="flex items-center justify-between">
+                      <span className="text-gray-800 font-medium">
+                        {item.name} <span className="text-gray-500">x{item.quantity}</span>
+                      </span>
+                      <button
+                        onClick={() => removeItem(item.id)}
+                        className="text-rose-700 cursor-pointer hover:text-rose-900 transition"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                
+                {/* Total al final del contenido */}
+                <div className="mt-auto pt-4 border-t border-gray-200">
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg font-semibold text-gray-800">Total:</span>
+                    <span className="text-xl font-bold text-rose-900">
+                      ${items.reduce((acc, item) => acc + (item.price * item.quantity), 0).toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
 
-  {/* Footer */}
-  {items.length > 0 && (
-    <div className="p-5 flex gap-3 bg-[#FFF6F0] border-t border-gray-300">
-      {/* Vaciar */}
-      <button
-        onClick={clearCart}
-        className="flex-1 flex items-center justify-center gap-2 cursor-pointer rounded-lg bg-gray-200 text-gray-700 text-base px-3 py-2 shadow hover:bg-gray-300 transition-all duration-300"
-        style={{ fontFamily: "Times New Roman, serif" }}
-      >
-        Vaciar
-      </button>
+          {/* Footer */}
+          {items.length > 0 && (
+            <div className="p-5 flex gap-3 bg-[#FFF6F0] border-t border-gray-300">
+              {/* Vaciar */}
+              <button
+                onClick={clearCart}
+                className="flex-1 flex items-center justify-center gap-2 cursor-pointer rounded-lg bg-gray-200 text-gray-700 text-base px-3 py-2 shadow hover:bg-gray-300 transition-all duration-300"
+                style={{ fontFamily: "Times New Roman, serif" }}
+              >
+                Vaciar
+              </button>
 
-      {/* Comprar por WhatsApp */}
-      <a
-        href={total === (plan?.maxItems || 0) ? `https://wa.me/+5491121911765?text=${encodeURIComponent(
-          `Hola, me gustaría hacer un pedido:\n\n${items
-            .map((i) => `• ${i.name} x${i.quantity}`)
-            .join("\n")}\n\n${plan ? `Plan seleccionado: ${plan.maxItems} viandas ${plan.type === 'gran' ? 'grandes' : 'pequeñas'}` : ""}`
-        )}` : "#"}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`flex-1 flex items-center justify-center gap-2 rounded-lg text-white text-base px-3 py-2 shadow-lg transition-all duration-300
-          ${total === (plan?.maxItems || 0) 
-            ? "bg-rose-950 hover:bg-rose-900 cursor-pointer" 
-            : "bg-gray-400 cursor-not-allowed"
-          }`}
-        style={{ fontFamily: "Times New Roman, serif" }}
-        onClick={(e) => {
-          if(total !== (plan?.maxItems || 0)) e.preventDefault();
-        }}
-      >
-        <Phone size={20} strokeWidth={1.75} />
-        Comprar
-      </a>
-    </div>
-  )}
-</div>
+              {/* Comprar por WhatsApp */}
+              <a
+                href={total === (plan?.maxItems || 0) ? `https://wa.me/+5491121911765?text=${encodeURIComponent(
+                  `Hola, me gustaría hacer un pedido:\n\n${items
+                    .map((i) => `• ${i.name} x${i.quantity}`)
+                    .join("\n")}\n\n${plan ? `Plan seleccionado: ${plan.maxItems} viandas ${plan.type === 'gran' ? 'grandes' : 'pequeñas'}` : ""}`
+                )}` : "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex-1 flex items-center justify-center gap-2 rounded-lg text-white text-base px-3 py-2 shadow-lg transition-all duration-300
+                ${total === (plan?.maxItems || 0)
+                    ? "bg-rose-950 hover:bg-rose-900 cursor-pointer"
+                    : "bg-gray-400 cursor-not-allowed"
+                  }`}
+                style={{ fontFamily: "Times New Roman, serif" }}
+                onClick={(e) => {
+                  if (total !== (plan?.maxItems || 0)) e.preventDefault();
+                }}
+              >
+                <Phone size={20} strokeWidth={1.75} />
+                Comprar
+              </a>
+            </div>
+          )}
+        </div>
 
       </div>
     </>

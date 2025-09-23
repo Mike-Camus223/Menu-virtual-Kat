@@ -67,15 +67,15 @@ export default function Plans() {
         {/* Título */}
         <div className="mb-7">
           <h1
-            className="text-3xl sm:text-4xl text-shadow-lg md:text-5xl font-semibold text-gray-900 mb-4"
+            className="text-3xl sm:text-4xl text-shadow-lg md:text-5xl font-semibold text-lime-900 mb-4"
             style={{ fontFamily: "Times New Roman, serif" }}
           >
-            Planes de{" "}
+            VIANDAS{" "}
             <span
-              className="text-rose-900 text-shadow-lg"
+              className="text-yellow-500 text-shadow-lg"
               style={{ fontFamily: "Times New Roman, serif" }}
             >
-              vianda
+              SALUDABLES
             </span>
           </h1>
         </div>
@@ -85,12 +85,12 @@ export default function Plans() {
           {planOptions.map((planOption) => (
             <div
               key={planOption.id}
-              className="relative z-5 group bg-rose-900 rounded-xl shadow-2xl overflow-hidden"
+              className="relative z-5 group bg-card rounded-xl  transition-all duration-400 hover:shadow-2xl overflow-hidden"
             >
               <div className="absolute top-5 right-2 z-[-1]">
                 <Wheat
                   className="
-                    text-pink-800
+                    text-lime-100
                     w-45 h-45
                     sm:w-45 sm:h-45
                     md:w-50 md:h-50
@@ -102,33 +102,33 @@ export default function Plans() {
               </div>
               <div className="p-4 sm:p-4 text-center space-y-5">
                 {/* Icono */}
-                <div className="w-20 h-20 mx-auto rounded-full border-3 border-white flex items-center justify-center">
-                  <Package size={36} className="text-white" />
+                <div className="w-20 h-20 mx-auto rounded-full border-3 border-lime-800 flex items-center justify-center">
+                  <Package size={36} className="text-lime-800 font-bold" />
                 </div>
 
                 {/* Nombre y descripción */}
                 <div className="flex flex-col gap-2">
-                  <h2 className="text-2xl md:text-3xl font-bold text-white">
-                    {planOption.name}
+                  <h2
+                    className="text-3xl sm:text-3xl text-shadow-lg md:text-2xl font-semibold text-lime-800 mb-4"
+                    style={{ fontFamily: "Times New Roman, serif" }}
+                  >
+                    {planOption.name.toUpperCase()}
                   </h2>
                 </div>
 
                 {/* Detalles */}
                 <div className="flex flex-col items-center mb-4">
-                  <div className="text-3xl sm:text-4xl font-bold text-white">
+                  <div className="text-3xl sm:text-4xl text-lime-800 font-bold">
                     {planOption.maxItems}
                   </div>
-                  <div className="text-white text-sm sm:text-base mt-1">
+                  <div className="text-lime-800 font-bold text-sm sm:text-base mt-1">
                     Viandas Incluidas
                   </div>
                 </div>
 
                 {/* Beneficios */}
                 <div className="rounded-xl p-4">
-                  <h4 className="text-white font-bold mb-2 text-center">
-                    Incluye:
-                  </h4>
-                  <ul className="space-y-1 text-white text-sm sm:text-base">
+                  <ul className="space-y-1 text-lime-800 font-bold text-sm sm:text-base">
                     <li>Ingredientes frescos y naturales</li>
                     <li>Preparación casera artesanal</li>
                     <li>Entrega a domicilio gratuita</li>
@@ -139,12 +139,12 @@ export default function Plans() {
                 <div className="w-full flex justify-center py-3 md:py-3  px-4">
                   <button
                     onClick={() => selectPlan(planOption)}
-                    className="w-full rounded-lg bg-rose-950 text-white text-base md:text-lg font-serif px-3 py-2 shadow-lg cursor-pointer transition-all duration-300"
+                    className="w-full rounded-lg text-white bg-green-800 hover:bg-green-900  text-base md:text-lg font-serif px-3 py-2 shadow-lg cursor-pointer transition-all duration-300"
                   >
                     Continuar
                   </button>
                 </div>
-                <p className="text-white text-xs sm:text-sm">
+                <p className=" text-xs text-lime-800 font-bold sm:text-sm">
                   * Podrás personalizar tus viandas en el siguiente paso
                 </p>
               </div>
@@ -161,14 +161,14 @@ export default function Plans() {
               Selección Guardada
             </h3>
 
-            <div className="bg-rose-50 rounded-full px-4 mt-2 py-2 inline-block">
-              <span className="text-rose-900 font-semibold">
+            <div className="bg-lime-100 rounded-full px-4 mt-2 py-2 inline-block">
+              <span className="text-lime-800 font-semibold">
                 Plan de {plan?.maxItems || 7} viandas {plan?.type === 'gran' ? 'grandes' : 'pequeñas'}
               </span>
             </div>
 
-            <div className="bg-rose-50 rounded-full px-4 mt-2 py-2 inline-block">
-              <span className="text-rose-900 font-semibold">
+            <div className="bg-lime-100 rounded-full px-4 mt-2 py-2 inline-block">
+              <span className="text-lime-800 font-semibold">
                 Selección: {totalInCart}/{plan?.maxItems || 7} viandas
               </span>
             </div>
@@ -176,14 +176,14 @@ export default function Plans() {
             <div className="flex flex-col md:flex-row gap-3 justify-center">
               <button
                 onClick={continueToPreviousPlan}
-                className="w-full md:w-auto flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-rose-950 text-white text-base md:text-sm shadow-lg hover:bg-rose-900 transition-all duration-300"
+                className="w-full md:w-auto flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-800 text-white hover:bg-green-900 font-medium text-base md:text-sm shadow-lg transition-all duration-300"
               >
                 <CheckCircle size={23} />
                 Continuar
               </button>
               <button
                 onClick={startNewPlan}
-                className="w-full md:w-auto flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-rose-950 text-white text-base md:text-sm shadow-lg hover:bg-rose-900 transition-all duration-300"
+                className="w-full md:w-auto flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-800 text-white hover:bg-green-900 font-medium text-base md:text-sm shadow-lg transition-all duration-300"
               >
                 <RefreshCw size={23} />
                 Empezar de Nuevo
