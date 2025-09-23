@@ -143,7 +143,7 @@ export default function Order() {
 
   // Agregar producto
   const handleAddItem = (product: Product) => {
-    if (!plan || total >= plan.maxItems) return; // ✅ usa plan.maxItems
+    if (!plan || total >= plan.maxItems) return; //  usa plan.maxItems
     const itemInCart = items.find((i) => i.id === product.id);
     if (itemInCart) incrementItem(product.id);
     else addItem({ id: product.id, name: product.name, quantity: 1, price: product.price });
@@ -209,7 +209,7 @@ export default function Order() {
   if (!plan) {
     return (
       <div className="min-h-screen bg-gradient-to-br flex flex-col items-center justify-center gap-6 py-10">
-        <Loader className="animate-spin bg-rose-600 text-rose-600 w-12 h-12" />
+        <Loader className="animate-spin bg-green-600 text-lime-500 w-12 h-12" />
       </div>
     );
   }
@@ -246,7 +246,7 @@ export default function Order() {
       )}
 
       {/* Filtros */}
-      <div className="flex flex-wrap w-full shadow-lg justify-between items-center gap-3 md:gap-4 px-4 py-2 mb-6">
+      <div className="flex flex-wrap w-full bg-amber-100 shadow-lg justify-between items-center gap-3 md:gap-4 px-4 py-2 pb-6">
         {/* Dropdown mobile/tablet */}
         <div ref={dropdownRef} className="md:hidden relative w-48">
           <button
@@ -268,7 +268,7 @@ export default function Order() {
               <div
                 key={c}
                 onClick={() => { handleFilterChange(c); setDropdownOpen(false); }}
-                className={`px-4 py-2 cursor-pointer text-gray-700 hover:bg-rose-100 ${selectedFilter === c ? "bg-rose-200 font-semibold" : ""
+                className={`px-4 py-2 cursor-pointer text-gray-700 hover:bg-lime-100 ${selectedFilter === c ? "bg-lime-200 font-semibold" : ""
                   } transition-colors duration-200`}
               >
                 {c} {categoryCounts[c] ? `(${categoryCounts[c]})` : ""}
@@ -283,7 +283,7 @@ export default function Order() {
             <button
               key={c}
               onClick={() => handleFilterChange(c)}
-              className={`px-4 py-1 cursor-pointer font-semibold text-sm md:text-lg transition-all duration-300 ${selectedFilter === c ? "text-rose-800 shadow-lg" : "text-gray-700"
+              className={`px-4 py-1 cursor-pointer font-semibold text-sm md:text-lg transition-all duration-300 ${selectedFilter === c ? "text-green-900 shadow-lg" : "text-gray-700"
                 }`}
             >
               {c} {categoryCounts[c] ? `(${categoryCounts[c]})` : ""}
@@ -293,16 +293,16 @@ export default function Order() {
       </div>
 
       {/* Productos */}
-      <main className="min-h-screen">
+      <main className="min-h-screen bg-amber-100">
         {loading ? (
           <div className="flex items-center justify-center min-h-screen">
-            <Loader2 className="animate-spin text-red-700 w-12 h-12" />
+            <Loader2 className="animate-spin text-green-800 w-12 h-12" />
           </div>
         ) : (
           <div className="container max-w-7xl mx-auto px-4 md:px-6">
             <div className="pt-2 pb-5">
               <h2
-                className="text-2xl sm:text-2xl text-shadow-lg md:text-3xl font-semibold text-gray-800 mb-4"
+                className="text-2xl text-lime-800 sm:text-2xl text-shadow-lg md:text-3xl font-semibold mb-4"
                 style={{ fontFamily: "Times New Roman, serif" }}
               >
                 {titles[selectedFilter]}
@@ -318,7 +318,7 @@ export default function Order() {
                 return (
                   <div
                     key={product.id}
-                    className="group relative bg-white rounded-lg hover:shadow-2xl transition-shadow duration-500 overflow-hidden border border-gray-200 flex flex-col h-[420px]" // altura uniforme
+                    className="group relative bg-white rounded-lg hover:shadow-2xl transition-shadow duration-500 overflow-hidden shadow-lg  flex flex-col h-[420px]" // altura uniforme
                   >
                     <div className="relative w-full aspect-[4/3] overflow-hidden">
                       <img
@@ -329,14 +329,14 @@ export default function Order() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
 
                       <div className="absolute top-3 right-3">
-                        <span className="px-3 py-1 bg-white/90 text-rose-900 font-semibold text-xs sm:text-sm rounded-full">
+                        <span className="px-3 py-1 bg-white/90 text-green-900 font-semibold text-xs sm:text-sm rounded-full">
                           {product.category}
                         </span>
                       </div>
 
                       {quantity > 0 && (
                         <div className="absolute top-3 left-3">
-                          <div className="w-7 h-7 bg-rose-800 hover:bg-rose-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
+                          <div className="w-7 h-7 bg-green-800 hover:bg-green-900 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
                             {quantity}
                           </div>
                         </div>
@@ -351,7 +351,7 @@ export default function Order() {
                       <p className="text-gray-700 text-sm mb-4 line-clamp-3 flex-1">{product.description}</p>
 
                       <div className="mb-4">
-                        <span className="text-lg font-bold text-rose-900">${product.price.toLocaleString()}</span>
+                        <span className="text-lg font-bold text-green-900">${product.price.toLocaleString()}</span>
                       </div>
 
                       <div className="mt-auto flex items-center justify-between pt-2">
@@ -360,7 +360,7 @@ export default function Order() {
                           disabled={quantity === 0}
                           className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${quantity === 0
                             ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                            : "bg-rose-800 text-white cursor-pointer hover:bg-rose-600 shadow-md"
+                            : "bg-green-800 text-white cursor-pointer hover:bg-green-900 shadow-md"
                             }`}
                         >
                           <Minus size={16} strokeWidth={3} />
@@ -373,7 +373,7 @@ export default function Order() {
                           disabled={!canAddMore}
                           className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${!canAddMore
                             ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                            : "bg-rose-800 text-white hover:bg-rose-600 cursor-pointer shadow-md"
+                            : "bg-green-800 text-white hover:bg-green-900 cursor-pointer shadow-md"
                             }`}
                         >
                           <Plus size={16} strokeWidth={3} />
@@ -389,12 +389,12 @@ export default function Order() {
 
         {/* Paginador - solo se muestra cuando hay más productos que los por página */}
         {products.length > productsPerPage && (
-          <div className="flex flex-1 flex-col items-center gap-4 mt-8 mb-20 md:mb-24">
+          <div className="flex flex-1 flex-col items-center gap-4 pt-8 pb-20 md:pb-24">
             {/* Dropdown para seleccionar items por página */}
             <div className="relative w-48">
               <button
                 onClick={() => setPaginationDropdownOpen((prev) => !prev)}
-                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-md flex justify-between items-center text-gray-700 font-semibold shadow-sm hover:ring-1 hover:ring-rose-500 transition-all duration-200"
+                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-md flex justify-between items-center text-gray-700 font-semibold shadow-sm hover:ring-1 hover:ring-green-500 transition-all duration-200"
               >
                 {productsPerPage} por página
                 <ChevronDown
@@ -414,7 +414,7 @@ export default function Order() {
                       handleProductsPerPageChange(value);
                       setPaginationDropdownOpen(false);
                     }}
-                    className={`px-4 py-2 cursor-pointer text-gray-700 hover:bg-rose-100 ${productsPerPage === value ? "bg-rose-200 font-semibold" : ""
+                    className={`px-4 py-2 cursor-pointer text-gray-700 hover:bg-lime-100 ${productsPerPage === value ? "bg-lime-200 font-semibold" : ""
                       } transition-colors duration-200`}
                   >
                     {value} por página
@@ -433,7 +433,7 @@ export default function Order() {
                 disabled={currentPage === 1}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${currentPage === 1
                   ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-rose-900 text-white hover:bg-rose-800 cursor-pointer shadow-md"
+                  : "bg-green-800 text-white hover:bg-green-900 cursor-pointer shadow-md"
                   }`}
               >
                 <ChevronsLeft size={16} strokeWidth={2} />
@@ -445,7 +445,7 @@ export default function Order() {
                 disabled={currentPage === 1}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${currentPage === 1
                   ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-rose-900 text-white hover:bg-rose-800 cursor-pointer shadow-md"
+                  : "bg-green-800 text-white hover:bg-green-900 cursor-pointer shadow-md"
                   }`}
               >
                 <ChevronLeft size={16} strokeWidth={2} />
@@ -457,8 +457,8 @@ export default function Order() {
                   key={page}
                   onClick={() => handlePageChange(page)}
                   className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 font-semibold ${currentPage === page
-                    ? "bg-rose-900 text-white shadow-lg"
-                    : "bg-white text-rose-900 border border-rose-900 hover:bg-rose-100 cursor-pointer shadow-sm"
+                    ? "bg-green-800 text-white shadow-lg"
+                    : "bg-white text-lime-800  hover:bg-lime-200 cursor-pointer shadow-sm"
                     }`}
                 >
                   {page}
@@ -471,7 +471,7 @@ export default function Order() {
                 disabled={currentPage === totalPages}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${currentPage === totalPages
                   ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-rose-900 text-white hover:bg-rose-800 cursor-pointer shadow-md"
+                  : "bg-green-800 text-white hover:bg-green-900 cursor-pointer shadow-md"
                   }`}
               >
                 <ChevronRight size={16} strokeWidth={2} />
@@ -483,7 +483,7 @@ export default function Order() {
                 disabled={currentPage === totalPages}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${currentPage === totalPages
                   ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-rose-900 text-white hover:bg-rose-800 cursor-pointer shadow-md"
+                  : "bg-green-800 text-white hover:bg-green-900 cursor-pointer shadow-md"
                   }`}
               >
                 <ChevronsRight size={16} strokeWidth={2} />
@@ -494,13 +494,13 @@ export default function Order() {
 
         {/* Botón de Checkout */}
         {total > 0 && (
-          <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-300 p-4 md:p-6 shadow-xl">
+          <div className="fixed bottom-0 left-0 right-0 bg-amber-100 backdrop-blur-md border-t-1 border-gray-300 p-4 md:p-6 shadow-xl">
             <div className="max-w-md mx-auto">
               <button
                 onClick={openCartSidebar}
                 disabled={total !== plan.maxItems}
                 className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-lg md:text-xl transition-all duration-300 ${total === plan.maxItems
-                  ? "bg-rose-950 text-white shadow-lg hover:bg-rose-900"
+                  ? "bg-green-800 text-white shadow-lg hover:bg-green-900"
                   : "bg-gray-300 text-gray-600 cursor-not-allowed shadow"
                   }`}
               >

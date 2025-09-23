@@ -34,7 +34,7 @@ const Navbar: React.FC<NavbarProps> = () => {
     <>
       {/* Navbar */}
       <nav
-        className={`fixed top-0 w-full bg-gradient-to-r from-rose-950 to-red-900 shadow-md z-[20] transition-transform duration-500 ${showNavbar ? "translate-y-0" : "-translate-y-full"
+        className={`fixed top-0 w-full bg-gradient-to-r from-lime-800 to-green-800 shadow-md z-[20] transition-transform duration-500 ${showNavbar ? "translate-y-0" : "-translate-y-full"
           }`}
       >
         {/* Navbar desktop */}
@@ -145,10 +145,10 @@ const Navbar: React.FC<NavbarProps> = () => {
 
       {/* Sidebar menú móvil */}
       <div
-        className={`fixed top-0 block lg:hidden right-0 h-screen w-64 bg-rose-900 z-[110] transform transition-transform duration-300 ease-in-out ${openMenu ? "translate-x-0" : "translate-x-full"
+        className={`fixed top-0 block lg:hidden right-0 h-screen w-64 bg-green-800 z-[110] transform transition-transform duration-300 ease-in-out ${openMenu ? "translate-x-0" : "translate-x-full"
           }`}
       >
-        <div className="flex items-center justify-end p-4 border-b border-rose-800">
+        <div className="flex items-center justify-end p-4 border-b border-green-800">
           <button onClick={() => setOpenMenu(false)}>
             <X className="text-white" size={28} />
           </button>
@@ -202,19 +202,19 @@ const Navbar: React.FC<NavbarProps> = () => {
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-gray-300 bg-[#FFF6F0]">
           <h2
-            className="text-2xl sm:text-3xl font-semibold text-gray-900"
+            className="text-2xl sm:text-3xl font-semibold text-lime-800"
             style={{ fontFamily: "Times New Roman, serif" }}
           >
             Tu{" "}
             <span
-              className="text-rose-900"
+              className="text-amber-500"
               style={{ fontFamily: "Times New Roman, serif" }}
             >
               Carrito
             </span>
           </h2>
           <button
-            className="cursor-pointer text-gray-600 hover:text-rose-900 transition"
+            className="cursor-pointer text-lime-800 hover:text-lime-900 transition"
             onClick={closeCartSidebar}
           >
             <X size={26} />
@@ -228,12 +228,12 @@ const Navbar: React.FC<NavbarProps> = () => {
             {/* Mostrar mensaje de plan solo si se seleccionó uno */}
             {plan && items.length > 0 && (
               <p className="text-sm text-gray-700 italic">
-                Plan seleccionado: <b className="text-rose-900">{plan.maxItems} viandas {plan.type === 'gran' ? 'grandes' : 'pequeñas'}</b>
+                Plan seleccionado: <b className="text-green-900">{plan.maxItems} viandas {plan.type === 'gran' ? 'grandes' : 'pequeñas'}</b>
               </p>
             )}
 
             {items.length === 0 ? (
-              <div className="flex flex-1 flex-col items-center justify-center text-gray-400">
+              <div className="flex flex-1 flex-col items-center justify-center text-lime-800">
                 <ShoppingCart size={55} strokeWidth={1.5} />
                 <p className="mt-3 text-lg font-medium">Carrito vacío</p>
               </div>
@@ -247,7 +247,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                       </span>
                       <button
                         onClick={() => removeItem(item.id)}
-                        className="text-rose-700 cursor-pointer hover:text-rose-900 transition"
+                        className="text-green-800 cursor-pointer hover:text-green-900 transition"
                       >
                         <Trash2 size={18} />
                       </button>
@@ -259,7 +259,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                 <div className="mt-auto pt-4 border-t border-gray-200">
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-semibold text-gray-800">Total:</span>
-                    <span className="text-xl font-bold text-rose-900">
+                    <span className="text-xl font-bold text-green-900">
                       ${items.reduce((acc, item) => acc + (item.price * item.quantity), 0).toLocaleString()}
                     </span>
                   </div>
@@ -291,7 +291,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                 rel="noopener noreferrer"
                 className={`flex-1 flex items-center justify-center gap-2 rounded-lg text-white text-base px-3 py-2 shadow-lg transition-all duration-300
                 ${total === (plan?.maxItems || 0)
-                    ? "bg-rose-950 hover:bg-rose-900 cursor-pointer"
+                    ? "bg-green-800 hover:bg-green-900 cursor-pointer"
                     : "bg-gray-400 cursor-not-allowed"
                   }`}
                 style={{ fontFamily: "Times New Roman, serif" }}

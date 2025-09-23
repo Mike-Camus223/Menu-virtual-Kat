@@ -58,7 +58,7 @@ export default function Plans() {
     <div className="relative min-h-screen flex flex-col">
       {/* Fondo dividido */}
       <div className="absolute inset-0">
-        <div className="h-1/2 " />
+        <div className="h-1/2 bg-amber-100" />
         <div className="h-1/2 bg-[#51591B]" />
       </div>
 
@@ -139,7 +139,7 @@ export default function Plans() {
                 <div className="w-full flex justify-center py-3 md:py-3  px-4">
                   <button
                     onClick={() => selectPlan(planOption)}
-                    className="w-full rounded-lg text-white bg-green-800 hover:bg-green-900  text-base md:text-lg font-serif px-3 py-2 shadow-lg cursor-pointer transition-all duration-300"
+                    className="w-full rounded-lg text-white bg-green-800 hover:bg-green-900  text-base md:text-lg font-serif hover:scale-105 active:scale-95 px-3 py-2 shadow-lg cursor-pointer transition-all duration-300"
                   >
                     Continuar
                   </button>
