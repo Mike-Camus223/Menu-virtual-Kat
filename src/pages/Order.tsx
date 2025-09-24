@@ -389,107 +389,104 @@ export default function Order() {
 
         {/* Paginador - solo se muestra cuando hay más productos que los por página */}
         {products.length > productsPerPage && (
-          <div className="flex flex-1 flex-col items-center gap-4 pt-8 pb-20 md:pb-24">
-            {/* Dropdown para seleccionar items por página */}
-            <div className="relative w-48">
-              <button
-                onClick={() => setPaginationDropdownOpen((prev) => !prev)}
-                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-md flex justify-between items-center text-gray-700 font-semibold shadow-sm hover:ring-1 hover:ring-green-500 transition-all duration-200"
-              >
-                {productsPerPage} por página
-                <ChevronDown
-                  className={`ml-2 transition-transform duration-200 ${paginationDropdownOpen ? "rotate-180" : ""}`}
-                  size={18}
-                />
-              </button>
+          <div className="flex flex-1 flex-col items-center gap-4 pt-8 pb-20 md:pb-24 w-full px-2">
+  {/* Dropdown para seleccionar items por página */}
+  <div className="relative w-full max-w-[12rem] sm:w-48">
+    <button
+      onClick={() => setPaginationDropdownOpen((prev) => !prev)}
+      className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md flex justify-between items-center text-gray-700 font-semibold shadow-sm hover:ring-1 hover:ring-green-500 transition-all duration-200 text-sm sm:text-base"
+    >
+      {productsPerPage} por página
+      <ChevronDown
+        className={`ml-2 transition-transform duration-200 ${paginationDropdownOpen ? "rotate-180" : ""}`}
+        size={18}
+      />
+    </button>
 
-              <div
-                className={`absolute z-50 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg overflow-hidden transition-all duration-200 origin-top ${paginationDropdownOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
-                  }`}
-              >
-                {[5, 10].map((value) => (
-                  <div
-                    key={value}
-                    onClick={() => {
-                      handleProductsPerPageChange(value);
-                      setPaginationDropdownOpen(false);
-                    }}
-                    className={`px-4 py-2 cursor-pointer text-gray-700 hover:bg-lime-100 ${productsPerPage === value ? "bg-lime-200 font-semibold" : ""
-                      } transition-colors duration-200`}
-                  >
-                    {value} por página
-                  </div>
-                ))}
-              </div>
-            </div>
+    <div
+      className={`absolute z-50 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg overflow-hidden transition-all duration-200 origin-top ${paginationDropdownOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"}`}
+    >
+      {[5, 10].map((value) => (
+        <div
+          key={value}
+          onClick={() => {
+            handleProductsPerPageChange(value);
+            setPaginationDropdownOpen(false);
+          }}
+          className={`px-4 py-2 cursor-pointer text-gray-700 hover:bg-lime-100 ${productsPerPage === value ? "bg-lime-200 font-semibold" : ""} transition-colors duration-200 text-sm sm:text-base`}
+        >
+          {value} por página
+        </div>
+      ))}
+    </div>
+  </div>
 
+  {/* Controles de paginación */}
+  <div className="flex flex-wrap justify-center items-center gap-2 w-full max-w-sm sm:max-w-md">
+    {/* Primera página */}
+    <button
+      onClick={handleFirstPage}
+      disabled={currentPage === 1}
+      className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300 text-sm sm:text-base ${currentPage === 1
+        ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+        : "bg-green-800 text-white hover:bg-green-900 cursor-pointer shadow-md"
+        }`}
+    >
+      <ChevronsLeft size={14} strokeWidth={2} />
+    </button>
 
+    {/* Botón Anterior */}
+    <button
+      onClick={handlePrevPage}
+      disabled={currentPage === 1}
+      className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300 text-sm sm:text-base ${currentPage === 1
+        ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+        : "bg-green-800 text-white hover:bg-green-900 cursor-pointer shadow-md"
+        }`}
+    >
+      <ChevronLeft size={14} strokeWidth={2} />
+    </button>
 
-            {/* Controles de paginación */}
-            <div className="flex justify-center items-center gap-2">
-              {/* Primera página */}
-              <button
-                onClick={handleFirstPage}
-                disabled={currentPage === 1}
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${currentPage === 1
-                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-green-800 text-white hover:bg-green-900 cursor-pointer shadow-md"
-                  }`}
-              >
-                <ChevronsLeft size={16} strokeWidth={2} />
-              </button>
+    {/* Números de página */}
+    {getVisiblePages().map((page) => (
+      <button
+        key={page}
+        onClick={() => handlePageChange(page)}
+        className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300 font-semibold text-sm sm:text-base ${currentPage === page
+          ? "bg-green-800 text-white shadow-lg"
+          : "bg-white text-lime-800  hover:bg-lime-200 cursor-pointer shadow-sm"
+          }`}
+      >
+        {page}
+      </button>
+    ))}
 
-              {/* Botón Anterior */}
-              <button
-                onClick={handlePrevPage}
-                disabled={currentPage === 1}
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${currentPage === 1
-                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-green-800 text-white hover:bg-green-900 cursor-pointer shadow-md"
-                  }`}
-              >
-                <ChevronLeft size={16} strokeWidth={2} />
-              </button>
+    {/* Botón Siguiente */}
+    <button
+      onClick={handleNextPage}
+      disabled={currentPage === totalPages}
+      className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300 text-sm sm:text-base ${currentPage === totalPages
+        ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+        : "bg-green-800 text-white hover:bg-green-900 cursor-pointer shadow-md"
+        }`}
+    >
+      <ChevronRight size={14} strokeWidth={2} />
+    </button>
 
-              {/* Números de página con ventana deslizante */}
-              {getVisiblePages().map((page) => (
-                <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
-                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 font-semibold ${currentPage === page
-                    ? "bg-green-800 text-white shadow-lg"
-                    : "bg-white text-lime-800  hover:bg-lime-200 cursor-pointer shadow-sm"
-                    }`}
-                >
-                  {page}
-                </button>
-              ))}
+    {/* Última página */}
+    <button
+      onClick={handleLastPage}
+      disabled={currentPage === totalPages}
+      className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300 text-sm sm:text-base ${currentPage === totalPages
+        ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+        : "bg-green-800 text-white hover:bg-green-900 cursor-pointer shadow-md"
+        }`}
+    >
+      <ChevronsRight size={14} strokeWidth={2} />
+    </button>
+  </div>
+</div>
 
-              {/* Botón Siguiente */}
-              <button
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages}
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${currentPage === totalPages
-                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-green-800 text-white hover:bg-green-900 cursor-pointer shadow-md"
-                  }`}
-              >
-                <ChevronRight size={16} strokeWidth={2} />
-              </button>
-
-              {/* Última página */}
-              <button
-                onClick={handleLastPage}
-                disabled={currentPage === totalPages}
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${currentPage === totalPages
-                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-green-800 text-white hover:bg-green-900 cursor-pointer shadow-md"
-                  }`}
-              >
-                <ChevronsRight size={16} strokeWidth={2} />
-              </button>
-            </div>
-          </div>
         )}
 
         {/* Botón de Checkout */}
