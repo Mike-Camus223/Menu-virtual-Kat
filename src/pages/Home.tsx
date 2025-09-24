@@ -66,7 +66,7 @@ export default function Home() {
         {/* Título */}
         <div className="pt-10 pb-10 md:pb-16 md:pt-20 w-full flex justify-center items-center text-center">
           <h1
-            className="underline text-shadow-lg text-lime-800 text-5xl sm:text-5xl md:text-6xl max-w-3xl px-4"
+            className="underline text-shadow-lg text-lime-800 text-5xl sm:text-5xl md:text-6xl max-w-4xl px-4"
             style={{ fontFamily: "Times New Roman, serif" }}
           >
             Platos ricos y nutritivos
@@ -100,7 +100,7 @@ export default function Home() {
             <div className="relative w-full max-w-md">
               <div
                 className={`fade-card ${isVisible ? 'fade-in' : 'fade-out'} w-full rounded-xl shadow-xl overflow-hidden`}
-                style={{ aspectRatio: "4/5" }}
+                style={{ aspectRatio: "3/3" }}
               >
                 <img
                   src={cards[currentCardIndex].src}
