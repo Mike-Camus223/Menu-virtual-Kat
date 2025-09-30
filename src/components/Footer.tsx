@@ -1,6 +1,10 @@
+import { useTheme } from "@/context/themeContext";
+
 export default function Footer() {
+    const { theme } = useTheme();
+
   return (
-    <footer className="from-lime-800 to-green-800 bg-gradient-to-r text-white text-center py-4">
+     <footer className={`bg-gradient-to-r ${theme.footer} text-white text-center py-4`}>
       © 2025 Katyka
     </footer>
   );

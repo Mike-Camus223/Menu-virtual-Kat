@@ -1,10 +1,13 @@
+import { useTheme } from "@/context/themeContext";
 import { TicketCheck, Wheat } from "lucide-react";
 import { Link } from "react-router-dom";
 
+
 export default function About() {
+    const {theme} = useTheme();
     return (
         <div>
-            <div className="w-full h-auto flex flex-col items-center pt-4 bg-amber-100">
+            <div className={`w-full h-auto flex flex-col items-center pt-4 ${theme.background}`}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 max-w-8xl mx-auto">
                     <div className="flex-col flex">
                         <div className="flex flex-col">
@@ -46,12 +49,12 @@ export default function About() {
                                         style={{ fontFamily: "Times New Roman, serif" }}
                                     >
                                         Bienvenido a{" "}
-                                        <span className="text-amber-500 text-shadow-lg" style={{ fontFamily: "Times New Roman, serif" }}>
+                                        <span className={`${theme.titleSecond} text-shadow-lg`} style={{ fontFamily: "Times New Roman, serif" }}>
                                             Katyka
                                         </span>
                                     </h2>
                                 </div>
-                                <p className="text-base sm:text-lg text-gray-700 leading-relaxed">
+                                <p className={`text-base sm:text-lg ${theme.textsecond} leading-relaxed`}>
                                     En <span className="font-semibold">Katyka</span> creemos que comer bien no tiene por qué ser complicado.
                                     Nuestro plan de viandas te ayuda a alcanzar tu peso ideal con porciones justas y sabor casero.
                                     <br /><br />
@@ -64,13 +67,13 @@ export default function About() {
                             </div>
 
                             {/* Botón */}
-                            <div className="w-full flex justify-center py-4 mb-2 md:mb-0 md:py-8 bg-amber-100 px-4">
+                            <div className={`w-full flex justify-center py-4 mb-2 md:mb-0 md:py-8 ${theme.background} px-4`}>
                                 <Link
                                     to="/pedidos"
-                                    className="flex items-center gap-2 rounded-lg bg-green-800 text-white text-lg md:text-xl px-4 py-3 shadow-lg hover:scale-105 active:scale-95 hover:bg-green-900 transition-all duration-300"
+                                    className={`flex items-center gap-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} text-lg md:text-xl px-4 py-3 shadow-lg hover:scale-105 active:scale-95 hover:${theme.buttonhovercolor} transition-all duration-300`}
                                     style={{ color: '#fff', fontFamily: "Times New Roman, serif" }}
                                 >
-                                    <TicketCheck className="text-white" size={28} strokeWidth={1.75} />
+                                    <TicketCheck className={`${theme.buttontext}`} size={28} strokeWidth={1.75} />
                                     Haz tu pedido ya
                                 </Link>
                             </div>
@@ -90,7 +93,7 @@ export default function About() {
                     </div>
                 </div>
             </div>
-            <div className="w-full h-auto flex flex-col items-center bg-amber-100">
+            <div className={`w-full h-auto flex flex-col items-center ${theme.background}`}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 max-w-8xl mx-auto">
                     {/* Imagen */}
                     <div className="overflow-hidden shadow-xl h-full w-full order-2 lg:order-1">
@@ -102,17 +105,17 @@ export default function About() {
                         />
                     </div>
                     {/* Texto / Info */}
-                    <div className="bg-amber-100 relative z-5 flex justify-center items-center w-full py-16 md:py-20 lg:py-20 xl:py-4 px-4 order-1 lg:order-2">
+                    <div className={`${theme.background} relative z-5 flex justify-center items-center w-full py-16 md:py-20 lg:py-20 xl:py-4 px-4 order-1 lg:order-2`}>
                         <div className="absolute top-0 right-0 z-[-1]">
-                            <Wheat className="text-lime-200 w-50 h-50sm:w-72 sm:h-72md:w-72 md:h-72 lg:w-[20rem] lg:h-[20rem] "strokeWidth={2}/>
+                            <Wheat className={`${theme.iconssecond} w-50 h-50sm:w-72 sm:h-72md:w-72 md:h-72 lg:w-[20rem] lg:h-[20rem] `}strokeWidth={2}/>
                         </div>
-                        <div className="max-w-xl w-full flex flex-col gap-3 text-lime-800">
+                        <div className={`max-w-xl w-full flex flex-col gap-3 ${theme.text}`}>
                             <h2
-                                className="text-2xl text-shadow-lg sm:text-2xl md:text-3xl lg:text-5xl font-semibold text-start"
+                                className="text-4xl text-center pb-2 sm:pb-0 text-shadow-lg sm:text-2xl md:text-3xl lg:text-5xl font-semibold sm:text-start"
                                 style={{ fontFamily: "Times New Roman, serif" }}
                             >
                                 Viandas<br />
-                                <span className="text-amber-500">Saludables</span>
+                                <span className={`${theme.titleSecond}`}>Saludables</span>
                             </h2>
 
                             {/* Viandas */}
@@ -152,12 +155,13 @@ export default function About() {
                             </div>
 
                             {/* Espaciador */}
-                            <div className="border-t border-lime-800"></div>
+                            <div className={`border-t ${theme.bordercolor}`}></div>
 
                             {/* Entregas */}
-                            <div className="italic text-sm text-center">
-                                Entregas a domicilio: miercoles y viernes por la tarde. <br />
-                                Consultar para más detalles en WhatsApp.
+                            <div className="italic text-sm text-center font-bold">
+                                Entregas a domicilio: miercoles y viernes durante el dia. <br />
+                                Reservar 3 dias antes el pedido. <br />
+                                Para mas detalles consultenos al  <span className="font-bold">numero de whatsapp 1121911765</span>
                             </div>
                         </div>
                     </div>
