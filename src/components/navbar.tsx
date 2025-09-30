@@ -272,7 +272,9 @@ const Navbar: React.FC<NavbarProps> = () => {
               </div>
             )}
           </div>
-          {/* Total al final del contenido */}
+          {items.length === 0 ? (
+            <div></div>
+          ) : (
           <div className={`mt-auto p-5 border-t ${theme.bordermain}`}>
             <div className="flex justify-between items-center">
               <span className={`text-lg font-semibold ${theme.text}`}>Total:</span>
@@ -281,6 +283,7 @@ const Navbar: React.FC<NavbarProps> = () => {
               </span>
             </div>
           </div>
+          )}
           {/* Footer */}
           {items.length > 0 && (
             <div className={`p-5 flex gap-3 ${theme.cartbackground} border-t ${theme.bordermain}`}>
