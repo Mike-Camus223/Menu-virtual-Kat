@@ -26,7 +26,6 @@ type Theme = {
     cartbackground: string;
     plansBg: string;
     dropdownselected: string;
-    dropdownhover: string;
     dropdownring: string;
 };
 
@@ -57,12 +56,14 @@ const defaultTheme: Theme = {
     bordermain: 'border-gray-300',
     cartbackground: 'bg-white',
     plansBg: 'bg-[#51591B]',
-    dropdownhover: "hover:bg-lime-100",
-dropdownring: "ring-lime-400",
-dropdownselected: "bg-lime-200",
+    dropdownring: "ring-lime-400",
+    dropdownselected: "bg-lime-200",
 };
 
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
+
+// localStorage.removeItem('theme_test_date'); location.reload();
+//localStorage.setItem('theme_test_date','2025-10-05');location.reload();   
 
 type EventRange = {
     name: string;
@@ -76,33 +77,32 @@ const EVENTS: EventRange[] = [
     {
         name: "motherday",
         start: { month: 10, day: 1 },
-        end: { month: 10, day: 13 },
+        end: { month: 10, day: 17 },
         theme: {
             name: "motherday",
-            navbar: "from-pink-400 to-pink-600",
-            footer: "from-pink-400 to-pink-600",
-            background: "bg-pink-50",
-            title: "text-pink-700",
+            navbar: "bg-[#830C41]",
+            footer: "bg-[#830C41]",
+            background: "bg-[#FCF2F8]",
+            title: "text-[#C5005A]",
             titleSecond: "text-pink-500",
-            text: "text-pink-800",
+            text: "text-[#C5005A]",
             textsecond: "text-gray-700",
             subtitle: "text-pink-600",
-            icons: "text-pink-600",
-            iconssecond: "text-pink-200",
-            bordercolor: "border-pink-600",
-            buttoncolor: "bg-pink-600",
-            buttonhovercolor: "bg-pink-700",
-            buttontext: "text-white",
+            icons: "text-[#C4005A]",
+            iconssecond: "text-pink-100",
+            bordercolor: "border-[#C4005A]",
+            buttoncolor: "bg-[#830C41]",
+            buttonhovercolor: "bg-[#770A3A]",
+            buttontext: "text-[#F9CBE5]",
             filterText: "text-pink-700",
-            loader: "bg-pink-600",
-            loadertext: "text-pink-600",
-            cardbackground: "bg-pink-200",
-            bordermain: "border-gray-300",
-            cartbackground: "bg-pink-100",
-            plansBg: "bg-bordo-500",
-            dropdownhover: "hover:bg-lime-100",
-dropdownring: "ring-lime-400",
-dropdownselected: "bg-lime-200",
+            loader: "bg-pink-500",
+            loadertext: "text-white",
+            cardbackground: "bg-[#FCF2F8]",
+            bordermain: "border-[#F9CBE5]",
+            cartbackground: "bg-pink-50",
+            plansBg: "bg-[#F9CBE5]",
+            dropdownring: "ring-pink-400",
+            dropdownselected: "bg-[#F9CBE5]",
         },
     },
 ];

@@ -4,7 +4,7 @@ export default function Footer() {
     const { theme } = useTheme();
 
   return (
-     <footer className={`bg-gradient-to-r ${theme.footer} text-white text-center py-4`}>
+     <footer className={`${theme.footer} ${theme.buttontext} text-center py-4`}>
       © 2025 Katyka
     </footer>
   );

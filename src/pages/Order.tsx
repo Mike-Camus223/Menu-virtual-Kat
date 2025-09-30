@@ -269,7 +269,7 @@ export default function Order() {
             <div
   key={c}
   onClick={() => { handleFilterChange(c); setDropdownOpen(false); }}
-  className={`px-4 py-2 cursor-pointer ${theme.filterText} ${theme.dropdownhover} ${
+  className={`px-4 py-2 cursor-pointer ${theme.filterText} ${
     selectedFilter === c ? `${theme.dropdownselected} font-semibold` : theme.cartbackground
   } transition-colors duration-200`}
 >
@@ -345,7 +345,7 @@ export default function Order() {
                     )}
                   </div>
 
-                  <div className="flex flex-col flex-1 p-4 md:p-6">
+                  <div className={`flex flex-col ${theme.cardbackground} flex-1 p-4 md:p-6`}>
                     <h3 className={`text-md md:text-md font-bold ${theme.title} mb-2 text-wrap`}>
                       {product.name}
                     </h3>
@@ -396,7 +396,7 @@ export default function Order() {
           <div className="relative w-full max-w-[12rem] sm:w-48">
             <button
               onClick={() => setPaginationDropdownOpen((prev) => !prev)}
-              className={`w-full px-3 py-2 ${theme.cartbackground} ${theme.bordercolor} border rounded-md flex justify-between items-center ${theme.filterText} font-semibold shadow-sm hover:ring-1 ${theme.dropdownring} transition-all duration-200 text-sm sm:text-base`}
+              className={`w-full px-3 py-2 cursor-pointer ${theme.cartbackground} ${theme.bordercolor} border rounded-md flex justify-between items-center ${theme.filterText} font-semibold shadow-sm hover:ring-1 ${theme.dropdownring} transition-all duration-200 text-sm sm:text-base`}
             >
               {productsPerPage} por página
               <ChevronDown
@@ -415,7 +415,7 @@ export default function Order() {
                     handleProductsPerPageChange(value);
                     setPaginationDropdownOpen(false);
                   }}
-                  className={`px-4 py-2 cursor-pointer ${theme.filterText} hover:bg-opacity-20 ${theme.dropdownhover} ${productsPerPage === value ? `bg-opacity-30 ${theme.dropdownselected} font-semibold` : ""} transition-colors duration-200 text-sm sm:text-base`}
+                  className={`px-4 py-2 cursor-pointer ${theme.filterText} hover:bg-opacity-20 ${productsPerPage === value ? `bg-opacity-30 ${theme.dropdownselected} font-semibold` : ""} transition-colors duration-200 text-sm sm:text-base`}
                 >
                   {value} por página
                 </div>

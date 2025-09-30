@@ -2,6 +2,8 @@ import React from "react";
 import { Laugh, Ham, Drumstick, Soup, Fish, CakeSlice, LineSquiggle, Carrot, Dessert, TicketCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import { mealsGran, pollosGran, pastasGran, pescadosGran, tartasGran, tartasBaseRicottaGran, vegetarianasGran, postresGran } from "../components/utils/DataProduct";
+import { useTheme } from "@/context/themeContext";
+
 
 // ======================= ARRAYS CONVERTIDOS =======================
 
@@ -46,14 +48,17 @@ interface MenuSectionProps {
 }
 
 const MenuSection: React.FC<MenuSectionProps> = ({ title, icon, items }) => {
+
+  const { theme } = useTheme();
+
   return (
-    <div className="flex flex-col items-center bg-amber-100 w-full py-10">
+    <div className={`flex flex-col items-center ${theme.background} w-full py-10`}>
       <div className="flex flex-col items-center mb-10">
-        <Laugh className="text-lime-800 text-shadow-lg" size={34} strokeWidth={2.75} absoluteStrokeWidth />
+        <Laugh className={`${theme.icons} text-shadow-lg`} size={34} strokeWidth={2.75} absoluteStrokeWidth />
         <div className="flex flex-row text-shadow-lg h-35 gap-3 w-full justify-center items-center my-2">
           {icon}
           <h2
-            className="underline text-lime-800 mt-4 text-3xl sm:text-4xl md:text-5xl"
+            className={`underline ${theme.title} mt-4 text-3xl sm:text-4xl md:text-5xl`}
             style={{ fontFamily: "Times New Roman, serif" }}
           >
             {title}
@@ -66,16 +71,16 @@ const MenuSection: React.FC<MenuSectionProps> = ({ title, icon, items }) => {
         {items.map((item, index) => (
           <div
             key={index}
-            className="flex justify-between items-center border-b border-lime-800 pb-4"
+            className={`flex justify-between items-center border-b ${theme.bordermain} pb-4`}
           >
             <div>
               <h2
-                className="font-semibold text-lime-800 text-lg sm:text-lg md:text-xl"
+                className={`font-semibold ${theme.text} text-lg sm:text-lg md:text-xl`}
                 style={{ fontFamily: "Times New Roman, serif" }}
               >
                 {item.name}
               </h2>
-              <p className="text-sm sm:text-sm md:text-base text-amber-800">{item.description}</p>
+              <p className={`text-sm sm:text-sm md:text-base ${theme.titleSecond}`}>{item.description}</p>
             </div>
           </div>
         ))}
@@ -85,11 +90,15 @@ const MenuSection: React.FC<MenuSectionProps> = ({ title, icon, items }) => {
 };
 // ======================= PÁGINA MENÚ =======================
 const Menu: React.FC = () => {
+
+  const { theme } = useTheme();
+
+
   return (
     <div>
-      <div className="pb-18 pt-15 bg-amber-100 h-auto w-full flex justify-center items-center">
+      <div className={`pb-18 pt-15 ${theme.background} h-auto w-full flex justify-center items-center`}>
         <h1
-          className="underline text-shadow-lg text-lime-800 text-4xl sm:text-5xl md:text-7xl"
+          className={`underline text-shadow-lg ${theme.title} text-4xl sm:text-5xl md:text-7xl`}
           style={{ fontFamily: "Times New Roman, serif" }}
         >
           Nuestros Menús
@@ -99,59 +108,59 @@ const Menu: React.FC = () => {
       {/* Secciones */}
       <MenuSection
         title="Carnes"
-        icon={<Ham className="text-lime-800 text-shadow-lg" size={48} strokeWidth={2.75} absoluteStrokeWidth />}
+        icon={<Ham className={`${theme.icons} text-shadow-lg`} size={48} strokeWidth={2.75} absoluteStrokeWidth />}
         items={meals}
       />
 
       <MenuSection
         title="Pollos"
-        icon={<Drumstick className="text-lime-800" size={48} strokeWidth={2.75} absoluteStrokeWidth />}
+        icon={<Drumstick className={`${theme.icons} text-shadow-lg`} size={48} strokeWidth={2.75} absoluteStrokeWidth />}
         items={pollos}
       />
 
       <MenuSection
         title="Pastas"
-        icon={<Soup className="text-lime-800" size={48} strokeWidth={2.75} absoluteStrokeWidth />}
+        icon={<Soup className={`${theme.icons} text-shadow-lg`} size={48} strokeWidth={2.75} absoluteStrokeWidth />}
         items={pastas}
       />
 
       <MenuSection
         title="Pescados"
-        icon={<Fish className="text-lime-800" size={48} strokeWidth={2.75} absoluteStrokeWidth />}
+        icon={<Fish className={`${theme.icons} text-shadow-lg`} size={48} strokeWidth={2.75} absoluteStrokeWidth />}
         items={pescados}
       />
 
       <MenuSection
         title="Tartas"
-        icon={<CakeSlice className="text-lime-800" size={48} strokeWidth={2.75} absoluteStrokeWidth />}
+        icon={<CakeSlice className={`${theme.icons} text-shadow-lg`} size={48} strokeWidth={2.75} absoluteStrokeWidth />}
         items={tartas}
       />
 
       <MenuSection
         title="Tartas con base ricotta"
-        icon={<LineSquiggle className="text-lime-800" size={48} strokeWidth={2.75} absoluteStrokeWidth />}
+        icon={<LineSquiggle className={`${theme.icons} text-shadow-lg`} size={48} strokeWidth={2.75} absoluteStrokeWidth />}
         items={tartasBaseRicotta}
       />
 
       <MenuSection
         title="Vegetarianas"
-        icon={<Carrot className="text-lime-800" size={48} strokeWidth={2.75} absoluteStrokeWidth />}
+        icon={<Carrot className={`${theme.icons} text-shadow-lg`} size={48} strokeWidth={2.75} absoluteStrokeWidth />}
         items={vegetarianas}
       />
 
       <MenuSection
         title="Postres"
-        icon={<Dessert className="text-lime-800" size={48} strokeWidth={2.75} absoluteStrokeWidth />}
+        icon={<Dessert className={`${theme.icons} text-shadow-lg`} size={48} strokeWidth={2.75} absoluteStrokeWidth />}
         items={postres}
       />
 
-      <div className="w-full flex justify-center py-12 bg-amber-100 px-4">
+      <div className={`w-full flex justify-center py-4 mb-2 md:mb-0 md:py-8 ${theme.background} px-4`}>
         <Link
           to="/pedidos"
-          className="flex items-center gap-2 bg-green-800 text-white text-lg md:text-xl px-4 py-3 rounded-lg shadow-lg hover:bg-green-900 hover:scale-105 active:scale-95 transition-all duration-300"
-          style={{ color: '#fff', fontFamily: "Times New Roman, serif" }}
+          className={`flex items-center gap-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} text-lg md:text-xl px-4 py-3 shadow-lg hover:scale-105 active:scale-95 hover:${theme.buttonhovercolor} transition-all duration-300`}
+          style={{ fontFamily: "Times New Roman, serif" }}
         >
-          <TicketCheck className="text-white" size={28} strokeWidth={1.75} />
+          <TicketCheck className={`${theme.buttontext}`} size={28} strokeWidth={1.75} />
           Haz tu pedido ya
         </Link>
       </div>

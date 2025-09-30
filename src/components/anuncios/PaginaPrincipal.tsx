@@ -2,11 +2,13 @@
 import { useState, useEffect } from 'react';
 import { ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTheme } from '@/context/themeContext';
 
 
 export default function Mainpage() {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
+  const { theme} = useTheme();
 
   const cards = [
     { src: "https://recetasdecocina.elmundo.es/wp-content/uploads/2024/01/receta-de-salteado-de-verduras-1024x657.jpg", alt: "Frescura" },
@@ -63,12 +65,12 @@ export default function Mainpage() {
         }}
       />
 
-      <div className="max-w-screen h-auto bg-amber-100">
+      <div className={`max-w-screen h-auto ${theme.background}`}>
 
         {/* Título */}
         <div className="pt-10 pb-10 md:pb-16 md:pt-20 w-full flex justify-center items-center text-center">
           <h1
-            className="underline text-shadow-lg text-lime-800 text-5xl sm:text-5xl md:text-6xl max-w-4xl px-4"
+            className={`underline text-shadow-lg ${theme.title} text-5xl sm:text-5xl md:text-6xl max-w-4xl px-4`}
             style={{ fontFamily: "Times New Roman, serif" }}
           >
             Platos ricos y nutritivos
@@ -119,8 +121,8 @@ export default function Mainpage() {
                     key={index}
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${
                       index === currentCardIndex 
-                        ? 'bg-lime-800 w-8' 
-                        : 'bg-lime-300'
+                        ? `${theme.buttoncolor} w-8` 
+                        : `${theme.plansBg}`
                     }`}
                   />
                 ))}
@@ -128,16 +130,14 @@ export default function Mainpage() {
             </div>
           </div>
         </div>
-
         {/* Botón de pedido */}
-        <div className="w-full flex justify-center pb-8 bg-amber-100 px-4">
+        <div className={`w-full flex justify-center pb-8 ${theme.background} px-4`}>
           <Link to="/pedidos">   
           <button
-            className="flex items-center cursor-pointer gap-3 rounded-lg bg-green-800 text-white text-xl px-6 py-4 shadow-lg hover:bg-green-900 transition-all duration-300 hover:scale-105 active:scale-95"
-            style={{ color: '#fff', fontFamily: "Times New Roman, serif" }}
+            className={`flex items-center cursor-pointer gap-3 rounded-lg ${theme.buttoncolor} ${theme.buttontext} text-xl px-6 py-4 shadow-lg hover:${theme.buttonhovercolor} transition-all duration-300 hover:scale-105 active:scale-95`}
+            style={{fontFamily: "Times New Roman, serif" }}
           >
-            
-            <ShoppingCart className="text-white" size={32} strokeWidth={1.75} />
+            <ShoppingCart className={`${theme.buttontext}`} size={32} strokeWidth={1.75} />
             ¡HAZ TU PEDIDO YA!
           </button>
             </Link>

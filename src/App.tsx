@@ -11,6 +11,7 @@ import Plans from "./components/template/plans.tsx";
 // Importar el provider
 import { CartProvider } from "./context/cartContext";
 import { ThemeProvider } from "./context/themeContext.tsx";
+import MotherdayOrder from "./pages/Motherdayorders.tsx";
 
 export default function App() {
   return (
@@ -60,6 +61,14 @@ export default function App() {
                 </PublicTemplate>
               }
             />
+            <Route
+  path="/pedidos/motherday"
+  element={
+    <PublicTemplate>
+      <MotherdayOrder />
+    </PublicTemplate>
+  }
+/>
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

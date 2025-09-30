@@ -45,7 +45,7 @@ export default function About() {
                             <div className="text-center max-w-4xl mx-auto my-2 md:mb-8 px-4 md:px-0">
                                 <div className="py-4 lg:py-8">
                                     <h2
-                                        className="text-3xl sm:text-4xl text-shadow-lg md:text-5xl font-semibold text-lime-800 mb-4"
+                                        className={`text-3xl sm:text-4xl text-shadow-lg md:text-5xl font-semibold ${theme.title} mb-4`}
                                         style={{ fontFamily: "Times New Roman, serif" }}
                                     >
                                         Bienvenido a{" "}
@@ -54,7 +54,7 @@ export default function About() {
                                         </span>
                                     </h2>
                                 </div>
-                                <p className={`text-base sm:text-lg ${theme.textsecond} leading-relaxed`}>
+                                <p className={`text-base sm:text-lg ${theme.text} leading-relaxed`}>
                                     En <span className="font-semibold">Katyka</span> creemos que comer bien no tiene por qué ser complicado.
                                     Nuestro plan de viandas te ayuda a alcanzar tu peso ideal con porciones justas y sabor casero.
                                     <br /><br />
@@ -71,7 +71,7 @@ export default function About() {
                                 <Link
                                     to="/pedidos"
                                     className={`flex items-center gap-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} text-lg md:text-xl px-4 py-3 shadow-lg hover:scale-105 active:scale-95 hover:${theme.buttonhovercolor} transition-all duration-300`}
-                                    style={{ color: '#fff', fontFamily: "Times New Roman, serif" }}
+                                    style={{ fontFamily: "Times New Roman, serif" }}
                                 >
                                     <TicketCheck className={`${theme.buttontext}`} size={28} strokeWidth={1.75} />
                                     Haz tu pedido ya

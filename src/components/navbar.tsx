@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { Salad, Menu, X, ShoppingCart, Trash2, Phone } from "lucide-react";
 import { useCart } from "@/context/cartContext";
@@ -9,9 +9,15 @@ interface NavbarProps { }
 const Navbar: React.FC<NavbarProps> = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
+
+  // Asegurar que el navbar esté visible al cargar la página
+  useEffect(() => {
+    setShowNavbar(true);
+  }, []);
   const [lastScrollY, setLastScrollY] = useState(0);
   const { items, removeItem, clearCart, plan, isCartOpen, openCartSidebar, closeCartSidebar } = useCart();
   const { theme } = useTheme();
+  const location = useLocation();
 
   // Total de items en carrito
   const total = items.reduce((acc, i) => acc + i.quantity, 0);
@@ -19,10 +25,18 @@ const Navbar: React.FC<NavbarProps> = () => {
   // Manejo de scroll para mostrar/ocultar navbar
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > lastScrollY && window.scrollY > 80) {
-        setShowNavbar(false);
-      } else {
+      // Zona de preparación: si estamos cerca del inicio (primeros 400px), siempre mostrar el navbar
+      if (window.scrollY < 400) {
         setShowNavbar(true);
+      } else {
+        // Fuera de la zona de preparación, comportamiento normal
+        if (window.scrollY > lastScrollY && window.scrollY > 80) {
+          // Si estamos scrolleando hacia abajo, ocultar
+          setShowNavbar(false);
+        } else if (window.scrollY < lastScrollY) {
+          // Si estamos scrolleando hacia arriba, mostrar
+          setShowNavbar(true);
+        }
       }
       setLastScrollY(window.scrollY);
     };
@@ -35,7 +49,7 @@ const Navbar: React.FC<NavbarProps> = () => {
     <>
       {/* Navbar */}
       <nav
-        className={`fixed top-0 w-full bg-gradient-to-r ${theme.navbar} shadow-md z-[20] transition-transform duration-500 ${showNavbar ? "translate-y-0" : "-translate-y-full"
+        className={`fixed top-0 w-full ${theme.navbar} shadow-md z-[50] transition-transform duration-500 ${showNavbar ? "translate-y-0" : "-translate-y-full"
           }`}
       >
         {/* Navbar desktop */}
@@ -43,13 +57,13 @@ const Navbar: React.FC<NavbarProps> = () => {
           <div className="flex items-center justify-between w-full py-4">
             {/* Logo + Título */}
             <div className="flex items-center gap-3">
-              <Salad className='text-white' size={55} strokeWidth={1.5} />
+              <Salad className={`${theme.buttontext}`} size={55} strokeWidth={1.5} />
               <Link to="/">
                 <div className="flex flex-col">
-                  <h1 className={`text-3xl font-bold title3 tracking-widest text-white`}>
+                  <h1 className={`text-3xl font-bold title3 tracking-widest ${theme.buttontext}`}>
                     Katyka
                   </h1>
-                  <p className={`text-sm font-medium tracking-widest font-sans text-white`}>
+                  <p className={`text-sm font-medium tracking-widest font-sans ${theme.buttontext}`}>
                     Comidas caseras saludables
                   </p>
                 </div>
@@ -101,10 +115,10 @@ const Navbar: React.FC<NavbarProps> = () => {
           <div className="flex items-center justify-between w-full py-4">
             {/* Logo + Título */}
             <div className="flex items-center gap-3">
-              <Salad className='text-white' size={40} strokeWidth={1.5} />
+              <Salad className={`${theme.buttontext}`} size={40} strokeWidth={1.5} />
               <Link to="/">
                 <div className="flex flex-col">
-                  <h1 className={`text-2xl font-bold title3 tracking-widest text-white`}>
+                  <h1 className={`text-2xl font-bold title3 tracking-widest ${theme.buttontext}`}>
                     Katyka
                   </h1>
                 </div>
@@ -200,7 +214,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           }`}
       >
         {/* Header */}
-        <div className={`flex items-center justify-between p-5 border-b ${theme.bordermain} ${theme.background}`}>
+        <div className={`flex items-center justify-between p-5 border-b ${theme.bordermain} ${theme.plansBg}`}>
           <h2
             className={`text-2xl sm:text-3xl font-semibold ${theme.title}`}
             style={{ fontFamily: "Times New Roman, serif" }}
@@ -243,7 +257,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                   {items.map((item) => (
                     <li key={item.id} className="flex items-center justify-between">
                       <span className={`${theme.text} font-medium`}>
-                        {item.name} <span className={theme.textsecond}>x{item.quantity}</span>
+                        {item.name} <span className={`${theme.text}`}>x{item.quantity}</span>
                       </span>
                       <button
                         onClick={() => removeItem(item.id)}
@@ -255,19 +269,18 @@ const Navbar: React.FC<NavbarProps> = () => {
                   ))}
                 </ul>
 
-                {/* Total al final del contenido */}
-                <div className={`mt-auto pt-4 border-t ${theme.bordermain}`}>
-                  <div className="flex justify-between items-center">
-                    <span className={`text-lg font-semibold ${theme.text}`}>Total:</span>
-                    <span className={`text-xl font-bold ${theme.title}`}>
-                      ${items.reduce((acc, item) => acc + (item.price * item.quantity), 0).toLocaleString()}
-                    </span>
-                  </div>
-                </div>
               </div>
             )}
           </div>
-
+          {/* Total al final del contenido */}
+          <div className={`mt-auto p-5 border-t ${theme.bordermain}`}>
+            <div className="flex justify-between items-center">
+              <span className={`text-lg font-semibold ${theme.text}`}>Total:</span>
+              <span className={`text-xl font-bold ${theme.title}`}>
+                ${items.reduce((acc, item) => acc + (item.price * item.quantity), 0).toLocaleString()}
+              </span>
+            </div>
+          </div>
           {/* Footer */}
           {items.length > 0 && (
             <div className={`p-5 flex gap-3 ${theme.cartbackground} border-t ${theme.bordermain}`}>
@@ -282,21 +295,25 @@ const Navbar: React.FC<NavbarProps> = () => {
 
               {/* Comprar por WhatsApp */}
               <a
-                href={total === (plan?.maxItems || 0) ? `https://wa.me/+5491121911765?text=${encodeURIComponent(
+                href={location.pathname === "/pedidos/motherday" ? `https://wa.me/+5491121911765?text=${encodeURIComponent(
+                  `Por día de la madre quiero comprar estos productos:\n\n${items
+                    .map((i) => `• ${i.name} x${i.quantity}`)
+                    .join("\n")}\n\nTotal: $${items.reduce((acc, item) => acc + (item.price * item.quantity), 0).toLocaleString()}`
+                )}` : total === (plan?.maxItems || 0) ? `https://wa.me/+5491121911765?text=${encodeURIComponent(
                   `Hola, me gustaría hacer un pedido:\n\n${items
                     .map((i) => `• ${i.name} x${i.quantity}`)
                     .join("\n")}\n\n${plan ? `Plan seleccionado: ${plan.maxItems} viandas ${plan.type === 'gran' ? 'grandes' : 'pequeñas'}` : ""}\n\nCosto total: $${items.reduce((acc, item) => acc + (item.price * item.quantity), 0).toLocaleString()}`
                 )}` : "#"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex-1 flex items-center justify-center gap-2 rounded-lg ${theme.buttontext} text-base px-3 py-2 shadow-lg transition-all duration-300
-  ${total === (plan?.maxItems || 0)
+                className={`flex-1 flex items-center justify-center gap-2 rounded-lg text-white text-base px-3 py-2 shadow-lg transition-all duration-300
+  ${location.pathname === "/pedidos/motherday" || total === (plan?.maxItems || 0)
                     ? `${theme.buttoncolor} hover:${theme.buttonhovercolor} cursor-pointer`
                     : "bg-gray-400 cursor-not-allowed"
                   }`}
                 style={{ fontFamily: "Times New Roman, serif" }}
                 onClick={(e) => {
-                  if (total !== (plan?.maxItems || 0)) e.preventDefault();
+                  if (location.pathname !== "/pedidos/motherday" && total !== (plan?.maxItems || 0)) e.preventDefault();
                 }}
               >
                 <Phone size={20} strokeWidth={1.75} />

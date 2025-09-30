@@ -1,8 +1,12 @@
 "use client";
+import { useTheme } from "@/context/themeContext";
 
 export default function Motherday() {
+
+  const { theme } = useTheme();
+
   return (
-    <div className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 via-white to-teal-50 px-4 sm:px-6 lg:px-12 py-12">
+    <div className={`w-full min-h-screen flex items-center justify-center ${theme.background} px-4 sm:px-6 lg:px-12 py-12`}>
       <div className="grid grid-cols-1 lg:grid-cols-2 max-w-7xl w-full items-center gap-12 lg:gap-16">
         
         {/* Texto */}

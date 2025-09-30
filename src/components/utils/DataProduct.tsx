@@ -167,3 +167,21 @@ export const postresPeq = [
   { id: "139586", name: "Torta de Ricotta", image: "https://images.unsplash.com/photo-1604908812504-25b972d4e4da?w=400&h=300&fit=crop", category: "postres", description: "Clásica torta húmeda de ricotta.", price: 4000 },
   { id: "973526", name: "Tarta de Manzana", image: "https://images.unsplash.com/photo-1604908812505-25b972d4e4db?w=400&h=300&fit=crop", category: "postres", description: "Tarta casera de manzanas caramelizadas.", price: 4000 },
 ];
+
+
+// Tortas //
+
+// src/components/utils/DataProduct.ts
+export const Tortas = [
+  { id: "482315", name: "Torta de Chocolate", image: "https://images.unsplash.com/photo-1604908812503-25b972d4e4d9?w=400&h=300&fit=crop", category: "Tortas", description: "Deliciosa torta de chocolate con relleno de crema.", price: 4000 },
+  { id: "482703", name: "Torta de Vainilla", image: "https://images.unsplash.com/photo-1617196032763-3f3b7e5f49f7?w=400&h=300&fit=crop", category: "Tortas", description: "Torta suave de vainilla con cubierta de frutas.", price: 3800 },
+  { id: "481542", name: "Torta Red Velvet", image: "https://images.unsplash.com/photo-1630243538021-68c4d8f69d53?w=400&h=300&fit=crop", category: "Tortas", description: "Torta Red Velvet con crema de queso y decoración elegante.", price: 4200 },
+  { id: "482900", name: "Torta de Frutas", image: "https://images.unsplash.com/photo-1620919187967-d8c1b6c06d92?w=400&h=300&fit=crop", category: "Tortas", description: "Torta fresca con crema chantilly y frutas de temporada.", price: 4500 },
+];
+
+export const PastelSaludable = [
+  { id: "490001", name: "Pastel de Zanahoria", image: "https://images.unsplash.com/photo-1599785209707-136c96f85df0?w=400&h=300&fit=crop", category: "Pastel Saludable", description: "Pastel de zanahoria con harina integral y cobertura ligera.", price: 3200 },
+  { id: "490002", name: "Pastel de Avena", image: "https://images.unsplash.com/photo-1607539931090-b5b00b73753b?w=400&h=300&fit=crop", category: "Pastel Saludable", description: "Pastel de avena y frutos secos, ideal para desayuno.", price: 3100 },
+  { id: "490003", name: "Pastel Vegano de Chocolate", image: "https://images.unsplash.com/photo-1599785209707-136c96f85df0?w=400&h=300&fit=crop", category: "Pastel Saludable", description: "Pastel vegano de chocolate, sin lácteos ni huevo.", price: 3500 },
+  { id: "490004", name: "Pastel de Manzana y Canela", image: "https://images.unsplash.com/photo-1599785209707-136c96f85df0?w=400&h=300&fit=crop", category: "Pastel Saludable", description: "Pastel suave con manzana natural y toque de canela.", price: 3300 },
+];
