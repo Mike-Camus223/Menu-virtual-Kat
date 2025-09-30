@@ -313,7 +313,14 @@ const Navbar: React.FC<NavbarProps> = () => {
                   }`}
                 style={{ fontFamily: "Times New Roman, serif" }}
                 onClick={(e) => {
-                  if (location.pathname !== "/pedidos/motherday" && total !== (plan?.maxItems || 0)) e.preventDefault();
+                  if (location.pathname !== "/pedidos/motherday" && total !== (plan?.maxItems || 0)) {
+                    e.preventDefault();
+                  } else {
+                    // Vaciar el carrito después de redirigir a WhatsApp
+                    setTimeout(() => {
+                      clearCart();
+                    }, 1000);
+                  }
                 }}
               >
                 <Phone size={20} strokeWidth={1.75} />
