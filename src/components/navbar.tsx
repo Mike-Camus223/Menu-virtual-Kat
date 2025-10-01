@@ -328,7 +328,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                                 .map((i) => `   • ${i.name} x${i.quantity}`)
                                 .join("\n")}\n   Subtotal: $${currentPlanPrice.toLocaleString()}`
                             : ""
-                        }\n\n💰 Total final: $${totalPrice.toLocaleString()}`
+                        }\n\nTotal final: $${totalPrice.toLocaleString()}`
                       )}`
                     : "#"
                 }
