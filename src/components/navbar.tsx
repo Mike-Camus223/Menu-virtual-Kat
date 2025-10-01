@@ -204,81 +204,82 @@ const Navbar: React.FC<NavbarProps> = () => {
         <div className="flex flex-col h-[calc(100%-70px)]">
           {/* Zona de scroll */}
           <div className="p-5 flex-1 flex flex-col gap-4 overflow-y-auto">
-            {/* Mostrar planes guardados con DETALLE COMPLETO */}
-            {multiPlans.length > 0 && (
-              <div className={`mb-4 p-4 ${theme.plansBg} rounded-lg`}>
-                <h3 className={`${theme.title} font-bold text-lg mb-3`}>Planes Guardados:</h3>
-                {multiPlans.map((mp, idx) => (
-                  <div key={idx} className={`mb-4 pb-3 ${idx !== multiPlans.length - 1 ? `border-b ${theme.bordercolor}` : ''}`}>
-                    <div className={`${theme.title} font-semibold mb-2`}>
-                      Plan {idx + 1}: {mp.quantity} viandas {mp.planType === 'gran' ? 'grandes' : 'pequeñas'}
-                    </div>
-                    <ul className="ml-4 space-y-1">
-                      {mp.items.map((item, itemIdx) => (
-                        <li key={itemIdx} className={`${theme.text} text-sm`}>
-                          • {item.name} x{item.quantity}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className={`${theme.title} font-bold text-sm mt-2`}>
-                      Subtotal: ${mp.totalPrice.toLocaleString()}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-            
-            {/* Mostrar plan actual */}
-            {plan && items.length > 0 && (
-              <div className={`p-3 ${theme.plansBg} rounded-lg mb-3`}>
-                <p className={`text-sm ${theme.title} font-bold mb-2`}>
-                  Plan actual: {plan.maxItems} viandas {plan.type === 'gran' ? 'grandes' : 'pequeñas'}
-                </p>
-                <p className={`text-xs ${theme.textsecond} italic`}>
-                  {currentPlanTotal}/{plan.maxItems} seleccionadas
-                </p>
-              </div>
-            )}
-
-            {/* Items del plan actual */}
+            {/* Estado vacío */}
             {items.length === 0 && multiPlans.length === 0 ? (
               <div className={`flex flex-1 flex-col items-center justify-center ${theme.title}`}>
                 <ShoppingCart size={55} strokeWidth={1.5} />
                 <p className="mt-3 text-lg font-medium">Carrito vacío</p>
               </div>
-            ) : items.length > 0 ? (
-              <div className="flex flex-col flex-1">
-                <h4 className={`${theme.title} font-semibold mb-2`}>Items actuales:</h4>
-                <ul className="flex flex-col gap-3">
-                  {items.map((item) => (
-                    <li key={item.id} className="flex items-center justify-between">
-                      <span className={`${theme.text} font-medium text-sm`}>
-                        {item.name} <span className={`${theme.text}`}>x{item.quantity}</span>
-                      </span>
-                      <button onClick={() => removeItem(item.id)} className={`${theme.icons} cursor-pointer hover:opacity-80 transition`}>
-                        <Trash2 size={18} />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+            ) : (
+              <div className="flex flex-col gap-4">
+                {/* Planes guardados - cada plan individual */}
+                {multiPlans.map((mp, idx) => (
+                  <div key={idx} className={`${theme.plansBg} rounded-lg p-4`}>
+                    <h4 className={`${theme.title} font-semibold mb-3`}>
+                      Plan viandas {mp.planType === 'gran' ? 'grandes' : 'pequeñas'}
+                    </h4>
+                    <ul className="space-y-2 mb-3">
+                      {mp.items.map((item, itemIdx) => (
+                        <li key={itemIdx} className={`${theme.text} text-sm flex items-center justify-between`}>
+                          <span>• {item.name}</span>
+                          <div className="flex items-center gap-2">
+                            <span className={`${theme.text} font-medium`}>x{item.quantity}</span>
+                            <button 
+                              onClick={() => {
+                                // Crear un objeto item temporal con el id y cantidad para eliminar
+                                removeItem(item.id);
+                              }} 
+                              className={`${theme.icons} cursor-pointer hover:opacity-80 transition`}
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className={`${theme.title} font-bold text-sm`}>
+                      Total: ${mp.totalPrice.toLocaleString()}
+                    </div>
+                  </div>
+                ))}
+                
+                {/* Plan actual */}
+                {plan && items.length > 0 && (
+                  <div className={`${theme.plansBg} rounded-lg p-4`}>
+                    <h4 className={`${theme.title} font-semibold mb-3`}>
+                      Plan viandas {plan.type === 'gran' ? 'grandes' : 'pequeñas'}
+                    </h4>
+                    <ul className="space-y-2 mb-3">
+                      {items.map((item) => (
+                        <li key={item.id} className={`${theme.text} text-sm flex items-center justify-between`}>
+                          <span>• {item.name}</span>
+                          <div className="flex items-center gap-2">
+                            <span className={`${theme.text} font-medium`}>x{item.quantity}</span>
+                            <button onClick={() => removeItem(item.id)} className={`${theme.icons} cursor-pointer hover:opacity-80 transition`}>
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className={`${theme.title} font-bold text-sm`}>
+                      Total: ${currentPlanPrice.toLocaleString()}
+                    </div>
+                  </div>
+                )}
               </div>
-            ) : null}
+            )}
           </div>
 
-          {/* Total */}
+          {/* Resumen general */}
           {(items.length > 0 || multiPlans.length > 0) && (
             <div className={`p-5 border-t ${theme.bordermain}`}>
               <div className="flex justify-between items-center">
-                <span className={`text-lg font-semibold ${theme.text}`}>Total General:</span>
+                <span className={`text-lg font-semibold ${theme.text}`}>Resumen general:</span>
                 <span className={`text-xl font-bold ${theme.title}`}>
                   ${totalPrice.toLocaleString()}
                 </span>
               </div>
-              {multiPlans.length > 0 && items.length > 0 && (
-                <div className={`text-xs ${theme.textsecond} mt-1 text-right`}>
-                  (Guardados: ${savedPlansPrice.toLocaleString()} + Actual: ${currentPlanPrice.toLocaleString()})
-                </div>
-              )}
             </div>
           )}
 
