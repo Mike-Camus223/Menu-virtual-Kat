@@ -17,7 +17,7 @@ interface Product {
 // No need for mock cart hook - using real useCart from context
 
 export default function Motherday() {
-  const { items, addItem, incrementItem, removeItem, openCartSidebar } = useCart();
+  const { items, addItem, incrementItem, removeItem, openCartSidebar, addMotherDayItem, removeMotherDayItem, decrementMotherDayItem, motherDayItems } = useCart();
   const [selectedFilter, setSelectedFilter] = useState("Todas");
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
@@ -36,8 +36,8 @@ export default function Motherday() {
 
   const categories = ["Todas", "Tortas", "Pastel Saludable"];
 
-  // 🔹 Calcular conteo por categoría
-  const categoryCounts: Record<string, number> = items.reduce((acc, item) => {
+  // 🔹 Calcular conteo por categoría usando motherDayItems
+  const categoryCounts: Record<string, number> = motherDayItems.reduce((acc, item) => {
     const allProductsForMotherday = getAllProductsForMotherday();
     const product = allProductsForMotherday.find((p) => p.id === item.id);
     if (product) {
@@ -59,8 +59,8 @@ export default function Motherday() {
   }, []);
 
   useEffect(() => {
-    if (items.reduce((a, i) => a + i.quantity, 0) > 0) setShowNotification(true);
-  }, [items]);
+    if (motherDayItems.reduce((a, i) => a + i.quantity, 0) > 0) setShowNotification(true);
+  }, [motherDayItems]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -90,12 +90,20 @@ export default function Motherday() {
   };
 
   const handleAddItem = (product: Product) => {
-    const item = items.find(i => i.id === product.id);
-    if (item) incrementItem(product.id);
-    else addItem({ id: product.id, name: product.name, quantity: 1, price: product.price });
+    const item = motherDayItems.find(i => i.id === product.id);
+    if (item) {
+      // Si ya existe, incrementar cantidad usando la función específica
+      addMotherDayItem({ id: product.id, name: product.name, quantity: 1, price: product.price });
+    } else {
+      // Si no existe, agregar nuevo ítem
+      addMotherDayItem({ id: product.id, name: product.name, quantity: 1, price: product.price });
+    }
   };
 
-  const handleRemoveItem = (id: string) => removeItem(id);
+  const handleRemoveItem = (id: string) => {
+    // Reducir cantidad 1 por 1
+    decrementMotherDayItem(id);
+  };
 
   // Pagination logic
   const totalPages = Math.ceil(products.length / productsPerPage);
@@ -241,7 +249,7 @@ export default function Motherday() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
               {currentProducts.map(product => {
-                const itemInCart = items.find(i => i.id === product.id);
+                const itemInCart = motherDayItems.find(i => i.id === product.id);
                 const quantity = itemInCart ? itemInCart.quantity : 0;
 
                 return (
@@ -348,7 +356,7 @@ export default function Motherday() {
         )}
 
         {/* Botón Checkout */}
-        {items.length > 0 && (
+        {(items.length > 0 || motherDayItems.length > 0) && (
           <div className={`fixed bottom-0 left-0 right-0 ${theme.background} backdrop-blur-md border-t-1 ${theme.bordermain} p-4 md:p-6 shadow-xl`}>
             <div className="max-w-md mx-auto">
               <button
@@ -356,7 +364,7 @@ export default function Motherday() {
                 className={`w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-lg md:text-xl transition-all duration-300 ${theme.buttoncolor} ${theme.buttontext} shadow-lg hover:${theme.buttonhovercolor}`}
               >
                 <ShoppingBasket className={theme.buttontext} size={28} strokeWidth={1.75} />
-                Ir a carrito ({items.reduce((a, i) => a + i.quantity, 0)})
+                Ir a carrito ({items.reduce((a, i) => a + i.quantity, 0) + motherDayItems.reduce((a, i) => a + i.quantity, 0)})
               </button>
             </div>
           </div>

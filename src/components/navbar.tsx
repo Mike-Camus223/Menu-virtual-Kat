@@ -16,7 +16,7 @@ const Navbar: React.FC<NavbarProps> = () => {
   }, []);
 
   const [lastScrollY, setLastScrollY] = useState(0);
-  const { items, clearCart, plan, isCartOpen, openCartSidebar, closeCartSidebar, multiPlans, removeCurrentPlan, removeMultiPlanById } = useCart();
+  const { items, clearCart, plan, isCartOpen, openCartSidebar, closeCartSidebar, multiPlans, removeCurrentPlan, removeMultiPlanById, motherDayItems, removeMotherDayItem, decrementMotherDayItem } = useCart();
   const { theme } = useTheme();
   const location = useLocation();
 
@@ -26,8 +26,11 @@ const Navbar: React.FC<NavbarProps> = () => {
   // Total de items en planes guardados
   const savedPlansTotal = multiPlans.reduce((acc, mp) => acc + mp.quantity, 0);
 
-  // Total general (planes guardados + plan actual)
-  const totalItemsInCart = savedPlansTotal + currentPlanTotal;
+  // Total de productos del Día de la Madre
+  const motherDayTotal = motherDayItems.reduce((acc, item) => acc + item.quantity, 0);
+
+  // Total general (planes guardados + plan actual + productos día de la madre)
+  const totalItemsInCart = savedPlansTotal + currentPlanTotal + motherDayTotal;
 
   // Total precio de planes guardados
   const savedPlansPrice = multiPlans.reduce((acc, mp) => acc + mp.totalPrice, 0);
@@ -35,8 +38,11 @@ const Navbar: React.FC<NavbarProps> = () => {
   // Total precio del plan actual
   const currentPlanPrice = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
+  // Total precio de productos del Día de la Madre
+  const motherDayPrice = motherDayItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+
   // Total precio total general
-  const totalPrice = savedPlansPrice + currentPlanPrice;
+  const totalPrice = savedPlansPrice + currentPlanPrice + motherDayPrice;
 
   // Manejo de scroll para mostrar/ocultar navbar
   useEffect(() => {
@@ -206,7 +212,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           {/* Zona de scroll */}
           <div className="p-5 flex-1 flex flex-col gap-4 overflow-y-auto">
             {/* Estado vacío */}
-            {items.length === 0 && multiPlans.length === 0 ? (
+            {items.length === 0 && multiPlans.length === 0 && motherDayItems.length === 0 ? (
               <div className={`flex flex-1 flex-col items-center justify-center ${theme.title}`}>
                 <ShoppingCart size={55} strokeWidth={1.5} />
                 <p className="mt-3 text-lg font-medium">Carrito vacío</p>
@@ -272,12 +278,51 @@ const Navbar: React.FC<NavbarProps> = () => {
                     </div>
                   </div>
                 )}
+
+                {/* Productos del Día de la Madre */}
+                {motherDayItems.length > 0 && (
+                  <div className={`${theme.plansBg} rounded-lg p-4`}>
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className={`${theme.title} font-semibold`}>
+                        Productos Día de la Madre
+                      </h4>
+                      <button
+                        onClick={() => {
+                          motherDayItems.forEach(item => removeMotherDayItem(item.id));
+                        }}
+                        className={`${theme.icons} cursor-pointer hover:opacity-80 transition`}
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
+                    <ul className="space-y-2 mb-3">
+                      {motherDayItems.map((item) => (
+                        <li key={item.id} className={`${theme.text} text-sm flex items-center justify-between`}>
+                          <span>• {item.name}</span>
+                          <div className="flex items-center gap-2">
+                            <span className={`${theme.text} font-medium`}>x{item.quantity}</span>
+                            <span className={`${theme.text} font-medium`}>${(item.price * item.quantity).toLocaleString()}</span>
+                            <button
+                              onClick={() => decrementMotherDayItem(item.id)}
+                              className={`${theme.icons} cursor-pointer hover:opacity-80 transition`}
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className={`${theme.title} font-bold text-sm`}>
+                      Total: ${motherDayPrice.toLocaleString()}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
 
           {/* Resumen general */}
-          {(items.length > 0 || multiPlans.length > 0) && (
+          {(items.length > 0 || multiPlans.length > 0 || motherDayItems.length > 0) && (
             <div className={`p-5 border-t ${theme.bordermain}`}>
               <div className="flex justify-between items-center">
                 <span className={`text-lg font-semibold ${theme.text}`}>Resumen general:</span>
@@ -289,7 +334,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           )}
 
           {/* Footer - Botones */}
-          {(items.length > 0 || multiPlans.length > 0) && (
+          {(items.length > 0 || multiPlans.length > 0 || motherDayItems.length > 0) && (
             <div className={`p-5 flex gap-3 ${theme.cartbackground} border-t ${theme.bordermain}`}>
               <button
                 onClick={() => {
@@ -304,13 +349,15 @@ const Navbar: React.FC<NavbarProps> = () => {
 
               <a
                 href={
-                  location.pathname === "/pedidos/motherday"
+                  // Solo productos del Día de la Madre
+                  location.pathname === "/pedidos/motherday" || (motherDayItems.length > 0 && multiPlans.length === 0 && (!plan || currentPlanTotal === 0))
                     ? `https://wa.me/+5491121911765?text=${encodeURIComponent(
-                      `Por día de la madre quiero comprar estos productos:\n\n${items
+                      `Hola, por día de la madre quiero comprar estos productos:\n\n${motherDayItems
                         .map((i) => `• ${i.name} x${i.quantity}`)
-                        .join("\n")}\n\nTotal: $${currentPlanPrice.toLocaleString()}`
+                        .join("\n")}\n\nTotal: $${motherDayPrice.toLocaleString()}`
                     )}`
-                    : multiPlans.length > 0 || (plan && currentPlanTotal === plan.maxItems)
+                    : // Planes + productos del Día de la Madre
+                    multiPlans.length > 0 || (plan && currentPlanTotal === plan.maxItems)
                       ? `https://wa.me/+5491121911765?text=${encodeURIComponent(
                         `Hola, me gustaría hacer un pedido:\n\n${multiPlans.length > 0
                           ? multiPlans
@@ -332,6 +379,11 @@ const Navbar: React.FC<NavbarProps> = () => {
                             .map((i) => `   • ${i.name} x${i.quantity}`)
                             .join("\n")}\n   Subtotal: $${currentPlanPrice.toLocaleString()}`
                           : ""
+                        }${motherDayItems.length > 0
+                          ? `\n\nY por día de la madre quiero comprar:\n${motherDayItems
+                            .map((i) => `   • ${i.name} x${i.quantity}`)
+                            .join("\n")}`
+                          : ""
                         }\n\nTotal final: $${totalPrice.toLocaleString()}`
                       )}`
                       : "#"
@@ -340,7 +392,8 @@ const Navbar: React.FC<NavbarProps> = () => {
                 rel="noopener noreferrer"
                 className={`flex-1 flex items-center justify-center gap-2 rounded-lg text-white text-base px-3 py-2 shadow-lg transition-all duration-300 ${location.pathname === "/pedidos/motherday" ||
                     multiPlans.length > 0 ||
-                    currentPlanTotal === (plan?.maxItems || 0)
+                    currentPlanTotal === (plan?.maxItems || 0) ||
+                    motherDayItems.length > 0
                     ? `${theme.buttoncolor} hover:${theme.buttonhovercolor} cursor-pointer`
                     : "bg-gray-400 cursor-not-allowed"
                   }`}
@@ -349,7 +402,8 @@ const Navbar: React.FC<NavbarProps> = () => {
                   if (
                     location.pathname !== "/pedidos/motherday" &&
                     multiPlans.length === 0 &&
-                    currentPlanTotal !== (plan?.maxItems || 0)
+                    currentPlanTotal !== (plan?.maxItems || 0) &&
+                    motherDayItems.length === 0
                   ) {
                     e.preventDefault();
                   } else {

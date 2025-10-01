@@ -26,6 +26,7 @@ interface CartContextType {
   plan: PlanData | null;
   items: CartItem[];
   multiPlans: MultiPlan[];
+  motherDayItems: CartItem[];
   setPlan: (plan: PlanData | null) => void
   addItem: (item: CartItem) => void;
   incrementItem: (id: string) => void;
@@ -37,6 +38,10 @@ interface CartContextType {
   clearMultiPlans: () => void;
   removeCurrentPlan: () => void;
   removeMultiPlanById: (planId: number) => void;
+  addMotherDayItem: (item: CartItem) => void;
+  removeMotherDayItem: (id: string) => void;
+  decrementMotherDayItem: (id: string) => void;
+  clearMotherDayItems: () => void;
   saveToStorage: () => void;
   loadFromStorage: () => void;
   isCartOpen: boolean;
@@ -52,6 +57,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [plan, setPlanState] = useState<PlanData | null>(null);
   const [items, setItems] = useState<CartItem[]>([]);
   const [multiPlans, setMultiPlans] = useState<MultiPlan[]>([]);
+  const [motherDayItems, setMotherDayItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
@@ -60,7 +66,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     saveToStorage();
-  }, [plan, items, multiPlans]);
+  }, [plan, items, multiPlans, motherDayItems]);
 
   const saveToStorage = () => {
     try {
@@ -68,6 +74,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         plan,
         items,
         multiPlans,
+        motherDayItems,
         timestamp: Date.now(),
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -86,6 +93,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           setPlanState(data.plan || null);
           setItems(data.items || []);
           setMultiPlans(data.multiPlans || []);
+          setMotherDayItems(data.motherDayItems || []);
         } else {
           localStorage.removeItem(STORAGE_KEY);
         }
@@ -130,6 +138,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setPlanState(null);
     setItems([]);
     setMultiPlans([]);
+    setMotherDayItems([]);
     localStorage.removeItem(STORAGE_KEY);
   };
 
@@ -168,6 +177,36 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setMultiPlans((prev) => prev.filter((p) => p.planId !== planId));
   };
 
+  const addMotherDayItem = (item: CartItem) => {
+    setMotherDayItems((prev) => {
+      const existing = prev.find((i) => i.id === item.id);
+      if (existing) {
+        return prev.map((i) =>
+          i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
+        );
+      }
+      return [...prev, item];
+    });
+  };
+
+  const removeMotherDayItem = (id: string) => {
+    setMotherDayItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const decrementMotherDayItem = (id: string) => {
+    setMotherDayItems((prev) =>
+      prev
+        .map((item) =>
+          item.id === id ? { ...item, quantity: Math.max(0, item.quantity - 1) } : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
+  };
+
+  const clearMotherDayItems = () => {
+    setMotherDayItems([]);
+  };
+
   const openCartSidebar = () => setIsCartOpen(true);
   const closeCartSidebar = () => setIsCartOpen(false);
 
@@ -177,6 +216,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         plan,
         items,
         multiPlans,
+        motherDayItems,
         setPlan,
         addItem,
         incrementItem,
@@ -188,6 +228,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         clearMultiPlans,
         removeCurrentPlan,
         removeMultiPlanById,
+        addMotherDayItem,
+      removeMotherDayItem,
+      decrementMotherDayItem,
+      clearMotherDayItems,
         saveToStorage,
         loadFromStorage,
         isCartOpen,
