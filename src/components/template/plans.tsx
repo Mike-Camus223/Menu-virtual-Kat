@@ -7,7 +7,7 @@ import { useTheme } from "@/context/themeContext";
 export default function Plans() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setPlan, plan, items, clearCart, clearItems, addMultiPlan, addMotherDayItem, motherDayItems } = useCart();
+  const { setPlan, plan, items, clearCart, clearItems, addMultiPlan, addMotherDayItem, motherDayItems, clearMotherDayItems } = useCart();
   const [showProgressModal, setShowProgressModal] = useState(false);
   const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
   const [isMotherDayButtonEnabled, setIsMotherDayButtonEnabled] = useState(false);
@@ -42,46 +42,45 @@ export default function Plans() {
   const comingFromMotherDay = location.pathname === "/pedidos/motherday";
   
   if (isAddingNewPlan) {
-    // Si estamos agregando un nuevo plan, no mostrar modal y resetear la bandera
+    // SI ESTAMOS AGREGANDO UN NUEVO PLAN: BLOQUEAR CUALQUIER APARICIÓN DE MODAL
+    // Esto previene el DOBLE MODAL definitivamente
     setShowProgressModal(false);
     setIsButtonsDisabled(false);
-    setIsAddingNewPlan(false);
-    return;
+    return; // SALIR INMEDIATAMENTE - NO MOSTRAR NINGÚN MODAL
   }
   
-  // CASO 1: Si acabamos de regresar de seleccionar tortas, NO mostrar modal
+  // PRIORIDAD 1: Si acabamos de regresar de seleccionar tortas, MOSTRAR modal con productos día de la madre
   if (justReturnedFromMotherDay) {
-    setShowProgressModal(false);
-    setIsButtonsDisabled(false);
+    setShowProgressModal(true);
+    setIsButtonsDisabled(true);
     setJustReturnedFromMotherDay(false);
     return;
   }
   
-  // CASO 2: Si venimos de seleccionar tortas (Motherday) y tenemos tortas, NO mostrar modal
+  // PRIORIDAD 2: Si venimos de seleccionar tortas (Motherday) y tenemos tortas, MOSTRAR modal
   if (comingFromMotherDay && motherDayItems.length > 0) {
-    setShowProgressModal(false);
-    setIsButtonsDisabled(false);
+    setShowProgressModal(true);
+    setIsButtonsDisabled(true);
     setJustReturnedFromMotherDay(true);
     return;
   }
   
-  // CASO 3: Si venimos de Order.tsx y solo hay productos del Día de la Madre, no mostrar modal
-  if (comingFromOrder && motherDayItems.length > 0 && items.length === 0) {
-    setShowProgressModal(false);
-    setIsButtonsDisabled(false);
+  // PRIORIDAD 3: Si hay tortas (independientemente de si hay plan o no), MOSTRAR modal de tortas
+  if (motherDayItems.length > 0) {
+    setShowProgressModal(true);
+    setIsButtonsDisabled(true);
     return;
   }
   
-  // CASO 4: IMPORTANTE: Si hay tortas pero NO hay plan activo, NO mostrar modal automáticamente
-  // El usuario ya sabe que tiene tortas, no necesitamos mostrarle el modal cada vez
-  if (motherDayItems.length > 0 && !plan) {
-    setShowProgressModal(false);
-    setIsButtonsDisabled(false);
-    return;
-  }
-  
-  // CASO 5: Si hay un plan activo con items, mostrar modal
+  // PRIORIDAD 4: Si hay un plan activo con items, mostrar modal de plan
   if (plan !== null && items.length > 0) {
+    setShowProgressModal(true);
+    setIsButtonsDisabled(true);
+    return;
+  }
+  
+  // PRIORIDAD 5: Si venimos de Order.tsx y solo hay productos del Día de la Madre, mostrar modal
+  if (comingFromOrder && motherDayItems.length > 0 && items.length === 0) {
     setShowProgressModal(true);
     setIsButtonsDisabled(true);
     return;
@@ -116,7 +115,11 @@ export default function Plans() {
   };
 
   const startNewPlan = () => {
+    // Vaciar TODO: carrito, plan, y resetear estados
     clearCart();
+    setPlan(null as any);
+    setIsButtonsDisabled(false);
+    setIsMotherDayButtonEnabled(false);
     setShowProgressModal(false);
   };
 
@@ -155,9 +158,16 @@ export default function Plans() {
     // 9. Habilitar los botones de planes
     setIsButtonsDisabled(false);
     
-    // 10. IMPORTANTE: No mostrar información de tortas cuando se agrega un nuevo plan
-    // El botón "Ver Detalles" del Día de la Madre ya está habilitado desde antes
-    // No necesitamos mostrar el modal con información de tortas
+    // 10. Si hay tortas, limpiar las tortas también para permitir nuevo plan
+    if (motherDayItems.length > 0) {
+      clearMotherDayItems();
+    }
+    
+    // 11. **ESPERAR MÁS TIEMPO** para asegurar que TODO el estado se actualice antes de resetear la bandera
+    // Esto previene que el useEffect vuelva a abrir el modal
+    setTimeout(() => {
+      setIsAddingNewPlan(false);
+    }, 500); // Aumentado de 100ms a 500ms para mayor seguridad
   };
 
   const addMotherDayCake = () => {
@@ -356,7 +366,7 @@ export default function Plans() {
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50 px-4">
           <div className={`${theme.background} rounded-2xl p-6 sm:p-8 max-w-sm w-full text-center shadow-2xl space-y-5`}>
             <h3 className={`text-xl md:text-2xl font-bold ${theme.title}`}>
-                {motherDayItems.length > 0 && !plan ? "Productos Día de la Madre" : "Selección Guardada"}
+                {motherDayItems.length > 0 ? "Productos Día de la Madre" : "Selección Guardada"}
               </h3>
 
             {plan && items.length > 0 && (
@@ -390,7 +400,7 @@ export default function Plans() {
               {/* Botón Continuar - si hay plan activo o tortas */}
               {(plan && items.length > 0) || motherDayItems.length > 0 ? (
                 <button
-                  onClick={motherDayItems.length > 0 && !plan ? () => navigate("/pedidos/motherdayorders") : continueToPreviousPlan}
+                  onClick={motherDayItems.length > 0 ? () => navigate("/pedidos/motherdayorders") : continueToPreviousPlan}
                   className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
                 >
                   <CheckCircle size={23} />
@@ -398,8 +408,8 @@ export default function Plans() {
                 </button>
               ) : null}
               
-              {/* BOTÓN "AGREGAR NUEVO PLAN" - aparece SOLO si completó el plan Y hay un plan activo */}
-              {totalInCart === plan?.maxItems && plan && items.length > 0 && (
+              {/* BOTÓN "AGREGAR NUEVO PLAN" - aparece si completó el plan O si hay tortas */}
+              {(totalInCart === plan?.maxItems && plan && items.length > 0) || motherDayItems.length > 0 ? (
                 <button
                   onClick={addNewPlan}
                   className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
@@ -407,7 +417,7 @@ export default function Plans() {
                   <CheckCircle size={23} />
                   Agregar Nuevo Plan
                 </button>
-              )}
+              ) : null}
               
               {/* BOTÓN "AÑADIR TORTA DÍA DE LA MADRE" - aparece SOLO si hay plan completo Y no hay tortas ya */}
               {totalInCart === plan?.maxItems && theme.name === "motherday" && motherDayItems.length === 0 && (
