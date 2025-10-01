@@ -509,9 +509,6 @@ export default function Order() {
         </div>
       )}
     </main>
-    <div className={`${theme.background} w-full h-[85px] sm:h-[55px]`}>
-
-    </div>
   </div>
 );
 }
