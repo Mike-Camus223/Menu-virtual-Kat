@@ -14,7 +14,7 @@ const Navbar: React.FC<NavbarProps> = () => {
   useEffect(() => {
     setShowNavbar(true);
   }, []);
-  
+
   const [lastScrollY, setLastScrollY] = useState(0);
   const { items, clearCart, plan, isCartOpen, openCartSidebar, closeCartSidebar, multiPlans, removeCurrentPlan, removeMultiPlanById } = useCart();
   const { theme } = useTheme();
@@ -22,19 +22,19 @@ const Navbar: React.FC<NavbarProps> = () => {
 
   // Total de items en carrito actual
   const currentPlanTotal = items.reduce((acc, i) => acc + i.quantity, 0);
-  
+
   // Total de items en planes guardados
   const savedPlansTotal = multiPlans.reduce((acc, mp) => acc + mp.quantity, 0);
-  
+
   // Total general (planes guardados + plan actual)
   const totalItemsInCart = savedPlansTotal + currentPlanTotal;
 
   // Total precio de planes guardados
   const savedPlansPrice = multiPlans.reduce((acc, mp) => acc + mp.totalPrice, 0);
-  
+
   // Total precio del plan actual
   const currentPlanPrice = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-  
+
   // Total precio total general
   const totalPrice = savedPlansPrice + currentPlanPrice;
 
@@ -220,10 +220,10 @@ const Navbar: React.FC<NavbarProps> = () => {
                       <h4 className={`${theme.title} font-semibold`}>
                         Plan viandas {mp.planType === 'gran' ? 'grandes' : 'pequeñas'}
                       </h4>
-                      <button 
+                      <button
                         onClick={() => {
                           removeMultiPlanById(mp.planId);
-                        }} 
+                        }}
                         className={`${theme.icons} cursor-pointer hover:opacity-80 transition`}
                       >
                         <Trash2 size={18} />
@@ -242,7 +242,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                     </div>
                   </div>
                 ))}
-                
+
                 {/* Plan actual */}
                 {plan && items.length > 0 && (
                   <div className={`${theme.plansBg} rounded-lg p-4`}>
@@ -250,10 +250,10 @@ const Navbar: React.FC<NavbarProps> = () => {
                       <h4 className={`${theme.title} font-semibold`}>
                         Plan viandas {plan.type === 'gran' ? 'grandes' : 'pequeñas'}
                       </h4>
-                      <button 
+                      <button
                         onClick={() => {
                           removeCurrentPlan();
-                        }} 
+                        }}
                         className={`${theme.icons} cursor-pointer hover:opacity-80 transition`}
                       >
                         <Trash2 size={18} />
@@ -306,50 +306,44 @@ const Navbar: React.FC<NavbarProps> = () => {
                 href={
                   location.pathname === "/pedidos/motherday"
                     ? `https://wa.me/+5491121911765?text=${encodeURIComponent(
-                        `Por día de la madre quiero comprar estos productos:\n\n${items
-                          .map((i) => `• ${i.name} x${i.quantity}`)
-                          .join("\n")}\n\nTotal: $${currentPlanPrice.toLocaleString()}`
-                      )}`
+                      `Por día de la madre quiero comprar estos productos:\n\n${items
+                        .map((i) => `• ${i.name} x${i.quantity}`)
+                        .join("\n")}\n\nTotal: $${currentPlanPrice.toLocaleString()}`
+                    )}`
                     : multiPlans.length > 0 || (plan && currentPlanTotal === plan.maxItems)
-                    ? `https://wa.me/+5491121911765?text=${encodeURIComponent(
-                        `Hola, me gustaría hacer un pedido:\n\n${
-                          multiPlans.length > 0
-                            ? multiPlans
-                                .map(
-                                  (mp, idx) =>
-                                    `Plan ${idx + 1}: ${mp.quantity} viandas ${
-                                      mp.planType === "gran" ? "grandes" : "pequeñas"
-                                    }\n${mp.items
-                                      .map((i) => `   • ${i.name} x${i.quantity}`)
-                                      .join("\n")}\n   Subtotal: $${mp.totalPrice.toLocaleString()}`
-                                )
-                                .join("\n\n")
-                            : ""
-                        }${
-                          multiPlans.length > 0 && plan && currentPlanTotal === plan.maxItems
-                            ? "\n\n"
-                            : ""
-                        }${
-                          plan && currentPlanTotal === plan.maxItems
-                            ? `Plan actual: ${plan.maxItems} viandas ${
-                                plan.type === "gran" ? "grandes" : "pequeñas"
-                              }\n${items
-                                .map((i) => `   • ${i.name} x${i.quantity}`)
-                                .join("\n")}\n   Subtotal: $${currentPlanPrice.toLocaleString()}`
-                            : ""
+                      ? `https://wa.me/+5491121911765?text=${encodeURIComponent(
+                        `Hola, me gustaría hacer un pedido:\n\n${multiPlans.length > 0
+                          ? multiPlans
+                            .map(
+                              (mp, idx) =>
+                                `Plan ${idx + 1}: ${mp.quantity} viandas ${mp.planType === "gran" ? "grandes" : "pequeñas"
+                                }\n${mp.items
+                                  .map((i) => `   • ${i.name} x${i.quantity}`)
+                                  .join("\n")}\n   Subtotal: $${mp.totalPrice.toLocaleString()}`
+                            )
+                            .join("\n\n")
+                          : ""
+                        }${multiPlans.length > 0 && plan && currentPlanTotal === plan.maxItems
+                          ? "\n\n"
+                          : ""
+                        }${plan && currentPlanTotal === plan.maxItems
+                          ? `Plan actual: ${plan.maxItems} viandas ${plan.type === "gran" ? "grandes" : "pequeñas"
+                          }\n${items
+                            .map((i) => `   • ${i.name} x${i.quantity}`)
+                            .join("\n")}\n   Subtotal: $${currentPlanPrice.toLocaleString()}`
+                          : ""
                         }\n\nTotal final: $${totalPrice.toLocaleString()}`
                       )}`
-                    : "#"
+                      : "#"
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex-1 flex items-center justify-center gap-2 rounded-lg text-white text-base px-3 py-2 shadow-lg transition-all duration-300 ${
-                  location.pathname === "/pedidos/motherday" ||
-                  multiPlans.length > 0 ||
-                  currentPlanTotal === (plan?.maxItems || 0)
+                className={`flex-1 flex items-center justify-center gap-2 rounded-lg text-white text-base px-3 py-2 shadow-lg transition-all duration-300 ${location.pathname === "/pedidos/motherday" ||
+                    multiPlans.length > 0 ||
+                    currentPlanTotal === (plan?.maxItems || 0)
                     ? `${theme.buttoncolor} hover:${theme.buttonhovercolor} cursor-pointer`
                     : "bg-gray-400 cursor-not-allowed"
-                }`}
+                  }`}
                 style={{ fontFamily: "Times New Roman, serif" }}
                 onClick={(e) => {
                   if (
@@ -360,8 +354,8 @@ const Navbar: React.FC<NavbarProps> = () => {
                     e.preventDefault();
                   } else {
                     setTimeout(() => {
-                     clearCart();
-                  navigate("/pedidos");
+                      clearCart();
+                      navigate("/pedidos");
                     }, 1000);
                   }
                 }}

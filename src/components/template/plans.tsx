@@ -297,14 +297,14 @@ export default function Plans() {
                 className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
               >
                 <CheckCircle size={23} />
-                Continuar
+                Continuar 
               </button>
               
               {/* BOTÓN "AGREGAR NUEVO PLAN" - solo aparece si completó el plan */}
               {totalInCart === plan?.maxItems && (
                 <button
                   onClick={addNewPlan}
-                  className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 font-medium text-base shadow-lg`}
+                  className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
                 >
                   <CheckCircle size={23} />
                   Agregar Nuevo Plan
@@ -316,7 +316,7 @@ export default function Plans() {
                 className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
               >
                 <RefreshCw size={23} />
-                Empezar de Nuevo
+                Vaciar todo y reiniciar
               </button>
             </div>
           </div>
