@@ -6,7 +6,7 @@ import { useTheme } from "@/context/themeContext";
 
 export default function Plans() {
   const navigate = useNavigate();
-  const { setPlan, plan, items, clearCart } = useCart();
+  const { setPlan, plan, items, clearCart, clearItems, addMultiPlan } = useCart();
   const [showProgressModal, setShowProgressModal] = useState(false);
   const { theme } = useTheme();
 
@@ -32,10 +32,13 @@ export default function Plans() {
   const totalInCart = items.reduce((acc, i) => acc + i.quantity, 0);
 
   useEffect(() => {
-    if (plan !== null && items.length > 0) {
-      setShowProgressModal(true);
-    }
-  }, [plan, items.length]);
+  // Solo mostrar modal si hay plan Y items, pero NO si acabamos de agregar un multiplan
+  if (plan !== null && items.length > 0) {
+    setShowProgressModal(true);
+  } else {
+    setShowProgressModal(false);
+  }
+}, [plan, items.length]);
 
   const selectPlan = (planOption: typeof planOptions[number]) => {
     setPlan({
@@ -55,6 +58,34 @@ export default function Plans() {
     clearCart();
     setShowProgressModal(false);
   };
+
+  const addNewPlan = () => {
+  if (plan && totalInCart === plan.maxItems) {
+    const totalPrice = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+    
+    // 1. Guardar el plan actual
+    addMultiPlan({
+      planId: plan.id,
+      planType: plan.type,
+      quantity: plan.maxItems,
+      totalPrice: totalPrice,
+      items: [...items]
+    });
+    
+    // 2. Limpiar todo para permitir nuevo plan
+    clearItems();
+    
+    // 3. Cerrar el modal
+    setShowProgressModal(false);
+    
+    // 4. Limpiar el plan para desbloquear botones
+    // Usamos un pequeño delay para que el modal se cierre primero
+    setTimeout(() => {
+      // Forzar limpieza del plan sin usar clearCart (que borraría multiPlans)
+      setPlan(null as any);
+    }, 200);
+  }
+};
 
   return (
     <div className="relative min-h-screen flex flex-col">
@@ -145,11 +176,16 @@ export default function Plans() {
                   </ul>
                 </div>
 
-                {/* Botón */}
-                <div className="w-full flex justify-center py-3 md:py-3  px-4">
+                {/* Botón - DISABLED cuando hay un plan activo */}
+                <div className="w-full flex justify-center py-3 md:py-3 px-4">
                   <button
                     onClick={() => selectPlan(planOption)}
-                    className={`w-full rounded-lg  ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} text-base md:text-lg font-serif hover:scale-105 active:scale-95 px-3 py-2 shadow-lg cursor-pointer transition-all duration-300`}
+                    disabled={plan !== null && items.length > 0}
+                    className={`w-full rounded-lg text-base md:text-lg font-serif px-3 py-2 shadow-lg transition-all duration-300 ${
+                      plan !== null && items.length > 0
+                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        : `${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} hover:scale-105 active:scale-95 cursor-pointer`
+                    }`}
                   >
                     Continuar
                   </button>
@@ -180,14 +216,12 @@ export default function Plans() {
                 />
               </div>
               <div className="p-4 relative z-2 sm:p-4 text-center space-y-5">
-                {/* Icono */}
                 <div
                   className={`w-20 h-20 mx-auto rounded-full border-3 ${theme.bordercolor} flex items-center justify-center`}
                 >
                   <Cake size={36} className={`${theme.icons} font-bold`} />
                 </div>
 
-                {/* Nombre */}
                 <div className="flex flex-col gap-2">
                   <h2
                     className={`text-3xl sm:text-3xl text-shadow-lg md:text-2xl font-semibold ${theme.text} mb-4`}
@@ -197,7 +231,6 @@ export default function Plans() {
                   </h2>
                 </div>
 
-                {/* Detalles */}
                 <div className="flex flex-col items-center mb-4">
                   <div className={`text-3xl sm:text-4xl ${theme.text} font-bold`}>
                     Un regalo único
@@ -207,7 +240,6 @@ export default function Plans() {
                   </div>
                 </div>
 
-                {/* Beneficios */}
                 <div className="rounded-xl p-4">
                   <ul
                     className={`space-y-1 ${theme.text} font-bold text-sm sm:text-base`}
@@ -218,7 +250,6 @@ export default function Plans() {
                   </ul>
                 </div>
 
-                {/* Botón */}
                 <div className="w-full flex justify-center py-3 md:py-3 px-4">
                   <button
                     onClick={() => navigate("/pedidos/motherday")}
@@ -236,7 +267,7 @@ export default function Plans() {
         </div>
       </div>
 
-      {/* Modal de progreso */}
+      {/* Modal de progreso - CON BOTÓN "AGREGAR NUEVO PLAN" */}
       {showProgressModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50 px-4">
           <div className={`${theme.background} rounded-2xl p-6 sm:p-8 max-w-sm w-full text-center shadow-2xl space-y-5`}>
@@ -251,23 +282,35 @@ export default function Plans() {
               </span>
             </div>
 
-            <div className={` ${theme.plansBg} rounded-full px-4 mt-2 py-2 inline-block`}>
+            <div className={`${theme.plansBg} rounded-full px-4 mt-2 py-2 inline-block`}>
               <span className={`${theme.text} font-semibold`}>
                 Selección: {totalInCart}/{plan?.maxItems || 7} viandas
               </span>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-3 justify-center">
+            <div className="flex flex-col gap-3 justify-center">
               <button
                 onClick={continueToPreviousPlan}
-                className={`w-full md:w-auto hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base md:text-sm shadow-lg transition-all duration-300`}
+                className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
               >
                 <CheckCircle size={23} />
                 Continuar
               </button>
+              
+              {/* BOTÓN "AGREGAR NUEVO PLAN" - solo aparece si completó el plan */}
+              {totalInCart === plan?.maxItems && (
+                <button
+                  onClick={addNewPlan}
+                  className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 font-medium text-base shadow-lg`}
+                >
+                  <CheckCircle size={23} />
+                  Agregar Nuevo Plan
+                </button>
+              )}
+              
               <button
                 onClick={startNewPlan}
-                className={`w-full md:w-auto hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base md:text-sm shadow-lg transition-all duration-300`}
+                className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
               >
                 <RefreshCw size={23} />
                 Empezar de Nuevo

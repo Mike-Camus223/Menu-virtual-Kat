@@ -10,8 +10,10 @@ interface CartItem {
 
 interface MultiPlan {
   planId: number;
+  planType: "gran" | "peq";
   quantity: number;
   totalPrice: number;
+  items: CartItem[];
 }
 
 export interface PlanData {
@@ -24,7 +26,7 @@ interface CartContextType {
   plan: PlanData | null;
   items: CartItem[];
   multiPlans: MultiPlan[];
-  setPlan: (plan: PlanData) => void;
+  setPlan: (plan: PlanData | null) => void
   addItem: (item: CartItem) => void;
   incrementItem: (id: string) => void;
   removeItem: (id: string) => void;
@@ -92,7 +94,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const setPlan = (newPlan: PlanData) => setPlanState(newPlan);
+  const setPlan = (newPlan: PlanData | null) => setPlanState(newPlan);
 
   const addItem = (item: CartItem) => {
     setItems((prev) => {
