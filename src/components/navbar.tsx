@@ -360,7 +360,8 @@ const Navbar: React.FC<NavbarProps> = () => {
                     e.preventDefault();
                   } else {
                     setTimeout(() => {
-                      clearCart();
+                     clearCart();
+                  navigate("/pedidos");
                     }, 1000);
                   }
                 }}
