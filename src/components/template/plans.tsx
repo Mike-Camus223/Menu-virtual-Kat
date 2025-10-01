@@ -63,22 +63,25 @@ export default function Plans() {
   if (plan && totalInCart === plan.maxItems) {
     const totalPrice = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     
-    // 1. Guardar el plan actual
+    // 1. Generar ID único para este plan guardado
+    const uniquePlanId = Date.now();
+    
+    // 2. Guardar el plan actual con ID único
     addMultiPlan({
-      planId: plan.id,
+      planId: uniquePlanId,
       planType: plan.type,
       quantity: plan.maxItems,
       totalPrice: totalPrice,
       items: [...items]
     });
     
-    // 2. Limpiar todo para permitir nuevo plan
+    // 3. Limpiar todo para permitir nuevo plan
     clearItems();
     
-    // 3. Cerrar el modal
+    // 4. Cerrar el modal
     setShowProgressModal(false);
     
-    // 4. Limpiar el plan para desbloquear botones
+    // 5. Limpiar el plan para desbloquear botones
     // Usamos un pequeño delay para que el modal se cierre primero
     setTimeout(() => {
       // Forzar limpieza del plan sin usar clearCart (que borraría multiPlans)

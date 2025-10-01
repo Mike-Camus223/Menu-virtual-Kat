@@ -35,6 +35,8 @@ interface CartContextType {
   addMultiPlan: (plan: MultiPlan) => void;
   removeMultiPlan: (planId: number) => void;
   clearMultiPlans: () => void;
+  removeCurrentPlan: () => void;
+  removeMultiPlanById: (planId: number) => void;
   saveToStorage: () => void;
   loadFromStorage: () => void;
   isCartOpen: boolean;
@@ -157,6 +159,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const clearMultiPlans = () => setMultiPlans([]);
 
+  const removeCurrentPlan = () => {
+    // Solo vaciar los items, mantener el plan activo
+    setItems([]);
+  };
+
+  const removeMultiPlanById = (planId: number) => {
+    setMultiPlans((prev) => prev.filter((p) => p.planId !== planId));
+  };
+
   const openCartSidebar = () => setIsCartOpen(true);
   const closeCartSidebar = () => setIsCartOpen(false);
 
@@ -175,6 +186,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         addMultiPlan,
         removeMultiPlan,
         clearMultiPlans,
+        removeCurrentPlan,
+        removeMultiPlanById,
         saveToStorage,
         loadFromStorage,
         isCartOpen,

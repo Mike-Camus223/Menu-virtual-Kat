@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Plus, Minus, Loader2, ShoppingBasket, ChevronDown, Loader, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { useCart } from "@/context/cartContext";
-import { useNavigate } from "react-router-dom";
 import Notification from "@/components/system/notification";
 import {
   pollosGran, mealsGran, pastasGran, pescadosGran, tartasGran, tartasBaseRicottaGran,
@@ -51,7 +50,6 @@ export default function Order() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(5);
-  const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [paginationDropdownOpen, setPaginationDropdownOpen] = useState(false);
   const {theme} = useTheme();
@@ -90,11 +88,6 @@ export default function Order() {
 
   // 🔹 "Todas" es la suma total
   categoryCounts["Todas"] = total;
-
-  // Redirigir si no hay plan
-  useEffect(() => {
-    if (!plan) navigate("/pedidos");
-  }, [plan, navigate]);
 
   // 🔹 Establecer productos según el plan seleccionado
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { Salad, Menu, X, ShoppingCart, Trash2, Phone } from "lucide-react";
 import { useCart } from "@/context/cartContext";
@@ -9,13 +9,14 @@ interface NavbarProps { }
 const Navbar: React.FC<NavbarProps> = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setShowNavbar(true);
   }, []);
   
   const [lastScrollY, setLastScrollY] = useState(0);
-  const { items, removeItem, clearCart, plan, isCartOpen, openCartSidebar, closeCartSidebar, multiPlans } = useCart();
+  const { items, clearCart, plan, isCartOpen, openCartSidebar, closeCartSidebar, multiPlans, removeCurrentPlan, removeMultiPlanById } = useCart();
   const { theme } = useTheme();
   const location = useLocation();
 
@@ -34,7 +35,7 @@ const Navbar: React.FC<NavbarProps> = () => {
   // Total precio del plan actual
   const currentPlanPrice = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   
-  // Precio total general
+  // Total precio total general
   const totalPrice = savedPlansPrice + currentPlanPrice;
 
   // Manejo de scroll para mostrar/ocultar navbar
@@ -215,25 +216,24 @@ const Navbar: React.FC<NavbarProps> = () => {
                 {/* Planes guardados - cada plan individual */}
                 {multiPlans.map((mp, idx) => (
                   <div key={idx} className={`${theme.plansBg} rounded-lg p-4`}>
-                    <h4 className={`${theme.title} font-semibold mb-3`}>
-                      Plan viandas {mp.planType === 'gran' ? 'grandes' : 'pequeñas'}
-                    </h4>
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className={`${theme.title} font-semibold`}>
+                        Plan viandas {mp.planType === 'gran' ? 'grandes' : 'pequeñas'}
+                      </h4>
+                      <button 
+                        onClick={() => {
+                          removeMultiPlanById(mp.planId);
+                        }} 
+                        className={`${theme.icons} cursor-pointer hover:opacity-80 transition`}
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
                     <ul className="space-y-2 mb-3">
                       {mp.items.map((item, itemIdx) => (
                         <li key={itemIdx} className={`${theme.text} text-sm flex items-center justify-between`}>
                           <span>• {item.name}</span>
-                          <div className="flex items-center gap-2">
-                            <span className={`${theme.text} font-medium`}>x{item.quantity}</span>
-                            <button 
-                              onClick={() => {
-                                // Crear un objeto item temporal con el id y cantidad para eliminar
-                                removeItem(item.id);
-                              }} 
-                              className={`${theme.icons} cursor-pointer hover:opacity-80 transition`}
-                            >
-                              <Trash2 size={16} />
-                            </button>
-                          </div>
+                          <span className={`${theme.text} font-medium`}>x{item.quantity}</span>
                         </li>
                       ))}
                     </ul>
@@ -246,19 +246,24 @@ const Navbar: React.FC<NavbarProps> = () => {
                 {/* Plan actual */}
                 {plan && items.length > 0 && (
                   <div className={`${theme.plansBg} rounded-lg p-4`}>
-                    <h4 className={`${theme.title} font-semibold mb-3`}>
-                      Plan viandas {plan.type === 'gran' ? 'grandes' : 'pequeñas'}
-                    </h4>
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className={`${theme.title} font-semibold`}>
+                        Plan viandas {plan.type === 'gran' ? 'grandes' : 'pequeñas'}
+                      </h4>
+                      <button 
+                        onClick={() => {
+                          removeCurrentPlan();
+                        }} 
+                        className={`${theme.icons} cursor-pointer hover:opacity-80 transition`}
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
                     <ul className="space-y-2 mb-3">
                       {items.map((item) => (
                         <li key={item.id} className={`${theme.text} text-sm flex items-center justify-between`}>
                           <span>• {item.name}</span>
-                          <div className="flex items-center gap-2">
-                            <span className={`${theme.text} font-medium`}>x{item.quantity}</span>
-                            <button onClick={() => removeItem(item.id)} className={`${theme.icons} cursor-pointer hover:opacity-80 transition`}>
-                              <Trash2 size={16} />
-                            </button>
-                          </div>
+                          <span className={`${theme.text} font-medium`}>x{item.quantity}</span>
                         </li>
                       ))}
                     </ul>
@@ -287,7 +292,10 @@ const Navbar: React.FC<NavbarProps> = () => {
           {(items.length > 0 || multiPlans.length > 0) && (
             <div className={`p-5 flex gap-3 ${theme.cartbackground} border-t ${theme.bordermain}`}>
               <button
-                onClick={clearCart}
+                onClick={() => {
+                  clearCart();
+                  navigate("/pedidos");
+                }}
                 className={`flex-1 flex items-center justify-center gap-2 cursor-pointer rounded-lg bg-gray-200 ${theme.textsecond} text-base px-3 py-2 shadow hover:bg-gray-300 transition-all duration-300`}
                 style={{ fontFamily: "Times New Roman, serif" }}
               >
@@ -309,7 +317,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                             ? multiPlans
                                 .map(
                                   (mp, idx) =>
-                                    `📦 Plan ${idx + 1}: ${mp.quantity} viandas ${
+                                    `Plan ${idx + 1}: ${mp.quantity} viandas ${
                                       mp.planType === "gran" ? "grandes" : "pequeñas"
                                     }\n${mp.items
                                       .map((i) => `   • ${i.name} x${i.quantity}`)
@@ -323,7 +331,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                             : ""
                         }${
                           plan && currentPlanTotal === plan.maxItems
-                            ? `📦 Plan actual: ${plan.maxItems} viandas ${
+                            ? `Plan actual: ${plan.maxItems} viandas ${
                                 plan.type === "gran" ? "grandes" : "pequeñas"
                               }\n${items
                                 .map((i) => `   • ${i.name} x${i.quantity}`)
