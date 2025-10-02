@@ -105,9 +105,9 @@ export default function Plans() {
     // Si viene de motherdayorders, volver allí
     if (location.pathname === "/pedidos/motherday") {
       navigate("/pedidos/motherday");
-    } else if (motherDayItems.length > 0 && !plan) {
-      // Si solo hay productos del Día de la Madre, ir a motherday
-      navigate("/pedidos/motherday");
+    } else if (motherDayItems.length > 0) {
+      // Si hay productos del Día de la Madre, ir a motherdayorders para continuar seleccionando
+      navigate("/pedidos/motherdayorders");
     } else {
       // Si hay un plan activo, ir a order
       navigate("/pedidos/order");
@@ -400,7 +400,7 @@ export default function Plans() {
               {/* Botón Continuar - si hay plan activo o tortas */}
               {(plan && items.length > 0) || motherDayItems.length > 0 ? (
                 <button
-                  onClick={motherDayItems.length > 0 ? () => navigate("/pedidos/motherdayorders") : continueToPreviousPlan}
+                  onClick={continueToPreviousPlan}
                   className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
                 >
                   <CheckCircle size={23} />

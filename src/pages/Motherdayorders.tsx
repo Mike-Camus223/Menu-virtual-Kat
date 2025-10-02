@@ -29,9 +29,6 @@ export default function Motherday() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [paginationDropdownOpen, setPaginationDropdownOpen] = useState(false);
   const { theme } = useTheme();
-  
-  // **NUEVO ESTADO**: Modal de finalización
-  const [showCompletionModal, setShowCompletionModal] = useState(false);
   const navigate = useNavigate();
 
   // 🔹 Obtener productos para Motherday (Tortas y PastelSaludable)
@@ -77,16 +74,7 @@ export default function Motherday() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Mostrar MODAL cuando se agregan tortas por primera vez
-  useEffect(() => {
-    if (motherDayItems.some(item => {
-      const allProductsForMotherday = getAllProductsForMotherday();
-      const product = allProductsForMotherday.find(p => p.id === item.id);
-      return product && (product.category === "Tortas" || product.category === "Pastel Saludable");
-    })) {
-      setShowCompletionModal(true);
-    }
-  }, [motherDayItems]);
+
 
   const handleFilterChange = (category: string) => {
     setSelectedFilter(category);
@@ -387,48 +375,7 @@ export default function Motherday() {
           </div>
         )}
 
-        {/* **MODAL DE FINALIZACIÓN** - Aparece cuando se agregan tortas */}
-        {showCompletionModal && (
-          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50 px-4">
-            <div className={`${theme.background} rounded-2xl p-6 sm:p-8 max-w-sm w-full text-center shadow-2xl space-y-5`}>
-              <h3 className={`text-xl md:text-2xl font-bold ${theme.title}`}>
-                ¡Tortas Agregadas!
-              </h3>
 
-              <div className={`${theme.plansBg} rounded-full px-4 py-2 inline-block`}>
-                <span className={`${theme.text} font-semibold`}>
-                  Has agregado {total} producto{total !== 1 ? 's' : ''} al carrito
-                </span>
-              </div>
-
-              <div className="flex flex-col gap-3 justify-center">
-                {/* Ir al carrito */}
-                <button
-                  onClick={() => {
-                    setShowCompletionModal(false);
-                    openCartSidebar();
-                  }}
-                  className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
-                >
-                  <ShoppingBasket size={23} />
-                  Ir al carrito
-                </button>
-                
-                {/* Volver a plans (agregar más productos) */}
-                <button
-                  onClick={() => {
-                    setShowCompletionModal(false);
-                    navigate("/pedidos/plans");
-                  }}
-                  className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
-                >
-                  <Plus size={23} />
-                  Agregar más productos
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </main>
     </div>
   );
