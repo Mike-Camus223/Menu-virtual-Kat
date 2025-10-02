@@ -36,7 +36,7 @@ interface ThemeContextProps {
 const defaultTheme: Theme = {
     name: "default",
     navbar: "bg-green-800",
-    footer: "from-lime-800 to-green-800",
+    footer: "bg-green-800",
     background: "bg-amber-100",
     title: 'text-lime-800',
     titleSecond: 'text-amber-500',
@@ -55,7 +55,7 @@ const defaultTheme: Theme = {
     cardbackground: 'bg-[#F7FEE7]',
     bordermain: 'border-gray-300',
     cartbackground: 'bg-white',
-    plansBg: 'bg-[#51591B]',
+    plansBg: 'bg-amber-200',
     dropdownring: "ring-lime-400",
     dropdownselected: "bg-lime-200",
 };
