@@ -76,7 +76,7 @@ type EventRange = {
 const EVENTS: EventRange[] = [
     {
         name: "motherday",
-        start: { month: 10, day: 1 },
+        start: { month: 10, day: 4 },
         end: { month: 10, day: 17 },
         theme: {
             name: "motherday",
