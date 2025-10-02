@@ -7,7 +7,7 @@ import { useTheme } from "@/context/themeContext";
 export default function Plans() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setPlan, plan, items, clearCart, clearItems, addMultiPlan, addMotherDayItem, motherDayItems, clearMotherDayItems } = useCart();
+  const { setPlan, plan, items, clearCart, clearItems, addMultiPlan, motherDayItems, clearMotherDayItems } = useCart();
   const [showProgressModal, setShowProgressModal] = useState(false);
   const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
   const [isMotherDayButtonEnabled, setIsMotherDayButtonEnabled] = useState(false);
