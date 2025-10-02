@@ -205,8 +205,6 @@ export default function Order() {
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   };
 
-  const canAddMore = !plan || total < plan.maxItems;
-
   if (!plan) {
     return (
       <div className={`min-h-screen ${theme.background} flex flex-col items-center justify-center gap-6 py-10`}>

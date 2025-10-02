@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Plus, Minus, Loader2, ShoppingBasket, ChevronDown, Loader, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
-import { useNavigate } from "react-router-dom"; // **IMPORT AGREGADO**
+import { Plus, Minus, Loader2, ShoppingBasket, ChevronDown, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { useCart } from "@/context/cartContext";
 import Notification from "@/components/system/notification";
 import { Tortas, PastelSaludable } from "@/components/utils/DataProduct";
@@ -18,7 +17,7 @@ interface Product {
 // No need for mock cart hook - using real useCart from context
 
 export default function Motherday() {
-  const { items, addItem, incrementItem, removeItem, openCartSidebar, addMotherDayItem, removeMotherDayItem, decrementMotherDayItem, motherDayItems } = useCart();
+  const { openCartSidebar, addMotherDayItem, decrementMotherDayItem, motherDayItems } = useCart();
   const [selectedFilter, setSelectedFilter] = useState("Todas");
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
@@ -29,7 +28,6 @@ export default function Motherday() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [paginationDropdownOpen, setPaginationDropdownOpen] = useState(false);
   const { theme } = useTheme();
-  const navigate = useNavigate();
 
   // 🔹 Obtener productos para Motherday (Tortas y PastelSaludable)
   const getAllProductsForMotherday = (): Product[] => {
