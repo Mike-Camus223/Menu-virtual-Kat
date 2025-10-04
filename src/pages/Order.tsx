@@ -549,6 +549,7 @@ export default function Order() {
             </div>
           </div>
         )}
+        <div className={`h-15 sm:h-5 ${theme.background}`}></div>
       </main>
     </div>
   );

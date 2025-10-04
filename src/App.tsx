@@ -1,17 +1,19 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import PublicTemplate from "./template/PublicTemplate";
+
+// Pages
 import Home from "./pages/Home.tsx";
 import Menu from "./pages/Menu.tsx";
 import Order from "./pages/Order.tsx";
 import About from "./pages/About.tsx";
+import MotherdayOrder from "./pages/Motherdayorders.tsx";
+
+// Components
 import Plans from "./components/template/plans.tsx";
 
-
-
-// Importar el provider
+// Contexts
 import { CartProvider } from "./context/cartContext";
 import { ThemeProvider } from "./context/themeContext.tsx";
-import MotherdayOrder from "./pages/Motherdayorders.tsx";
 
 export default function App() {
   return (
@@ -19,14 +21,16 @@ export default function App() {
       <ThemeProvider>
         <BrowserRouter>
           <Routes>
+            {/* Home */}
             <Route
               path="/"
               element={
                 <PublicTemplate>
-                  <Home></Home>
+                  <Home />
                 </PublicTemplate>
               }
             />
+
             <Route
               path="/menu"
               element={
@@ -35,7 +39,7 @@ export default function App() {
                 </PublicTemplate>
               }
             />
-            {/* /pedidos ahora abre Plans */}
+
             <Route
               path="/pedidos"
               element={
@@ -44,7 +48,7 @@ export default function App() {
                 </PublicTemplate>
               }
             />
-            {/* /pedidos/order abre la pantalla de ordenes */}
+
             <Route
               path="/pedidos/order"
               element={
@@ -53,6 +57,16 @@ export default function App() {
                 </PublicTemplate>
               }
             />
+
+            <Route
+              path="/pedidos/motherday"
+              element={
+                <PublicTemplate>
+                  <MotherdayOrder />
+                </PublicTemplate>
+              }
+            />
+
             <Route
               path="/about"
               element={
@@ -61,14 +75,9 @@ export default function App() {
                 </PublicTemplate>
               }
             />
-            <Route
-  path="/pedidos/motherday"
-  element={
-    <PublicTemplate>
-      <MotherdayOrder />
-    </PublicTemplate>
-  }
-/>
+
+            {/* Redirección automática a Home */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
