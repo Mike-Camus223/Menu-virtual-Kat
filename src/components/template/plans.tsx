@@ -7,12 +7,11 @@ import { useTheme } from "@/context/themeContext";
 export default function Plans() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setPlan, plan, items, clearCart, clearItems, addMultiPlan, motherDayItems, clearMotherDayItems } = useCart();
+  const { setPlan, plan, items, clearCart, clearItems, addMultiPlan, motherDayItems } = useCart();
   const [showProgressModal, setShowProgressModal] = useState(false);
   const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
   const [isMotherDayButtonEnabled, setIsMotherDayButtonEnabled] = useState(false);
   const [isAddingNewPlan, setIsAddingNewPlan] = useState(false);
-  const [justReturnedFromMotherDay, setJustReturnedFromMotherDay] = useState(false);
   const { theme } = useTheme();
 
   const planOptions = [
@@ -37,59 +36,32 @@ export default function Plans() {
   const totalInCart = items.reduce((acc, i) => acc + i.quantity, 0);
 
   useEffect(() => {
-  // Lógica mejorada para mostrar el modal correctamente
-  const comingFromOrder = location.pathname === "/pedidos/order";
-  const comingFromMotherDay = location.pathname === "/pedidos/motherday";
-  
+  // CASO 1: Si estamos agregando nuevo plan, NO MOSTRAR MODAL
   if (isAddingNewPlan) {
-    // SI ESTAMOS AGREGANDO UN NUEVO PLAN: BLOQUEAR CUALQUIER APARICIÓN DE MODAL
-    // Esto previene el DOBLE MODAL definitivamente
     setShowProgressModal(false);
     setIsButtonsDisabled(false);
-    return; // SALIR INMEDIATAMENTE - NO MOSTRAR NINGÚN MODAL
-  }
-  
-  // PRIORIDAD 1: Si acabamos de regresar de seleccionar tortas, MOSTRAR modal con productos día de la madre
-  if (justReturnedFromMotherDay) {
-    setShowProgressModal(true);
-    setIsButtonsDisabled(true);
-    setJustReturnedFromMotherDay(false);
     return;
   }
-  
-  // PRIORIDAD 2: Si venimos de seleccionar tortas (Motherday) y tenemos tortas, MOSTRAR modal
-  if (comingFromMotherDay && motherDayItems.length > 0) {
-    setShowProgressModal(true);
-    setIsButtonsDisabled(true);
-    setJustReturnedFromMotherDay(true);
-    return;
-  }
-  
-  // PRIORIDAD 3: Si hay tortas (independientemente de si hay plan o no), MOSTRAR modal de tortas
+
+  // CASO 2: Si hay productos del Día de la Madre, mostrar modal
   if (motherDayItems.length > 0) {
     setShowProgressModal(true);
     setIsButtonsDisabled(true);
     return;
   }
-  
-  // PRIORIDAD 4: Si hay un plan activo con items, mostrar modal de plan
+
+  // CASO 3: Si hay plan activo con items, mostrar modal
   if (plan !== null && items.length > 0) {
     setShowProgressModal(true);
     setIsButtonsDisabled(true);
     return;
   }
-  
-  // PRIORIDAD 5: Si venimos de Order.tsx y solo hay productos del Día de la Madre, mostrar modal
-  if (comingFromOrder && motherDayItems.length > 0 && items.length === 0) {
-    setShowProgressModal(true);
-    setIsButtonsDisabled(true);
-    return;
-  }
-  
-  // CASO 6: No hay nada, ocultar modal
+
+  // CASO 4: No mostrar modal
   setShowProgressModal(false);
   setIsButtonsDisabled(false);
-  }, [plan, items.length, motherDayItems.length, location.pathname, isAddingNewPlan, justReturnedFromMotherDay]);
+}, [plan, items.length, motherDayItems.length, isAddingNewPlan]);
+
 
   const selectPlan = (planOption: typeof planOptions[number]) => {
     setPlan({
@@ -103,7 +75,7 @@ export default function Plans() {
   const continueToPreviousPlan = () => {
     setShowProgressModal(false);
     // Si viene de motherdayorders, volver allí
-    if (location.pathname === "/pedidos/motherday") {
+    if (location.pathname === "/pedidos/motherdayorders") {
       navigate("/pedidos/motherday");
     } else if (motherDayItems.length > 0) {
       // Si hay productos del Día de la Madre, ir a motherdayorders para continuar seleccionando
@@ -124,51 +96,36 @@ export default function Plans() {
   };
 
   const addNewPlan = () => {
-    // 1. Marcar que estamos agregando un nuevo plan para prevenir doble modal
-    setIsAddingNewPlan(true);
+  // 1. PREVENIR inmediatamente cualquier modal
+  setIsAddingNewPlan(true);
+  setShowProgressModal(false);
+  setIsButtonsDisabled(false);
+
+  // 2. Guardar plan actual si existe
+  if (plan && items.length > 0) {
+    const uniquePlanId = Date.now();
+    const basePrice = plan.type === "gran" ? 3500 : 2800;
+    const totalPrice = basePrice * plan.maxItems;
     
-    // 2. Si hay plan activo con items, guardarlo como multi-plan
-    if (plan && items.length > 0) {
-      // 3. Generar ID único para este plan guardado
-      const uniquePlanId = Date.now();
-      
-      // 4. Calcular el precio total (precio base por cantidad)
-      const basePrice = plan.type === "gran" ? 3500 : 2800;
-      const totalPrice = basePrice * plan.maxItems;
-      
-      // 5. Guardar el plan actual con ID único
-      addMultiPlan({
-        planId: uniquePlanId,
-        planType: plan.type,
-        quantity: plan.maxItems,
-        totalPrice: totalPrice,
-        items: [...items]
-      });
-      
-      // 6. Limpiar items del plan actual
-      clearItems();
-    }
+    addMultiPlan({
+      planId: uniquePlanId,
+      planType: plan.type,
+      quantity: plan.maxItems,
+      totalPrice: totalPrice,
+      items: [...items]
+    });
     
-    // 7. Cerrar el modal primero
-    setShowProgressModal(false);
-    
-    // 8. Limpiar el plan para desbloquear botones (siempre, para poder seleccionar nuevo plan)
-    setPlan(null as any);
-    
-    // 9. Habilitar los botones de planes
-    setIsButtonsDisabled(false);
-    
-    // 10. Si hay tortas, limpiar las tortas también para permitir nuevo plan
-    if (motherDayItems.length > 0) {
-      clearMotherDayItems();
-    }
-    
-    // 11. **ESPERAR MÁS TIEMPO** para asegurar que TODO el estado se actualice antes de resetear la bandera
-    // Esto previene que el useEffect vuelva a abrir el modal
-    setTimeout(() => {
-      setIsAddingNewPlan(false);
-    }, 500); // Aumentado de 100ms a 500ms para mayor seguridad
-  };
+    clearItems();
+  }
+
+  // 3. Limpiar plan actual
+  setPlan(null);
+
+  // 4. Resetear después de un tiempo seguro
+  setTimeout(() => {
+    setIsAddingNewPlan(false);
+  }, 800); // Aumenta a 800ms para mayor seguridad
+};
 
   const addMotherDayCake = () => {
     // Solo cerrar el modal y habilitar el botón de Ver Detalles
