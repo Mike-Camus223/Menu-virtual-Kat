@@ -1,12 +1,11 @@
 import { Package, RefreshCw, CheckCircle, Wheat, Cake } from "lucide-react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCart } from "@/context/cartContext";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/context/themeContext";
 
 export default function Plans() {
   const navigate = useNavigate();
-  const location = useLocation();
   const { setPlan, plan, items, clearCart, clearItems, addMultiPlan, motherDayItems } = useCart();
   const [showProgressModal, setShowProgressModal] = useState(false);
   const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
@@ -113,14 +112,15 @@ export default function Plans() {
   // 2. Guardar plan actual si existe
   if (plan && items.length > 0) {
     const uniquePlanId = Date.now();
-    const basePrice = plan.type === "gran" ? 3500 : 2800;
-    const totalPrice = basePrice * plan.maxItems;
+    
+    // ✅ CALCULAR PRECIO REAL sumando los precios de los productos
+    const totalPrice = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     
     addMultiPlan({
       planId: uniquePlanId,
       planType: plan.type,
       quantity: plan.maxItems,
-      totalPrice: totalPrice,
+      totalPrice: totalPrice, // ✅ PRECIO REAL
       items: [...items]
     });
     
@@ -129,18 +129,6 @@ export default function Plans() {
 
   // 3. Limpiar plan actual
   setPlan(null);
-
-  // 4. ✅ ELIMINAR COMPLETAMENTE el setTimeout - NO resetear isAddingNewPlan
-  // setIsAddingNewPlan se queda en TRUE permanentemente hasta que el usuario haga "Vaciar todo"
-};
-
- const addMotherDayCake = () => {
-  // Cerrar el modal PERMANENTEMENTE y habilitar todo
-  setShowProgressModal(false);
-  setIsMotherDayButtonEnabled(true);
-  setIsButtonsDisabled(false);
-  // ✅ También prevenir que el modal reaparezca
-  setIsAddingNewPlan(true);
 };
 
   return (

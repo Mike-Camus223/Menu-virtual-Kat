@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { Salad, Menu, X, ShoppingCart, Trash2, Phone } from "lucide-react";
 import { useCart } from "@/context/cartContext";
@@ -18,7 +18,6 @@ const Navbar: React.FC<NavbarProps> = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const { items, clearCart, plan, isCartOpen, openCartSidebar, closeCartSidebar, multiPlans, removeCurrentPlan, removeMultiPlanById, motherDayItems, removeMotherDayItem, decrementMotherDayItem } = useCart();
   const { theme } = useTheme();
-  const location = useLocation();
 
   // Total de items en carrito actual
   const currentPlanTotal = items.reduce((acc, i) => acc + i.quantity, 0);
@@ -349,62 +348,61 @@ const Navbar: React.FC<NavbarProps> = () => {
 
               <a
                 href={
-                  // Solo productos del Día de la Madre
-                  location.pathname === "/pedidos/motherday" || (motherDayItems.length > 0 && multiPlans.length === 0 && (!plan || currentPlanTotal === 0))
+                  // SOLO productos del Día de la Madre (sin planes de vianda)
+                  (motherDayItems.length > 0 && multiPlans.length === 0 && (!plan || items.length === 0))
                     ? `https://wa.me/+5491121911765?text=${encodeURIComponent(
-                      `Hola, por día de la madre quiero comprar estos productos:\n\n${motherDayItems
-                        .map((i) => `• ${i.name} x${i.quantity}`)
-                        .join("\n")}\n\nTotal: $${motherDayPrice.toLocaleString()}`
+                      `¡Hola! Quiero realizar mi pedido del Día de la Madre:\n\n` +
+                      `PRODUCTOS DÍA DE LA MADRE:\n` +
+                      `${motherDayItems.map((i) => `• ${i.name} x${i.quantity}`).join("\n")}\n\n` +
+                      `Total: $${motherDayPrice.toLocaleString()}\n\n` +
+                      `¡Quedo atenta a confirmación!`
                     )}`
-                    : // Planes + productos del Día de la Madre
-                    multiPlans.length > 0 || (plan && currentPlanTotal === plan.maxItems)
+                    : // Planes de vianda + productos del Día de la Madre (o solo planes)
+                    (multiPlans.length > 0 || (plan && items.length > 0))
                       ? `https://wa.me/+5491121911765?text=${encodeURIComponent(
-                        `Hola, me gustaría hacer un pedido:\n\n${multiPlans.length > 0
-                          ? multiPlans
-                            .map(
-                              (mp, idx) =>
-                                `Plan ${idx + 1}: ${mp.quantity} viandas ${mp.planType === "gran" ? "grandes" : "pequeñas"
-                                }\n${mp.items
-                                  .map((i) => `   • ${i.name} x${i.quantity}`)
-                                  .join("\n")}\n   Subtotal: $${mp.totalPrice.toLocaleString()}`
-                            )
-                            .join("\n\n")
+                        `¡Hola! Quiero realizar el siguiente pedido:\n\n` +
+
+                        // Planes anteriores
+                        `${multiPlans.length > 0
+                          ? multiPlans.map((mp) =>
+                            `Plan ${mp.quantity} viandas ${mp.planType === "gran" ? "grandes" : "pequeñas"}:\n` +
+                            mp.items.map((i) => `• ${i.name} x${i.quantity}`).join("\n") +
+                            `\nSubtotal: $${mp.totalPrice.toLocaleString()}\n\n`
+                          ).join("")
                           : ""
-                        }${multiPlans.length > 0 && plan && currentPlanTotal === plan.maxItems
-                          ? "\n\n"
+                        }` +
+
+                        // Plan actual
+                        `${multiPlans.length > 0 && plan && items.length > 0 ? "" : ""}` +
+                        `${plan && items.length > 0
+                          ? `Plan ${plan.maxItems} viandas ${plan.type === "gran" ? "grandes" : "pequeñas"}:\n` +
+                          items.map((i) => `• ${i.name} x${i.quantity}`).join("\n") +
+                          `\nSubtotal: $${currentPlanPrice.toLocaleString()}\n\n`
                           : ""
-                        }${plan && currentPlanTotal === plan.maxItems
-                          ? `Plan actual: ${plan.maxItems} viandas ${plan.type === "gran" ? "grandes" : "pequeñas"
-                          }\n${items
-                            .map((i) => `   • ${i.name} x${i.quantity}`)
-                            .join("\n")}\n   Subtotal: $${currentPlanPrice.toLocaleString()}`
+                        }` +
+
+                        // Productos Día de la Madre (si existen)
+                        `${motherDayItems.length > 0
+                          ? `PRODUCTOS DÍA DE LA MADRE:\n` +
+                          motherDayItems.map((i) => `• ${i.name} x${i.quantity}`).join("\n") +
+                          `\nSubtotal: $${motherDayPrice.toLocaleString()}\n\n`
                           : ""
-                        }${motherDayItems.length > 0
-                          ? `\n\nY por día de la madre quiero comprar:\n${motherDayItems
-                            .map((i) => `   • ${i.name} x${i.quantity}`)
-                            .join("\n")}`
-                          : ""
-                        }\n\nTotal final: $${totalPrice.toLocaleString()}`
+                        }` +
+
+                        `TOTAL FINAL: $${totalPrice.toLocaleString()}\n\n` +
+                        `¡Quedo atento/a a confirmación y detalles de pago!`
                       )}`
                       : "#"
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex-1 flex items-center justify-center gap-2 rounded-lg text-white text-base px-3 py-2 shadow-lg transition-all duration-300 ${location.pathname === "/pedidos/motherday" ||
-                    multiPlans.length > 0 ||
-                    currentPlanTotal === (plan?.maxItems || 0) ||
-                    motherDayItems.length > 0
+                className={`flex-1 flex items-center justify-center gap-2 rounded-lg text-white text-base px-3 py-2 shadow-lg transition-all duration-300 ${motherDayItems.length > 0 || multiPlans.length > 0 || (plan && items.length > 0)
                     ? `${theme.buttoncolor} hover:${theme.buttonhovercolor} cursor-pointer`
                     : "bg-gray-400 cursor-not-allowed"
                   }`}
                 style={{ fontFamily: "Times New Roman, serif" }}
                 onClick={(e) => {
-                  if (
-                    location.pathname !== "/pedidos/motherday" &&
-                    multiPlans.length === 0 &&
-                    currentPlanTotal !== (plan?.maxItems || 0) &&
-                    motherDayItems.length === 0
-                  ) {
+                  if (motherDayItems.length === 0 && multiPlans.length === 0 && (!plan || items.length === 0)) {
                     e.preventDefault();
                   } else {
                     setTimeout(() => {
@@ -417,6 +415,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                 <Phone size={20} strokeWidth={1.75} />
                 Comprar
               </a>
+
             </div>
           )}
         </div>
