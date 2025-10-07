@@ -183,10 +183,10 @@ export default function Motherday() {
           </div>
 
           <div className="space-y-3 block lg:hidden sm:space-y-4 lg:space-y-5">
-            <p className={`${theme.text} title3 text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-wide`}>
+            <p className={`${theme.text} title3 text-4xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-wide`}>
               FELIZ DÍA DE
             </p>
-            <h1 className="text-4xl sm:text-5xl title3 lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold leading-tight">
+            <h1 className="text-5xl sm:text-5xl title3 lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold leading-tight">
               <span className={`block ${theme.text}`}>LAS MADRES</span>
             </h1>
           </div>
