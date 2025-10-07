@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import PublicTemplate from "./template/PublicTemplate";
-
 // Pages
 import Home from "./pages/Home.tsx";
 import Menu from "./pages/Menu.tsx";
