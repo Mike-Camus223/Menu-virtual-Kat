@@ -368,7 +368,7 @@ export default function Plans() {
                   className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
                 >
                   <CheckCircle size={23} />
-                  Continuar
+                  Continuar con lo seleccionado
                 </button>
               ) : null}
 
@@ -379,20 +379,9 @@ export default function Plans() {
                   className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
                 >
                   <CheckCircle size={23} />
-                  Agregar Nuevo Plan
+                  Agregar Nueva Compra
                 </button>
               ) : null}
-
-              {/* BOTÓN "AÑADIR TORTA DÍA DE LA MADRE" - aparece SIEMPRE que sea tema motherday */}
-{theme.name === "motherday" && motherDayItems.length === 0 && (
-  <button
-    onClick={addMotherDayCake}
-    className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
-  >
-    <Cake size={23} />
-    Añadir Torta Día de la Madre
-  </button>
-)}
 
               {/* Botón Vaciar - siempre visible */}
               <button
