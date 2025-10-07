@@ -173,10 +173,12 @@ export const postresPeq = [
 
 // src/components/utils/DataProduct.ts
 export const Tortas = [
-  { id: "482315", name: "Torta de Chocolate", image: "https://www.splenda.com/wp-content/uploads/2020/05/american-classic-cheesecake-scaled.jpg", category: "Tortas", description: "Deliciosa torta de chocolate con relleno de crema.", price: 4000 },
-  { id: "482703", name: "Torta de Vainilla", image: "https://images.unsplash.com/photo-1617196032763-3f3b7e5f49f7?w=400&h=300&fit=crop", category: "Tortas", description: "Torta suave de vainilla con cubierta de frutas.", price: 3800 },
-  { id: "481542", name: "Torta Red Velvet", image: "https://images.unsplash.com/photo-1630243538021-68c4d8f69d53?w=400&h=300&fit=crop", category: "Tortas", description: "Torta Red Velvet con crema de queso y decoración elegante.", price: 4200 },
-  { id: "482900", name: "Torta de Frutas", image: "https://images.unsplash.com/photo-1620919187967-d8c1b6c06d92?w=400&h=300&fit=crop", category: "Tortas", description: "Torta fresca con crema chantilly y frutas de temporada.", price: 4500 },
+  { id: "482315", name: "Mini Torta de Chocolate", image: "/images/cakes/tortachocolate.jpg", category: "Tortas", description: "Deliciosa torta de chocolate con relleno de crema.", price: 4000 },
+  { id: "482703", name: "Torta de Vainilla", image: "/images/cakes/tortachantilli.jpg", category: "Tortas", description: "Torta suave de vainilla con cubierta de frutas.", price: 3800 },
+  { id: "481542", name: "Torta Red Velvet", image: "https://www.infobae.com/new-resizer/DGoMOTuyK29Gwu_0GG0rzZg4VGk=/arc-anglerfish-arc2-prod-infobae/public/52E6H6YM2NHAHHAR6S7SL47SEM.jpg", category: "Tortas", description: "Torta Red Velvet con crema de queso y decoración elegante.", price: 4200 },
+  { id: "482900", name: "Torta de Frutas", image: "/images/cakes/tortachantilliv2.jpg", category: "Tortas", description: "Torta fresca con crema chantilly y frutas de temporada.", price: 4500 },
+  { id: "482900", name: "Torta corazon", image: "/images/cakes/tortacorazon.jpg", category: "Tortas", description: "Torta fresca con crema chantilly y frutas de temporada.", price: 4500 },
+  { id: "482900", name: "Torta oreo", image: "/images/cakes/tortaoreo.jpg", category: "Tortas", description: "Torta fresca con crema chantilly y frutas de temporada.", price: 4500 },
 ];
 
 export const PastelSaludable = [
