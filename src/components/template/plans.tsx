@@ -274,11 +274,11 @@ export default function Plans() {
                 </div>
 
                 <div className="flex flex-col items-center mb-4">
-                  <div className={`text-3xl sm:text-4xl ${theme.text} font-bold`}>
-                    Un regalo único
+                  <div className={`text-2xl sm:text-2xl ${theme.text} font-bold`}>
+                    Dulzura para mamá
                   </div>
                   <div className={`${theme.text} font-bold text-sm sm:text-base mt-1`}>
-                    Incluye postre y sorpresa especial
+                    Postrecitos deliciosos
                   </div>
                 </div>
 
@@ -301,7 +301,7 @@ export default function Plans() {
                         : `${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} hover:scale-105 active:scale-95 cursor-pointer`
                       }`}
                   >
-                    Ver Detalles
+                    Continuar
                   </button>
                 </div>
                 <p className={`text-xs ${theme.text} font-bold sm:text-sm`}>

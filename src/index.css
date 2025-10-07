@@ -93,6 +93,14 @@ h1, h2, h3, h4, h5, h6 {
 background-color: #2D641C;
 }
 
+.motherdaybg {
+background-color: #FCF2F8;
+opacity: 0.8;
+background-image:  radial-gradient(#fd69a4 1.85px, transparent 1.85px), radial-gradient(#f1bbda 1.85px, #FCF2F8 1.85px);
+background-size: 74px 74px;
+background-position: 0 0,37px 37px;
+}
+
 @keyframes dropdown {
   0% { opacity: 0; transform: translateY(-5px); }
   100% { opacity: 1; transform: translateY(0); }
@@ -101,6 +109,17 @@ background-color: #2D641C;
   animation: dropdown 0.2s ease-out forwards;
 }
 
+/* Reemplaza tu clase .heart32 con esto: */
+.heart32 {
+  position: relative;
+  width: 80%;
+  height: 80%;
+  overflow: hidden;
+  clip-path: path("M12 4.248c-3.148-5.402-12-3.825-12 2.944 0 4.661 5.571 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-6.792-8.875-8.306-12-2.944z");
+  transform: scale(4);
+  transform-origin: center center;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
 
 .text-card {
   color: #64815c;
