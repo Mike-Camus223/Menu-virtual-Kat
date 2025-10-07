@@ -36,36 +36,30 @@ export default function Plans() {
   const totalInCart = items.reduce((acc, i) => acc + i.quantity, 0);
 
   useEffect(() => {
-      console.log("DEBUG Modal:", { 
+  console.log("DEBUG Modal:", { 
     isAddingNewPlan, 
     motherDayItems: motherDayItems.length, 
     plan: plan?.type, 
     items: items.length 
-  })
-  // CASO 1: Si estamos agregando nuevo plan, NO MOSTRAR MODAL
+  });
+  
+  // CASO 1: Si el usuario ya interactuó con el modal, NUNCA más mostrar
   if (isAddingNewPlan) {
     setShowProgressModal(false);
     setIsButtonsDisabled(false);
     return;
   }
 
-  // CASO 2: Si hay productos del Día de la Madre, mostrar modal
-  if (motherDayItems.length > 0) {
+  // CASO 2: Solo mostrar modal si hay algo en el carrito Y el usuario no ha interactuado antes
+  const hasCartItems = motherDayItems.length > 0 || (plan !== null && items.length > 0);
+  
+  if (hasCartItems) {
     setShowProgressModal(true);
     setIsButtonsDisabled(true);
-    return;
+  } else {
+    setShowProgressModal(false);
+    setIsButtonsDisabled(false);
   }
-
-  // CASO 3: Si hay plan activo con items, mostrar modal
-  if (plan !== null && items.length > 0) {
-    setShowProgressModal(true);
-    setIsButtonsDisabled(true);
-    return;
-  }
-
-  // CASO 4: No mostrar modal
-  setShowProgressModal(false);
-  setIsButtonsDisabled(false);
 }, [plan, items.length, motherDayItems.length, isAddingNewPlan]);
 
 
@@ -79,8 +73,10 @@ export default function Plans() {
   };
 
   const continueToPreviousPlan = () => {
+  // Cerrar modal y prevenir que reaparezca
   setShowProgressModal(false);
-  
+  setIsAddingNewPlan(true); // ✅ Prevenir reapparición
+
   // PRIORIDAD 1: Si hay plan activo con items, ir a ORDER (viandas)
   if (plan && items.length > 0) {
     navigate("/pedidos/order");
@@ -98,20 +94,21 @@ export default function Plans() {
 };
 
   const startNewPlan = () => {
-    // Vaciar TODO: carrito, plan, y resetear estados
-    clearCart();
-    setPlan(null as any);
-    setIsButtonsDisabled(false);
-    setIsMotherDayButtonEnabled(false);
-    setShowProgressModal(false);
-  };
+  // Vaciar TODO: carrito, plan, y resetear estados
+  clearCart();
+  setPlan(null as any);
+  setIsButtonsDisabled(false);
+  setIsMotherDayButtonEnabled(false);
+  setShowProgressModal(false);
+  setIsAddingNewPlan(false);
+};
 
   const addNewPlan = () => {
-  // 1. PREVENIR inmediatamente cualquier modal
+  // 1. PREVENIR inmediatamente cualquier modal - PERMANENTEMENTE
   setIsAddingNewPlan(true);
   setShowProgressModal(false);
   setIsButtonsDisabled(false);
-  setIsMotherDayButtonEnabled(true); // ✅ HABILITAR botón de Día de la Madre también
+  setIsMotherDayButtonEnabled(true);
 
   // 2. Guardar plan actual si existe
   if (plan && items.length > 0) {
@@ -133,19 +130,18 @@ export default function Plans() {
   // 3. Limpiar plan actual
   setPlan(null);
 
-  // 4. NO limpiar motherDayItems - el usuario quiere mantener las tortas
-
-  // 5. Resetear después de un tiempo seguro
-  setTimeout(() => {
-    setIsAddingNewPlan(false);
-  }, 1000); // Aumenta a 1000ms para mayor seguridad
+  // 4. ✅ ELIMINAR COMPLETAMENTE el setTimeout - NO resetear isAddingNewPlan
+  // setIsAddingNewPlan se queda en TRUE permanentemente hasta que el usuario haga "Vaciar todo"
 };
 
-  const addMotherDayCake = () => {
-    // Solo cerrar el modal y habilitar el botón de Ver Detalles
-    setShowProgressModal(false);
-    setIsMotherDayButtonEnabled(true);
-  };
+ const addMotherDayCake = () => {
+  // Cerrar el modal PERMANENTEMENTE y habilitar todo
+  setShowProgressModal(false);
+  setIsMotherDayButtonEnabled(true);
+  setIsButtonsDisabled(false);
+  // ✅ También prevenir que el modal reaparezca
+  setIsAddingNewPlan(true);
+};
 
   return (
     <div className="relative min-h-screen flex flex-col">
@@ -174,11 +170,10 @@ export default function Plans() {
         </div>
 
         {/* Cards */}
-        <div className={`grid gap-6 w-full max-w-4xl md:max-w-5xl ${
-          theme.name === "motherday" 
-            ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" 
+        <div className={`grid gap-6 w-full max-w-4xl md:max-w-5xl ${theme.name === "motherday"
+            ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
             : "grid-cols-1 sm:grid-cols-2"
-        }`}>
+          }`}>
           {planOptions.map((planOption) => (
             <div
               key={planOption.id}
@@ -241,11 +236,10 @@ export default function Plans() {
                   <button
                     onClick={() => selectPlan(planOption)}
                     disabled={isButtonsDisabled || (plan !== null && items.length > 0)}
-                    className={`w-full rounded-lg text-base md:text-lg font-serif px-3 py-2 shadow-lg transition-all duration-300 ${
-                      isButtonsDisabled || (plan !== null && items.length > 0)
+                    className={`w-full rounded-lg text-base md:text-lg font-serif px-3 py-2 shadow-lg transition-all duration-300 ${isButtonsDisabled || (plan !== null && items.length > 0)
                         ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                         : `${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} hover:scale-105 active:scale-95 cursor-pointer`
-                    }`}
+                      }`}
                   >
                     Continuar
                   </button>
@@ -312,16 +306,15 @@ export default function Plans() {
 
                 <div className="w-full flex justify-center py-3 md:py-3 px-4">
                   <button
-  onClick={() => navigate("/pedidos/motherday")}
-  disabled={!isMotherDayButtonEnabled && (plan !== null && items.length > 0) && motherDayItems.length === 0}
-  className={`w-full rounded-lg text-base md:text-lg font-serif px-3 py-2 shadow-lg transition-all duration-300 ${
-    !isMotherDayButtonEnabled && (plan !== null && items.length > 0) && motherDayItems.length === 0
-      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-      : `${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} hover:scale-105 active:scale-95 cursor-pointer`
-  }`}
->
-  Ver Detalles
-</button>
+                    onClick={() => navigate("/pedidos/motherday")}
+                    disabled={!isMotherDayButtonEnabled && (plan !== null && items.length > 0) && motherDayItems.length === 0}
+                    className={`w-full rounded-lg text-base md:text-lg font-serif px-3 py-2 shadow-lg transition-all duration-300 ${!isMotherDayButtonEnabled && (plan !== null && items.length > 0) && motherDayItems.length === 0
+                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        : `${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} hover:scale-105 active:scale-95 cursor-pointer`
+                      }`}
+                  >
+                    Ver Detalles
+                  </button>
                 </div>
                 <p className={`text-xs ${theme.text} font-bold sm:text-sm`}>
                   * Podrás personalizar tus productos en el siguiente paso
@@ -337,35 +330,35 @@ export default function Plans() {
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50 px-4">
           <div className={`${theme.background} rounded-2xl p-6 sm:p-8 max-w-sm w-full text-center shadow-2xl space-y-5`}>
             <h3 className={`text-xl md:text-2xl font-bold ${theme.title}`}>
-                {motherDayItems.length > 0 ? "Productos Día de la Madre" : "Selección Guardada"}
-              </h3>
+              {motherDayItems.length > 0 ? "Productos Día de la Madre" : "Selección Guardada"}
+            </h3>
 
             {plan && items.length > 0 && (
-                <>
-                  <div className={`${theme.plansBg} rounded-full px-4 mt-2 py-2 inline-block`}>
-                    <span className={`${theme.text} font-semibold`}>
-                      Plan de {plan?.maxItems || 7} viandas{" "}
-                      {plan?.type === "gran" ? "grandes" : "pequeñas"}
-                    </span>
-                  </div>
-
-                  {motherDayItems.length === 0 && (
-                    <div className={`${theme.plansBg} rounded-full px-4 mt-2 py-2 inline-block`}>
-                      <span className={`${theme.text} font-semibold`}>
-                        Selección: {totalInCart}/{plan?.maxItems || 7} viandas
-                      </span>
-                    </div>
-                  )}
-                </>
-              )}
-
-              {motherDayItems.length > 0 && (
+              <>
                 <div className={`${theme.plansBg} rounded-full px-4 mt-2 py-2 inline-block`}>
                   <span className={`${theme.text} font-semibold`}>
-                    Tortas Día de la Madre: {motherDayItems.reduce((acc, item) => acc + item.quantity, 0)} productos
+                    Plan de {plan?.maxItems || 7} viandas{" "}
+                    {plan?.type === "gran" ? "grandes" : "pequeñas"}
                   </span>
                 </div>
-              )}
+
+                {motherDayItems.length === 0 && (
+                  <div className={`${theme.plansBg} rounded-full px-4 mt-2 py-2 inline-block`}>
+                    <span className={`${theme.text} font-semibold`}>
+                      Selección: {totalInCart}/{plan?.maxItems || 7} viandas
+                    </span>
+                  </div>
+                )}
+              </>
+            )}
+
+            {motherDayItems.length > 0 && (
+              <div className={`${theme.plansBg} rounded-full px-4 mt-2 py-2 inline-block`}>
+                <span className={`${theme.text} font-semibold`}>
+                  Tortas Día de la Madre: {motherDayItems.reduce((acc, item) => acc + item.quantity, 0)} productos
+                </span>
+              </div>
+            )}
 
             <div className="flex flex-col gap-3 justify-center">
               {/* Botón Continuar - si hay plan activo o tortas */}
@@ -375,32 +368,32 @@ export default function Plans() {
                   className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
                 >
                   <CheckCircle size={23} />
-                  Continuar 
+                  Continuar
                 </button>
               ) : null}
-              
+
               {/* BOTÓN "AGREGAR NUEVO PLAN" - aparece si completó el plan O si hay tortas */}
               {(totalInCart === plan?.maxItems && plan && items.length > 0) || motherDayItems.length > 0 ? (
-  <button
-    onClick={addNewPlan}
-    className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
-  >
-    <CheckCircle size={23} />
-    Agregar Nuevo Plan
-  </button>
-) : null}
-              
-              {/* BOTÓN "AÑADIR TORTA DÍA DE LA MADRE" - aparece SOLO si hay plan completo Y no hay tortas ya */}
-              {totalInCart === plan?.maxItems && theme.name === "motherday" && motherDayItems.length === 0 && (
                 <button
-                  onClick={addMotherDayCake}
+                  onClick={addNewPlan}
                   className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
                 >
-                  <Cake size={23} />
-                  Añadir Torta Día de la Madre
+                  <CheckCircle size={23} />
+                  Agregar Nuevo Plan
                 </button>
-              )}
-              
+              ) : null}
+
+              {/* BOTÓN "AÑADIR TORTA DÍA DE LA MADRE" - aparece SIEMPRE que sea tema motherday */}
+{theme.name === "motherday" && motherDayItems.length === 0 && (
+  <button
+    onClick={addMotherDayCake}
+    className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}
+  >
+    <Cake size={23} />
+    Añadir Torta Día de la Madre
+  </button>
+)}
+
               {/* Botón Vaciar - siempre visible */}
               <button
                 onClick={startNewPlan}

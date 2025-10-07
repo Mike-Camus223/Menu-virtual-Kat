@@ -177,8 +177,8 @@ export const Tortas = [
   { id: "482703", name: "Torta de Vainilla", image: "/images/cakes/tortachantilli.jpg", category: "Tortas", description: "Torta suave de vainilla con cubierta de frutas.", price: 3800 },
   { id: "481542", name: "Torta Red Velvet", image: "https://www.infobae.com/new-resizer/DGoMOTuyK29Gwu_0GG0rzZg4VGk=/arc-anglerfish-arc2-prod-infobae/public/52E6H6YM2NHAHHAR6S7SL47SEM.jpg", category: "Tortas", description: "Torta Red Velvet con crema de queso y decoración elegante.", price: 4200 },
   { id: "482900", name: "Torta de Frutas", image: "/images/cakes/tortachantilliv2.jpg", category: "Tortas", description: "Torta fresca con crema chantilly y frutas de temporada.", price: 4500 },
-  { id: "482900", name: "Torta corazon", image: "/images/cakes/tortacorazon.jpg", category: "Tortas", description: "Torta fresca con crema chantilly y frutas de temporada.", price: 4500 },
-  { id: "482900", name: "Torta oreo", image: "/images/cakes/tortaoreo.jpg", category: "Tortas", description: "Torta fresca con crema chantilly y frutas de temporada.", price: 4500 },
+  { id: "482901", name: "Torta corazon", image: "/images/cakes/tortacorazon.jpg", category: "Tortas", description: "Torta fresca con crema chantilly y frutas de temporada.", price: 4500 },
+  { id: "482902", name: "Torta oreo", image: "/images/cakes/tortaoreo.jpg", category: "Tortas", description: "Torta fresca con crema chantilly y frutas de temporada.", price: 4500 },
 ];
 
 export const PastelSaludable = [
