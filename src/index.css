@@ -35,10 +35,6 @@ img {
   display: block;
 }
 
-html {
-  background-color: oklch(96.2% 0.059 95.617);
-}
-
 
 /* Body defaults */
 body {
@@ -87,10 +83,6 @@ h1, h2, h3, h4, h5, h6 {
   100% {
     left: -20rem; 
   }
-}
-
-.bgunico {
-background-color: #2D641C;
 }
 
 .motherdaybg {
