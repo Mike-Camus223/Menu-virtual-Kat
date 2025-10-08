@@ -173,17 +173,17 @@ export const postresPeq = [
 
 // src/components/utils/DataProduct.ts
 export const Tortas = [
-  { id: "482315", name: "Mini Torta de Chocolate", image: "/images/cakes/tortachocolate.jpg", category: "Tortas", description: "Deliciosa torta de chocolate con relleno de crema.", price: 4000 },
-  { id: "482703", name: "Torta de Vainilla", image: "/images/cakes/tortachantilli.jpg", category: "Tortas", description: "Torta suave de vainilla con cubierta de frutas.", price: 3800 },
-  { id: "481542", name: "Torta Red Velvet", image: "https://www.infobae.com/new-resizer/DGoMOTuyK29Gwu_0GG0rzZg4VGk=/arc-anglerfish-arc2-prod-infobae/public/52E6H6YM2NHAHHAR6S7SL47SEM.jpg", category: "Tortas", description: "Torta Red Velvet con crema de queso y decoración elegante.", price: 4200 },
-  { id: "482900", name: "Torta de Frutas", image: "/images/cakes/tortachantilliv2.jpg", category: "Tortas", description: "Torta fresca con crema chantilly y frutas de temporada.", price: 4500 },
-  { id: "482901", name: "Torta corazon", image: "/images/cakes/tortacorazon.jpg", category: "Tortas", description: "Torta fresca con crema chantilly y frutas de temporada.", price: 4500 },
-  { id: "482902", name: "Torta oreo", image: "/images/cakes/tortaoreo.jpg", category: "Tortas", description: "Torta fresca con crema chantilly y frutas de temporada.", price: 4500 },
+  { id: "482315", name: "Torta Choco (1 kg)", image: "/images/cakes/tortachocolate.jpg", category: "Tortas", description: "Torta pequeña de chocolate con relleno de crema. Rinde 4 porciones (1 kg aprox).", price: 30000 },
+  { id: "482703", name: "Torta Vainilla (1 kg)", image: "/images/cakes/tortachantilli.jpg", category: "Tortas", description: "Torta pequeña de vainilla con crema chantilly y frutas. Rinde 4 porciones (1 kg aprox).", price: 30000 },
+  { id: "481542", name: "Torta Red Velvet (1 kg)", image: "https://www.infobae.com/new-resizer/DGoMOTuyK29Gwu_0GG0rzZg4VGk=/arc-anglerfish-arc2-prod-infobae/public/52E6H6YM2NHAHHAR6S7SL47SEM.jpg", category: "Tortas", description: "Torta pequeña Red Velvet con crema de queso. Rinde 4 porciones (1 kg aprox).", price: 30000 },
+  { id: "482900", name: "Torta Frutas (1 kg)", image: "/images/cakes/tortachantilliv2.jpg", category: "Tortas", description: "Torta pequeña con crema chantilly y frutas frescas. Rinde 4 porciones (1 kg aprox).", price: 30000 },
+  { id: "482901", name: "Torta Corazón (1 kg)", image: "/images/cakes/tortacorazon.jpg", category: "Tortas", description: "Torta pequeña en forma de corazón con crema chantilly. Rinde 4 porciones (1 kg aprox).", price: 30000 },
+  { id: "482902", name: "Torta Oreo (1 kg)", image: "/images/cakes/tortaoreo.jpg", category: "Tortas", description: "Torta pequeña Oreo con crema chantilly y galletas. Rinde 4 porciones (1 kg aprox).", price: 30000 },
 ];
 
 export const PastelSaludable = [
-  { id: "490001", name: "Pastel de Zanahoria", image: "https://images.unsplash.com/photo-1599785209707-136c96f85df0?w=400&h=300&fit=crop", category: "Pastel Saludable", description: "Pastel de zanahoria con harina integral y cobertura ligera.", price: 3200 },
-  { id: "490002", name: "Pastel de Avena", image: "https://images.unsplash.com/photo-1607539931090-b5b00b73753b?w=400&h=300&fit=crop", category: "Pastel Saludable", description: "Pastel de avena y frutos secos, ideal para desayuno.", price: 3100 },
-  { id: "490003", name: "Pastel Vegano de Chocolate", image: "https://images.unsplash.com/photo-1599785209707-136c96f85df0?w=400&h=300&fit=crop", category: "Pastel Saludable", description: "Pastel vegano de chocolate, sin lácteos ni huevo.", price: 3500 },
-  { id: "490004", name: "Pastel de Manzana y Canela", image: "https://images.unsplash.com/photo-1599785209707-136c96f85df0?w=400&h=300&fit=crop", category: "Pastel Saludable", description: "Pastel suave con manzana natural y toque de canela.", price: 3300 },
+  { id: "490001", name: "Pastel Zanahoria (1 kg)", image: "https://images-tastehub.mdlzapps.cloud/images/0bb78ab7-abe6-4c85-8d14-560fc66cc335.jpg", category: "Torta vegana", description: "Pastel pequeño de zanahoria con harina integral y cobertura ligera. Rinde 4 porciones (1 kg aprox).", price: 30000 },
+  { id: "490002", name: "Cheesecake Vegano Frutilla (1 kg)", image: "https://4.bp.blogspot.com/-j1N8tq0Df70/VOvCEJCD1_I/AAAAAAABFKA/TNQF0yoe8lI/s1600/IMG_4861.JPG", category: "Torta vegana", description: "Cheesecake vegano con base de frutos secos, crema vegetal sabor frutilla y endulzado con miel natural. Rinde 4 porciones (1 kg aprox).", price: 30000 },
+  { id: "490003", name: "Pastel Choco Vegano (1 kg)", image: "https://www.tictacyummy.com/wp-content/uploads/2020/09/PrtadaWeb.jpg", category: "Torta vegana", description: "Pastel pequeño de chocolate intenso sin lácteos ni huevo, elaborado con cacao puro. Rinde 4 porciones (1 kg aprox).", price: 30000 },
+  { id: "490004", name: "Budín Manzana y Canela (1 kg)", image: "https://imag.bonviveur.com/bizcocho-de-manzana-entero.jpg", category: "Torta vegana", description: "Budín pequeño de manzana natural con toque de canela, húmedo y aromático. Rinde 4 porciones (1 kg aprox).", price: 30000 },
 ];

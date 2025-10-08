@@ -50,7 +50,7 @@ export default function Order() {
   const [showNotification, setShowNotification] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(5);
+  const [productsPerPage, setProductsPerPage] = useState(8);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [paginationDropdownOpen, setPaginationDropdownOpen] = useState(false);
   const {theme} = useTheme();
@@ -75,13 +75,13 @@ export default function Order() {
     postres: "Dulces tentaciones",
   };
 
-  // 🔹 Obtener productos según el tipo de plan
+  // Obtener productos según el tipo de plan
   const getAllProductsForPlan = (): Product[] => {
     if (!plan) return [];
     return plan.type === "gran" ? productosGrandes : productosPequenos;
   };
 
-  // 🔹 Calcular conteo por categoría
+  // Calcular conteo por categoría
   const categoryCounts: Record<string, number> = items.reduce((acc, item) => {
     const allProductsForPlan = getAllProductsForPlan();
     const product = allProductsForPlan.find((p) => p.id === item.id);
@@ -91,10 +91,10 @@ export default function Order() {
     return acc;
   }, {} as Record<string, number>);
 
-  // 🔹 "Todas" es la suma total
+  // "Todas" es la suma total
   categoryCounts["Todas"] = total;
 
-  // 🔹 Establecer productos según el plan seleccionado
+  // Establecer productos según el plan seleccionado
   useEffect(() => {
     if (plan) {
       const allProductsForPlan = getAllProductsForPlan();
@@ -194,7 +194,7 @@ export default function Order() {
   };
 
   const getVisiblePages = () => {
-    const maxVisiblePages = 5;
+    const maxVisiblePages = 8;
     let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
     let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
@@ -406,7 +406,7 @@ export default function Order() {
               <div
                 className={`absolute z-50 mt-1 w-full ${theme.cartbackground} ${theme.bordercolor} border rounded-md shadow-lg overflow-hidden transition-all duration-200 origin-top ${paginationDropdownOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"}`}
               >
-                {[5, 10].map((value) => (
+                {[8, 16].map((value) => (
                   <div
                     key={value}
                     onClick={() => {
@@ -534,7 +534,7 @@ export default function Order() {
                   Ir al carrito
                 </button>
                 
-                {/* Seguir comprando (volver a plans) */}
+                {/* Seguir comprando (volver a planes) */}
                 <button
                   onClick={() => {
                     setShowCompletionModal(false);

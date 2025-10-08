@@ -24,19 +24,19 @@ export default function Motherday() {
   const [showNotification, setShowNotification] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(5);
+  const [productsPerPage, setProductsPerPage] = useState(8);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [paginationDropdownOpen, setPaginationDropdownOpen] = useState(false);
   const { theme } = useTheme();
 
-  // 🔹 Obtener productos para Motherday (Tortas y PastelSaludable)
+  // Obtener productos para Motherday (Tortas y PastelSaludable)
   const getAllProductsForMotherday = (): Product[] => {
     return [...Tortas, ...PastelSaludable];
   };
 
-  const categories = ["Todas", "Tortas", "Pastel Saludable"];
+  const categories = ["Todas", "Tortas", "Torta vegana"];
 
-  // 🔹 Calcular conteo por categoría usando motherDayItems
+  // Calcular conteo por categoría usando motherDayItems
   const categoryCounts: Record<string, number> = motherDayItems.reduce((acc, item) => {
     const allProductsForMotherday = getAllProductsForMotherday();
     const product = allProductsForMotherday.find((p) => p.id === item.id);
@@ -49,10 +49,10 @@ export default function Motherday() {
   const titles: Record<string, string> = {
     Todas: "Todos nuestros productos",
     Tortas: "Deliciosas tortas",
-    "Pastel Saludable": "Pasteles saludables",
+    "Torta vegana": "Tortas Veganas",
   };
 
-  // 🔹 Establecer productos iniciales para Motherday
+  // Establecer productos iniciales para Motherday
   useEffect(() => {
     const allProductsForMotherday = getAllProductsForMotherday();
     setProducts(allProductsForMotherday);
@@ -143,7 +143,7 @@ export default function Motherday() {
   };
 
   const getVisiblePages = () => {
-    const maxVisiblePages = 5;
+    const maxVisiblePages = 8;
     let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
     let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
@@ -331,7 +331,7 @@ export default function Motherday() {
                   paginationDropdownOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
                 }`}
               >
-                {[5, 10].map(value => (
+                {[8, 16].map(value => (
                   <div
                     key={value}
                     onClick={() => { handleProductsPerPageChange(value); setPaginationDropdownOpen(false); }}
