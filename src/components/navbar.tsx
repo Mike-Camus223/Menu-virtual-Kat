@@ -338,6 +338,7 @@ const Navbar: React.FC<NavbarProps> = () => {
               <button
                 onClick={() => {
                   clearCart();
+                  closeCartSidebar();
                   navigate("/pedidos");
                 }}
                 className={`flex-1 flex items-center justify-center gap-2 cursor-pointer rounded-lg bg-gray-200 ${theme.textsecond} text-base px-3 py-2 shadow hover:bg-gray-300 transition-all duration-300`}
