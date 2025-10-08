@@ -144,7 +144,7 @@ export default function Plans() {
         {/* Título */}
         <div className="mb-7">
           <h1
-            className={`text-3xl sm:text-4xl text-shadow-lg md:text-5xl font-semibold ${theme.title} mb-4`}
+            className={`text-3xl text-center  sm:text-4xl text-shadow-lg md:text-5xl font-semibold ${theme.title} mb-4`}
             style={{ fontFamily: "Times New Roman, serif" }}
           >
             VIANDAS{" "}
@@ -275,7 +275,7 @@ export default function Plans() {
 
                 <div className="flex flex-col items-center mb-4">
                   <div className={`text-2xl sm:text-2xl ${theme.text} font-bold`}>
-                    Dulzura para mamá
+                    Dulzura para Mamá
                   </div>
                   <div className={`${theme.text} font-bold text-sm sm:text-base mt-1`}>
                     Postrecitos deliciosos
