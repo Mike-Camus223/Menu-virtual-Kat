@@ -34,7 +34,7 @@ export default function Motherday() {
     return [...Tortas, ...PastelSaludable];
   };
 
-  const categories = ["Todas", "Tortas", "Torta vegana"];
+  const categories = ["Todas", "Tortas", "Pasteles saludables"];
 
   // Calcular conteo por categoría usando motherDayItems
   const categoryCounts: Record<string, number> = motherDayItems.reduce((acc, item) => {
@@ -49,7 +49,7 @@ export default function Motherday() {
   const titles: Record<string, string> = {
     Todas: "Todos nuestros productos",
     Tortas: "Deliciosas tortas",
-    "Torta vegana": "Tortas Veganas",
+    "Pasteles saludables": "Pasteles saludables",
   };
 
   // Establecer productos iniciales para Motherday

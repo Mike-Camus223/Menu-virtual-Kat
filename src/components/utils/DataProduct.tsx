@@ -2,10 +2,10 @@
 // MENU GRANDE ViANDAS
 // Carnes
 export const mealsGran = [
-  { id: "482913", name: "Carne a la mostaza con verduras salteadas", image: "", category: "carne", description: "Carne suave con salsa de mostaza y verduras salteadas.", price: 8500 },
-  { id: "139572", name: "Carne con crema y espinacas", image: "", category: "carne", description: "Carne acompañada con crema y espinacas.", price: 8500 },
+  { id: "482913", name: "Carne a la mostaza con verduras salteadas", image: "https://www.cucinare.tv/wp-content/uploads/2024/11/Solomillo-a-la-mostaza-Gabo.jpg", category: "carne", description: "Carne suave con salsa de mostaza y verduras salteadas.", price: 8500 },
+  { id: "139572", name: "Carne con crema y espinacas", image: "https://cdn0.recetasgratis.net/es/posts/9/0/7/crema_de_espinacas_sin_nata_ni_patata_69709_600.jpg", category: "carne", description: "Carne acompañada con crema y espinacas.", price: 8500 },
   { id: "973514", name: "Carne al Puerro con Verduras", image: "https://cdn0.recetasgratis.net/es/posts/4/4/2/ternera_en_salsa_de_puerros_52244_paso_5_600.jpg", category: "carne", description: "Receta de carne salteada con puerros y verduras.", price: 8500 },
-  { id: "416925", name: "Carne al Champiñón con arroz", image: "ssd", category: "carne", description: "Carne en salsa de champiñones servida con arroz.", price: 8500 },
+  { id: "416925", name: "Carne al Champiñón con arroz", image: "https://cloudfront-us-east-1.images.arcpublishing.com/abccolor/MKOLHDCPTNEMHIGTSNRHZRNN7U.jpg", category: "carne", description: "Carne en salsa de champiñones servida con arroz.", price: 8500 },
   { id: "725180", name: "Carne 2 Purés", image: "https://st.depositphotos.com/1001719/2416/i/450/depositphotos_24167691-stock-photo-mashed-potatoes-and-beef-steak.jpg", category: "carne", description: "Carne servida con dos tipos de puré casero.", price: 8500 },
   { id: "671290", name: "Pastel de Carne", image: "https://www.cocina-uruguaya.com/base/stock/Recipe/pastel-de-carne-al-graten/pastel-de-carne-al-graten_web.jpg.webp", category: "carne", description: "Clásico pastel con carne picada.", price: 8500 },
   { id: "902158", name: "Lasaña de Berenjenas", image: "https://cdn0.uncomo.com/es/posts/0/6/2/como_hacer_lasana_de_berenjenas_34260_600.webp", category: "carne", description: "Capas de berenjena con carne, salsa y queso.", price: 8500 },
@@ -89,10 +89,10 @@ export const postresGran = [
 
 // Carnes - versión chica
 export const mealsPeq = [
-  { id: "482913", name: "Carne a la mostaza con verduras salteadas", image: "", category: "carne", description: "Carne suave con salsa de mostaza y verduras salteadas.", price: 7500 },
-  { id: "139572", name: "Carne con crema y espinacas", image: "", category: "carne", description: "Carne acompañada con crema y espinacas.", price: 7500 },
+  { id: "482913", name: "Carne a la mostaza con verduras salteadas", image: "https://www.cucinare.tv/wp-content/uploads/2024/11/Solomillo-a-la-mostaza-Gabo.jpg", category: "carne", description: "Carne suave con salsa de mostaza y verduras salteadas.", price: 7500 },
+  { id: "139572", name: "Carne con crema y espinacas", image: "https://cdn0.recetasgratis.net/es/posts/9/0/7/crema_de_espinacas_sin_nata_ni_patata_69709_600.jpg", category: "carne", description: "Carne acompañada con crema y espinacas.", price: 7500 },
   { id: "973514", name: "Carne al Puerro con Verduras", image: "https://cdn0.recetasgratis.net/es/posts/4/4/2/ternera_en_salsa_de_puerros_52244_paso_5_600.jpg", category: "carne", description: "Receta de carne salteada con puerros y verduras.", price: 7500 },
-  { id: "416925", name: "Carne al Champiñón con arroz", image: "ssd", category: "carne", description: "Carne en salsa de champiñones servida con arroz.", price: 7500 },
+  { id: "416925", name: "Carne al Champiñón con arroz", image: "https://cloudfront-us-east-1.images.arcpublishing.com/abccolor/MKOLHDCPTNEMHIGTSNRHZRNN7U.jpg", category: "carne", description: "Carne en salsa de champiñones servida con arroz.", price: 7500 },
   { id: "725180", name: "Carne 2 Purés", image: "https://st.depositphotos.com/1001719/2416/i/450/depositphotos_24167691-stock-photo-mashed-potatoes-and-beef-steak.jpg", category: "carne", description: "Carne servida con dos tipos de puré casero.", price: 7500 },
   { id: "671290", name: "Pastel de Carne", image: "https://www.cocina-uruguaya.com/base/stock/Recipe/pastel-de-carne-al-graten/pastel-de-carne-al-graten_web.jpg.webp", category: "carne", description: "Clásico pastel con carne picada.", price: 7500 },
   { id: "902158", name: "Lasaña de Berenjenas", image: "https://cdn0.uncomo.com/es/posts/0/6/2/como_hacer_lasana_de_berenjenas_34260_600.webp", category: "carne", description: "Capas de berenjena con carne, salsa y queso.", price: 7500 },
@@ -182,8 +182,8 @@ export const Tortas = [
 ];
 
 export const PastelSaludable = [
-  { id: "490001", name: "Torta de Zanahoria", image: "https://images-tastehub.mdlzapps.cloud/images/0bb78ab7-abe6-4c85-8d14-560fc66cc335.jpg", category: "Torta vegana", description: "Bizcochuelo de zanahoria con coco, decorado con crema de yogurt y nueces u otros frutos secos. Rinde para 8 personas.", price: 30000 },
-  { id: "490002", name: "Cheesecake Frutilla", image: "/images/cakes/cheesecakefrutilla.jpg", category: "Torta vegana", description: "Base de frutos secos con crema de yogurt y frutilla. Rinde 8 personas.", price: 30000 },
-  { id: "490003", name: "Pastel Choco", image: "https://www.tictacyummy.com/wp-content/uploads/2020/09/PrtadaWeb.jpg", category: "Torta vegana", description: "Bizcochuelo de chocolate amargo, relleno con yogurt y decorado con frutos de la temporada. Rinde 8 porciones.", price: 30000 },
-  { id: "490004", name: "Budín Manzana y Pera", image: "https://imag.bonviveur.com/bizcocho-de-manzana-entero.jpg", category: "Torta vegana", description: "Bizcochuelo de avena y almendras con peras y manzanas. Rinde 8 porciones.", price: 30000 },
+  { id: "490001", name: "Torta de Zanahoria", image: "https://images-tastehub.mdlzapps.cloud/images/0bb78ab7-abe6-4c85-8d14-560fc66cc335.jpg", category: "Pasteles saludables", description: "Bizcochuelo de zanahoria con coco, decorado con crema de yogurt y nueces u otros frutos secos. Rinde para 8 personas.", price: 30000 },
+  { id: "490002", name: "Cheesecake Frutilla", image: "/images/cakes/cheesecakefrutilla.jpg", category: "Pasteles saludables", description: "Base de frutos secos con crema de yogurt y frutilla. Rinde 8 personas.", price: 30000 },
+  { id: "490003", name: "Pastel Choco", image: "https://www.tictacyummy.com/wp-content/uploads/2020/09/PrtadaWeb.jpg", category: "Pasteles saludables", description: "Bizcochuelo de chocolate amargo, relleno con yogurt y decorado con frutos de la temporada. Rinde 8 porciones.", price: 30000 },
+  { id: "490004", name: "Budín Manzana y Pera", image: "https://imag.bonviveur.com/bizcocho-de-manzana-entero.jpg", category: "Pasteles saludables", description: "Bizcochuelo de avena y almendras con peras y manzanas. Rinde 8 porciones.", price: 30000 },
 ];
