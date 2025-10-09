@@ -359,7 +359,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                       `PRODUCTOS DÍA DE LA MADRE:\n` +
                       `${motherDayItems.map((i) => `• ${i.name} x${i.quantity}`).join("\n")}\n\n` +
                       `Total: $${motherDayPrice.toLocaleString()}\n\n` +
-                      `¡Quedo atenta a confirmación!`
+                      `¡Quedo atento/a a confirmación!`
                     )}`
                     : // Planes de vianda + productos del Día de la Madre (o solo planes)
                     (multiPlans.length > 0 || (plan && items.length > 0))

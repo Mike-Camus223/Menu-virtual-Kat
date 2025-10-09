@@ -171,7 +171,6 @@ export const postresPeq = [
 
 // Tortas //
 
-// src/components/utils/DataProduct.ts
 export const Tortas = [
   { id: "482315", name: "Torta Choco", image: "/images/cakes/tortachocolate.jpg", category: "Tortas", description: "Bizcochuelo de chocolate relleno con chantilly. Rinde 8 a 10 porciones.", price: 30000 },
   { id: "482703", name: "Torta Vainilla", image: "/images/cakes/tortachantilli.jpg", category: "Tortas", description: "Bizcochuelo relleno de crema de dulce de leche y decorado con frutas de la temporada. Rinde 8 a 10 porciones.", price: 30000 },
@@ -183,7 +182,7 @@ export const Tortas = [
 ];
 
 export const PastelSaludable = [
-  { id: "490001", name: "Torta de Zanahoria", image: "https://images-tastehub.mdlzapps.cloud/images/0bb78ab7-abe6-4c85-8d14-560fc66cc335.jpg", category: "Torta vegana", description: "Bizcochuelo de zanahoria con coco decorado con crema de yogurt y nueces u otros frutos secos. Rinde para 8 personas.", price: 30000 },
+  { id: "490001", name: "Torta de Zanahoria", image: "https://images-tastehub.mdlzapps.cloud/images/0bb78ab7-abe6-4c85-8d14-560fc66cc335.jpg", category: "Torta vegana", description: "Bizcochuelo de zanahoria con coco, decorado con crema de yogurt y nueces u otros frutos secos. Rinde para 8 personas.", price: 30000 },
   { id: "490002", name: "Cheesecake Frutilla", image: "/images/cakes/cheesecakefrutilla.jpg", category: "Torta vegana", description: "Base de frutos secos con crema de yogurt y frutilla. Rinde 8 personas.", price: 30000 },
   { id: "490003", name: "Pastel Choco", image: "https://www.tictacyummy.com/wp-content/uploads/2020/09/PrtadaWeb.jpg", category: "Torta vegana", description: "Bizcochuelo de chocolate amargo, relleno con yogurt y decorado con frutos de la temporada. Rinde 8 porciones.", price: 30000 },
   { id: "490004", name: "Budín Manzana y Pera", image: "https://imag.bonviveur.com/bizcocho-de-manzana-entero.jpg", category: "Torta vegana", description: "Bizcochuelo de avena y almendras con peras y manzanas. Rinde 8 porciones.", price: 30000 },
