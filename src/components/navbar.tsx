@@ -128,6 +128,9 @@ const Navbar: React.FC<NavbarProps> = () => {
                   <h1 className={`text-2xl font-bold title3 tracking-widest ${theme.buttontext}`}>
                     Katyka
                   </h1>
+                   <p className={`text-[10px] font-medium tracking-widest font-sans ${theme.buttontext}`}>
+                    Comidas caseras saludables
+                  </p>
                 </div>
               </Link>
             </div>
