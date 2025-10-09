@@ -74,7 +74,7 @@ export default function Plans() {
   const continueToPreviousPlan = () => {
   // Cerrar modal y prevenir que reaparezca
   setShowProgressModal(false);
-  setIsAddingNewPlan(true); // ✅ Prevenir reapparición
+  setIsAddingNewPlan(true); // Prevenir reapparición
 
   // PRIORIDAD 1: Si hay plan activo con items, ir a ORDER (viandas)
   if (plan && items.length > 0) {
@@ -113,14 +113,14 @@ export default function Plans() {
   if (plan && items.length > 0) {
     const uniquePlanId = Date.now();
     
-    // ✅ CALCULAR PRECIO REAL sumando los precios de los productos
+    // CALCULAR PRECIO REAL sumando los precios de los productos
     const totalPrice = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     
     addMultiPlan({
       planId: uniquePlanId,
       planType: plan.type,
       quantity: plan.maxItems,
-      totalPrice: totalPrice, // ✅ PRECIO REAL
+      totalPrice: totalPrice, // PRECIO REAL
       items: [...items]
     });
     
