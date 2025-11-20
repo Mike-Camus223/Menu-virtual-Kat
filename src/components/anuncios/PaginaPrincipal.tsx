@@ -26,8 +26,8 @@ export default function Mainpage() {
       setTimeout(() => {
         setCurrentCardIndex((prev) => (prev + 1) % cards.length);
         setIsVisible(true);
-      }, 500); // Tiempo del fade out
-    }, 3000); // Cambia cada 3 segundos
+      }, 500);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [cards.length]);
@@ -66,8 +66,6 @@ export default function Mainpage() {
       />
 
       <div className={`max-w-screen h-auto ${theme.background}`}>
-
-        {/* Título */}
         <div className="pt-10 pb-10 md:pb-16 md:pt-20 w-full flex justify-center items-center text-center">
           <h1
             className={`underline text-shadow-lg ${theme.title} text-5xl sm:text-5xl md:text-6xl max-w-4xl px-4`}
@@ -76,10 +74,7 @@ export default function Mainpage() {
             Platos ricos y nutritivos
           </h1>
         </div>
-
-        {/* Carrusel para desktop, cards animadas para mobile/tablet */}
         <div className="pb-10 pt-0 sm:pb-16 sm:pt-16">
-          {/* Carousel para desktop (lg y superior) */}
           <div className="hidden lg:block relative overflow-hidden h-[28rem]">
             <div className="scroll-track gap-12">
               {[...cards, ...cards].map((c, i) => (

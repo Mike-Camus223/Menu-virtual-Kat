@@ -24,17 +24,11 @@ export function ThemeColorEffect() {
 
   useEffect(() => {
     if (typeof window === "undefined" || !theme) return;
-
-    // Crear un div temporal con la clase de color de Tailwind
     const temp = document.createElement("div");
     temp.className = theme.navbar || theme.background;
     document.body.appendChild(temp);
-
-    // Obtener color calculado (rgb)
     const color = getComputedStyle(temp).backgroundColor;
     temp.remove();
-
-    // Convertir rgb(...) a hex (#RRGGBB)
     const rgbMatch = color.match(/\d+/g);
     const hex =
       rgbMatch && rgbMatch.length >= 3
@@ -46,12 +40,10 @@ export function ThemeColorEffect() {
             })
             .join("")}`
         : "#ffffff";
-
-    // Meta tags para distintos navegadores
     const metas = [
-      { name: "theme-color", content: color }, // Chrome, Android
-      { name: "msapplication-navbutton-color", content: hex }, // Windows / Edge
-      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" }, // Safari iOS
+      { name: "theme-color", content: color }, 
+      { name: "msapplication-navbutton-color", content: hex }, 
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" }, 
     ];
 
     metas.forEach(({ name, content }) => {
@@ -68,12 +60,10 @@ export function ThemeColorEffect() {
   return null;
 }
 
-// === 🟢 APP PRINCIPAL ===
 export default function App() {
   return (
     <CartProvider>
       <ThemeProvider>
-        {/* 🌈 Aplica el color dinámico del tema */}
         <ThemeColorEffect />
 
         <BrowserRouter>
@@ -131,8 +121,6 @@ export default function App() {
                 </PublicTemplate>
               }
             />
-
-            {/* Redirección automática a Home */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>
