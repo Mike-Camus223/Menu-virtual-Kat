@@ -36,12 +36,10 @@ export default function About() {
                                     </div>
                                 ))}
                             </div>
-                            {/* Sección de imágenes */}
 
                         </div>
 
                         <div className="flex flex-col my-auto">
-                            {/* Texto */}
                             <div className="text-center max-w-4xl mx-auto my-2 md:mb-8 px-4 md:px-0">
                                 <div className="py-4 lg:py-8">
                                     <h2
@@ -65,8 +63,6 @@ export default function About() {
                                 </p>
 
                             </div>
-
-                            {/* Botón */}
                             <div className={`w-full flex justify-center py-4 mb-2 md:mb-0 md:py-8 ${theme.background} px-4`}>
                                 <Link
                                     to="/pedidos"
@@ -81,8 +77,6 @@ export default function About() {
                         </div>
 
                     </div>
-
-                    {/* Columna derecha */}
                     <div className="relative overflow-hidden shadow-xl h-full min-h-[300px]">
                         <img
                             src="https://i.guim.co.uk/img/media/d151221abab9bf4181178553b561c1a96dec7fa7/0_188_5632_3380/master/5632.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=64ef7900961307f2305f1198dfe1191e"
@@ -95,7 +89,6 @@ export default function About() {
             </div>
             <div className={`w-full h-auto flex flex-col items-center ${theme.background}`}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 max-w-8xl mx-auto">
-                    {/* Imagen */}
                     <div className="overflow-hidden shadow-xl h-full w-full order-2 lg:order-1">
                         <img
                             src="https://i.guim.co.uk/img/media/d151221abab9bf4181178553b561c1a96dec7fa7/0_188_5632_3380/master/5632.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=64ef7900961307f2305f1198dfe1191e"
@@ -104,7 +97,6 @@ export default function About() {
                             draggable="false"
                         />
                     </div>
-                    {/* Texto / Info */}
                     <div className={`${theme.background} relative z-5 flex justify-center items-center w-full py-16 md:py-20 lg:py-20 xl:py-4 px-4 order-1 lg:order-2`}>
                         <div className="absolute top-0 right-0 z-[-1]">
                             <Wheat className={`${theme.iconssecond} w-50 h-50sm:w-72 sm:h-72md:w-72 md:h-72 lg:w-[20rem] lg:h-[20rem] `}strokeWidth={2}/>
@@ -117,11 +109,7 @@ export default function About() {
                                 Viandas<br />
                                 <span className={`${theme.titleSecond}`}>Saludables</span>
                             </h2>
-
-                            {/* Viandas */}
                             <div className="flex flex-col gap-2 text-xs sm:text-sm">
-
-                                {/* Pastas / Pollo / Vegetarianas / Tartas */}
                                 <div className="flex flex-col gap-1">
                                     <p className="font-semibold text-start">Pastas / Pollo / Vegetarianas / Tartas</p>
                                     <div className="flex justify-between px-4">
@@ -133,8 +121,6 @@ export default function About() {
                                         <span>$8000</span>
                                     </div>
                                 </div>
-
-                                {/* Carnes */}
                                 <div className="flex flex-col gap-1">
                                     <p className="font-semibold text-start">Peceto / Cuadril / Cuadrada / Pescado</p>
                                     <div className="flex justify-between px-4">
@@ -146,18 +132,12 @@ export default function About() {
                                         <span>$8500</span>
                                     </div>
                                 </div>
-
-                                {/* Postres */}
                                 <div className="flex justify-between px-4 mt-2">
                                     <span className="font-semibold">Postres</span>
                                     <span>$5500</span>
                                 </div>
                             </div>
-
-                            {/* Espaciador */}
                             <div className={`border-t ${theme.bordercolor}`}></div>
-
-                            {/* Entregas */}
                             <div className="italic text-sm text-center font-bold">
                                 Entregas a domicilio: miercoles y viernes durante el dia. <br />
                                 Reservar 3 dias antes el pedido. <br />

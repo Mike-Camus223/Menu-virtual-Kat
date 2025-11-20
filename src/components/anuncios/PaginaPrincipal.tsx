@@ -13,7 +13,7 @@ export default function Mainpage() {
   const cards = [
     { src: "https://recetasdecocina.elmundo.es/wp-content/uploads/2024/01/receta-de-salteado-de-verduras-1024x657.jpg", alt: "Frescura" },
     { src: "https://content-cocina.lecturas.com/medio/2024/07/15/arroz-chaufa-peruano_483d3313_1218071266_240715103150_1200x1200.jpg", alt: "Nutrición" },
-    { src: "https://www.gourmet.cl/wp-content/uploads/2013/03/guiso-de-verduras.jpg", alt: "Variedad" },
+    { src: "https://resizer.glanacion.com/resizer/v2/-4VFYKD6F2BHAJIPUC5W2B3EAOM.jpg?auth=e54219d1ed0dfe44755c73a82a21ad49f3d26e46172015a8bcb347f4c0d68360&width=420&height=280&quality=70&smart=true", alt: "Variedad" },
     { src: "https://www.recetasnestle.com.ec/sites/default/files/srh_recipes/b9e5673058f8bcc1d7853f5b20110db5.png", alt: "Sabor" },
     { src: "https://d36fw6y2wq3bat.cloudfront.net/recipes/salteado-de-pollo-zanahorias-y-champinones/900/salteado-de-pollo-zanahorias-y-champinones.jpg", alt: "Calidad" },
     { src: "https://cocinerosargentinos.com/content/recipes/original/recipes.20262.jpg", alt: "Pasión" },

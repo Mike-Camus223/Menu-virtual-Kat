@@ -10,11 +10,8 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1">
-        {/* Solo se muestra Motherday si el tema activo es "motherday" */}
         {theme.name === "motherday" && <Motherday />}
-        
-        {/* Página principal siempre visible */}
-        <Mainpage />
+          <Mainpage />
       </main>
     </div>
   );

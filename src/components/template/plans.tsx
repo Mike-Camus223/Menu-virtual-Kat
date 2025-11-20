@@ -219,7 +219,6 @@ export default function Plans() {
                   </ul>
                 </div>
 
-                {/* Botón - DISABLED cuando hay un plan activo o cuando el modal está abierto */}
                 <div className="w-full flex justify-center py-3 md:py-3 px-4">
                   <button
                     onClick={() => selectPlan(planOption)}
@@ -239,7 +238,6 @@ export default function Plans() {
             </div>
           ))}
 
-          {/* EXTRA CARD para día de la madre */}
           {theme.name === "motherday" && (
             <div
               className={`relative group ${theme.cardbackground} ${theme.bordermain} border-1 rounded-xl transition-all duration-400 shadow-xl hover:shadow-2xl overflow-hidden`}
@@ -313,7 +311,6 @@ export default function Plans() {
         </div>
       </div>
 
-      {/* Modal de progreso - CON BOTÓN "AGREGAR NUEVO PLAN" */}
       {showProgressModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50 px-4">
           <div className={`${theme.background} rounded-2xl p-6 sm:p-8 max-w-sm w-full text-center shadow-2xl space-y-5`}>
@@ -349,7 +346,6 @@ export default function Plans() {
             )}
 
             <div className="flex flex-col gap-3 justify-center">
-              {/* Botón Continuar - si hay plan activo o tortas */}
               {(plan && items.length > 0) || motherDayItems.length > 0 ? (
                 <button
                   onClick={continueToPreviousPlan}
@@ -360,7 +356,6 @@ export default function Plans() {
                 </button>
               ) : null}
 
-              {/* BOTÓN "AGREGAR NUEVO PLAN" - aparece si completó el plan O si hay tortas */}
               {(totalInCart === plan?.maxItems && plan && items.length > 0) || motherDayItems.length > 0 ? (
                 <button
                   onClick={addNewPlan}
@@ -371,7 +366,6 @@ export default function Plans() {
                 </button>
               ) : null}
 
-              {/* Botón Vaciar - siempre visible */}
               <button
                 onClick={startNewPlan}
                 className={`w-full hover:scale-105 active:scale-95 duration-300 transition-all flex cursor-pointer items-center justify-center gap-2 px-4 py-2 rounded-lg ${theme.buttoncolor} ${theme.buttontext} hover:${theme.buttonhovercolor} font-medium text-base shadow-lg`}

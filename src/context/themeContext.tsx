@@ -107,7 +107,7 @@ const EVENTS: EventRange[] = [
     },
 ];
 
-// intenta parsear una fecha de prueba (localStorage, query param o variable global)
+// intenta parsear una fecha de prueba 
 function parseTestDate(): Date | null {
     if (typeof window === "undefined") return null;
     const fromLS = localStorage.getItem("theme_test_date");
@@ -119,7 +119,6 @@ function parseTestDate(): Date | null {
     return isNaN(d.getTime()) ? null : d;
 }
 
-// comprueba si 'today' cae dentro del rango (start..end) manejando wrap-around y cruces de año
 function isDateInRange(today: Date, start: { month: number; day: number }, end: { month: number; day: number }): boolean {
     // probamos anclar el range en varios años para cubrir casos como: start = dic, end = ene (cruce año)
     const candidateYears = [today.getFullYear(), today.getFullYear() - 1, today.getFullYear() + 1];
