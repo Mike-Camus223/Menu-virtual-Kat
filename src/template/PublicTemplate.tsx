@@ -12,7 +12,7 @@ export default function PublicTemplate({ children }: PublicTemplateProps) {
   const {theme} = useTheme();
 
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden">
+    <div className={`min-h-screen ${theme.background} flex flex-col overflow-x-hidden`}>
       <Navbar />
       {/* Fondo de hojas */}
       <div id="leafback"></div>
